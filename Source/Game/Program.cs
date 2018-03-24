@@ -13,9 +13,11 @@ namespace Game
         private static void Main(string[] args)
         {
             Map = new Map();
-            var graphics = new GraphicsSystem();
+            var graphics = new GraphicsSystem(Map);
             var events = new EventSystem();
 
+            
+            events.GameEvents.Add(new Event(() => Map.Girl.Move(), 10));
             events.GameEvents.Add(new Event(() => {
                 graphics.BeginRenderFrame();
 

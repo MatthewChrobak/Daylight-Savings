@@ -1,5 +1,9 @@
 ﻿using System;
+using Game.Models;
+using Game.Models.Enviroment;
 using Game.Timing;
+using Game.Models;
+using Game.Models.Enviroment;
 using SFML.Graphics;
 using SFML.Window;
 
@@ -7,7 +11,12 @@ namespace Game.Graphics
 {
     public class GameWindow : RenderWindow
     {
-        public GameWindow() : base(new VideoMode(960, 640), "Test")
+        private LittleGirl girl;
+
+        private float speed = 1.0f;
+
+
+        public GameWindow(Map map) : base(new VideoMode(960, 640), "Test")
         {
             this.Closed += this.GameWindow_Closed;
             this.KeyPressed += this.ProcessKeyInputs;
@@ -17,6 +26,9 @@ namespace Game.Graphics
             this.MouseMoved += GameWindow_MouseMoved;
             this.MouseButtonPressed += this.GameWindow_MouseButtonPressed1;
             this.MouseButtonPressed += GameWindow_MouseButtonPressed;
+
+            //this is the girl from MAP
+            this.girl = map.Girl;
         }
 
         private void GameWindow_MouseButtonPressed1(object sender, MouseButtonEventArgs e)
@@ -45,18 +57,26 @@ namespace Game.Graphics
             if(e.Code == Keyboard.Key.Up)
             {
                 Console.WriteLine("Up is pressed");
+                this.girl.girlDirection = Direction.UP;
+                this.girl.Y -= 25;
             }
             else if (e.Code == Keyboard.Key.Down)
             {
                 Console.WriteLine("Down is pressed");
+                this.girl.girlDirection = Direction.DOWN;
+                this.girl.Y += 25;
             }
             else if (e.Code == Keyboard.Key.Left)
             {
                 Console.WriteLine("Left is pressed");
+                this.girl.girlDirection = Direction.LEFT;
+                this.girl.X -= 25;
             }
             else if (e.Code == Keyboard.Key.Right)
             {
                 Console.WriteLine("Right is pressed");
+                this.girl.girlDirection = Direction.RIGHT;
+                this.girl.X += 25;
             } 
         }
 
@@ -88,41 +108,54 @@ namespace Game.Graphics
         // Method to process the inputs from the joystick
         private void ProcessJoyInputs(object sender, JoystickMoveEventArgs e){
 
+            float moveX = 0.0f, moveY = 0.0f;
+
+
             if (!IgnoreInput(e.Position))
             {
                 // Testing purposes
-                Console.WriteLine($"{e.ToString()}");
-
-                if(e.Axis == Joystick.Axis.X){
+                //Console.WriteLine($"{e.ToString()}");
+                if (e.Axis == Joystick.Axis.X)
+                {
                     if (e.Position < -25.0f) // Move to the left
                     {
-                        // Face Left
+                        Console.WriteLine("Move Left");
+                        moveX -= speed;
                     }
 
                     if (e.Position > 25.0f) // Move to the right
                     {
+                        Console.WriteLine("Move Right");
                         // Face right
+                        moveX += speed;
                     }
                 }
-                if(e.Axis == Joystick.Axis.Y){
-                    if(e.Position < - 25.0f ){ // Move up
+                if (e.Axis == Joystick.Axis.Y)
+                {
+                    if (e.Position < -25.0f)
+                    { // Move up
+                        Console.WriteLine("Move Up");
                         // Face up
+                        moveY -= speed;
                     }
-                    if(e. Position > 25.0f){ // Move down
+                    if (e.Position > 25.0f)
+                    { // Move down
+                        Console.WriteLine("Move Down");
                         // Face down
+                        moveY += speed;
                     }
                 }
             }
-
-
-
-            return;
+            girl.setVelocity(moveX, moveY);
+            
         }
 
 
         // Helper function to ignore inputs if the value is too low.
-        private Boolean IgnoreInput(float value){
+        private bool IgnoreInput(float value){
+            
             return Math.Abs(value) < 20.0f;
+
         }
     }
 }

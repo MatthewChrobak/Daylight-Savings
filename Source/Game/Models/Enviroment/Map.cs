@@ -6,8 +6,8 @@ namespace Game.Models.Enviroment
     public class Map : IDrawable
     {
         public Tile[,] Tiles;
-        public const int MAX_X = 10;
-        public const int MAX_Y = 10;
+        public const int MAX_X = 100;
+        public const int MAX_Y = 100;
         public const int TILE_SIZE = 16;
 
         public LittleGirl Girl { get; set; }
