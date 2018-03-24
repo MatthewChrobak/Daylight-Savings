@@ -30,6 +30,12 @@
                 this.NotifyAll();
             }
         }
+
+        public Position(){
+            X = 0;
+            Y = 0;
+        }
+
         public Position(float xPosition, float yPosition)
         {
             X = xPosition;
