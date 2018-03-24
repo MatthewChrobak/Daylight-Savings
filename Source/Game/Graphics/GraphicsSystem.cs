@@ -21,11 +21,14 @@ namespace Game.Graphics
             this._surfaces.LoadTextures();
         }
 
-        public void RenderFrame(IEnumerable<DrawableComponent> components)
+        public void BeginRenderFrame()
         {
             this._context.Clear(Color.Black);
             this._context.DispatchEvents();
+        }
 
+        public void RenderToFrame(IEnumerable<DrawableComponent> components)
+        {
             foreach (var component in components) {
                 var sprite = this._surfaces.GetSprite(component.TextureName);
 
@@ -56,7 +59,10 @@ namespace Game.Graphics
 
                 this._context.Draw(sprite);
             }
+        }
 
+        public void EndRenderFrame()
+        {
             this._context.Display();
         }
     }

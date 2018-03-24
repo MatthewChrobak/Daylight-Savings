@@ -82,6 +82,8 @@
     <Compile Include="Timing\Event.cs" />
     <Compile Include="Timing\EventSystem.cs" />
     <Compile Include="Timing\StateSystem.cs" />
+    <Compile Include="UserInterface\UIComponent.cs" />
+    <Compile Include="UserInterface\UISystem.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

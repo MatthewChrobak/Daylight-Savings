@@ -15,7 +15,13 @@ namespace Game.Graphics
             this.JoystickMoved += this.ProcessJoyInputs;
             this.KeyPressed += GameWindow_KeyPressed;
             this.MouseMoved += GameWindow_MouseMoved;
+            this.MouseButtonPressed += this.GameWindow_MouseButtonPressed1;
             this.MouseButtonPressed += GameWindow_MouseButtonPressed;
+        }
+
+        private void GameWindow_MouseButtonPressed1(object sender, MouseButtonEventArgs e)
+        {
+            Program.UI.OnClick(e.X, e.Y);
         }
 
         private void GameWindow_MouseButtonPressed(object sender, MouseButtonEventArgs e)
@@ -56,7 +62,7 @@ namespace Game.Graphics
 
         private void GameWindow_Closed(object sender, EventArgs e)
         {
-            StateSystem.GameState = States.Closed;
+            StateSystem.TryClose();
         }
 
         // Method to process inputs from keyboard

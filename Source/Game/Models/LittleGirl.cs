@@ -21,8 +21,8 @@ namespace Game.Models
             yield return new DrawableComponent()
             {
                 TextureName = this.SurfaceName,
-                RenderSize = new Vector2f(25, 50),
-                Position = new Vector2f(this.X - 12.5f, this.Y - 50)
+                RenderSize = new Vector2f(100, 140),
+                Position = new Vector2f(this.X - 100, this.Y - 140)
             };
         }
     }
