@@ -12,7 +12,6 @@ namespace Game
 
             events.GameEvents.Add(new Event(graphics.Render, 16));
 
-
             events.GameLoop();
         }
     }

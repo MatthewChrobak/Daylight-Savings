@@ -54,8 +54,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Graphics\Camera.cs" />
     <Compile Include="Graphics\GameWindow.cs" />
     <Compile Include="Graphics\GraphicsSystem.cs" />
+    <Compile Include="Graphics\SurfaceManager.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Timing\Event.cs" />
