@@ -5,10 +5,14 @@ namespace Game.Graphics
     public class GraphicsSystem
     {
         private GameWindow _context;
+        private SurfaceManager _surfaces;
 
         public GraphicsSystem()
         {
             this._context = new GameWindow();
+            this._surfaces = new SurfaceManager();
+
+            this._surfaces.LoadTextures();
         }
 
         public void Render()
