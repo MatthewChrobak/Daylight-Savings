@@ -14,7 +14,7 @@
     <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
+    <PlatformTarget>x86</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -31,6 +31,9 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="sfmlnet-audio-2">
@@ -79,5 +82,35 @@
     <None Include="app.config" />
   </ItemGroup>
   <ItemGroup />
+  <ItemGroup>
+    <Content Include="Libs\csfml-audio-2.dll" />
+    <Content Include="Libs\csfml-graphics-2.dll" />
+    <Content Include="Libs\csfml-system-2.dll" />
+    <Content Include="Libs\csfml-window-2.dll" />
+    <Content Include="Libs\libsndfile-1.dll" />
+    <Content Include="Libs\openal32.dll" />
+    <Content Include="Libs\OpenTK.Compatibility.dll" />
+    <Content Include="Libs\OpenTK.dll" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>echo "Deleting any existing extlibs for SFML"
+del "csfml-audio-2.dll"
+del "csfml-graphics-2.dll"
+del "csfml-system-2.dll"
+del "csfml-window-2.dll"
+del "libsndfile-1.dll"
+del "openal32.dll"
+del "OpenTK.Compatibility.dll"
+del "OpenTK.dll"
+rd "Graphics\"</PreBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PostBuildEvent>echo "Copying extlibs for SFML"
+xcopy /Y "$(SolutionDir)SFML\extlibs\*.dll"
+
+echo "Copying graphics"
+mkdir "$(TargetDir)Graphics\"
+xcopy "$(SolutionDir)Graphics\*" "$(TargetDir)Graphics\" /s /i /y</PostBuildEvent>
+  </PropertyGroup>
 </Project>
