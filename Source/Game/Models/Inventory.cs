@@ -1,5 +1,6 @@
 ﻿using System;
 
+
 namespace Game.Models
 {
     public class Inventory
@@ -29,6 +30,14 @@ namespace Game.Models
                     this.littleGirlInventory[i] = null;
                     break;
                 }
+            }
+        }
+
+        public void viewItemFromInventory()
+        {
+            foreach(Item i in littleGirlInventory)
+            {
+                Console.WriteLine(i);
             }
         }
     }
