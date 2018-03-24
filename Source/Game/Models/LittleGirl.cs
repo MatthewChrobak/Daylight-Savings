@@ -11,6 +11,7 @@ namespace Game.Models
 
         public int health { get; set; }
         public Inventory littleGirlInventory;
+
     }
 }
 
