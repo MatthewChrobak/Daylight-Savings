@@ -2,7 +2,6 @@
 using SFML.System;
 using Game.Models.Enviroment;
 using System.Collections.Generic;
-using Game.Models.Enviroment;
 
 namespace Game.Graphics
 {
@@ -11,6 +10,7 @@ namespace Game.Graphics
         private GameWindow _context;
         private SurfaceManager _surfaces;
         private Camera _camera;
+        private Font _font;
 
         public GraphicsSystem(Map map)
         {
@@ -21,44 +21,73 @@ namespace Game.Graphics
             this._context.SetView(this._camera);
 
             this._surfaces.LoadTextures();
+
+            this._font = new Font("fonts/opensans.ttf");
         }
 
-        public void RenderFrame(IEnumerable<DrawableComponent> components)
+        public void BeginRenderFrame()
         {
             this._context.Clear(Color.Black);
             this._context.DispatchEvents();
+        }
 
+        public void RenderToFrame(IEnumerable<DrawableComponent> components)
+        {
             foreach (var component in components) {
-                var sprite = this._surfaces.GetSprite(component.TextureName);
-
-                var pos = (Vector2f)component.Position;
-                sprite.Position = pos;
-
-                if (component.Rect != null) {
-                    var rect = (IntRect)component.Rect;
-                    sprite.TextureRect = rect;
-
-                    if (component.RenderSize != null) {
-                        var size = (Vector2f)component.RenderSize;
-
-                        sprite.Scale = new Vector2f(
-                            size.X / rect.Width,
-                            size.Y / rect.Height
-                            );
-                    }
+                if (component.RenderText != null) {
+                    this.RenderTextComponent(component);
                 } else {
-                    if (component.RenderSize != null) {
-                        var size = (Vector2f)component.RenderSize;
-                        sprite.Scale = new Vector2f(
-                            size.X / sprite.Texture.Size.X,
-                            size.Y / sprite.Texture.Size.Y
-                            );
-                    }
+                    this.RenderSurfaceComponent(component);
                 }
+            }
+        }
 
-                this._context.Draw(sprite);
+        private void RenderSurfaceComponent(DrawableComponent component)
+        {
+            var sprite = this._surfaces.GetSprite(component.TextureName);
+
+            var pos = (Vector2f)component.Position;
+            sprite.Position = pos;
+
+            if (component.Rect != null) {
+                var rect = (IntRect)component.Rect;
+                sprite.TextureRect = rect;
+
+                if (component.RenderSize != null) {
+                    var size = (Vector2f)component.RenderSize;
+
+                    sprite.Scale = new Vector2f(
+                        size.X / rect.Width,
+                        size.Y / rect.Height
+                        );
+                }
+            } else {
+                if (component.RenderSize != null) {
+                    var size = (Vector2f)component.RenderSize;
+                    sprite.Scale = new Vector2f(
+                        size.X / sprite.Texture.Size.X,
+                        size.Y / sprite.Texture.Size.Y
+                        );
+                }
             }
 
+            this._context.Draw(sprite);
+        }
+        
+        private void RenderTextComponent(DrawableComponent component)
+        {
+            var text = new Text(component.RenderText, this._font);
+            text.CharacterSize = component.CharacterSize;
+
+            if (component.Position != null) {
+                text.Position = (Vector2f)component.Position;
+            }
+
+            this._context.Draw(text);
+        }
+
+        public void EndRenderFrame()
+        {
             this._context.Display();
         }
     }

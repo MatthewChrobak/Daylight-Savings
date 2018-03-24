@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Game.Graphics;
+using SFML.Graphics;
 using SFML.System;
 
 namespace Game.Models
@@ -23,8 +24,9 @@ namespace Game.Models
             yield return new DrawableComponent()
             {
                 TextureName = this.SurfaceName,
-                RenderSize = new Vector2f(25, 50),
-                Position = new Vector2f(this.X - 12.5f, this.Y - 50)
+                RenderSize = new Vector2f(70, 104),
+                Position = new Vector2f(this.X, this.Y),
+                Rect = new IntRect(0, 0, 513, 738)
             };
         }
 

@@ -32,15 +32,11 @@ namespace Game.Models.Enviroment
                     foreach (var component in this.Tiles[x, y].GetDrawableComponents()) {
                         yield return component;
                     }
-
-                    if (this.Girl.X >= x * TILE_SIZE && this.Girl.X <= (x + 1) * TILE_SIZE) {
-                        if (this.Girl.Y >= y * TILE_SIZE && this.Girl.Y <= (y + 1) * TILE_SIZE) {
-                            foreach (var component in this.Girl.GetDrawableComponents()) {
-                                yield return component;
-                            }
-                        }
-                    }
                 }
+            }
+
+            foreach (var component in this.Girl.GetDrawableComponents()) {
+                yield return component;
             }
         }
     }

@@ -1,19 +1,20 @@
-﻿using System;
-using Game.Models;
+﻿using Game.Models;
 using Game.Models.Enviroment;
 using Game.Timing;
-using Game.Models;
-using Game.Models.Enviroment;
 using SFML.Graphics;
 using SFML.Window;
+using System;
 
 namespace Game.Graphics
 {
     public class GameWindow : RenderWindow
     {
+        private float bound = 30.0f;
         private LittleGirl girl;
 
         private float speed = 1.0f;
+        private float moveX;
+        private float moveY;
 
 
         public GameWindow(Map map) : base(new VideoMode(960, 640), "Test")
@@ -24,10 +25,16 @@ namespace Game.Graphics
             this.JoystickMoved += this.ProcessJoyInputs;
             this.KeyPressed += GameWindow_KeyPressed;
             this.MouseMoved += GameWindow_MouseMoved;
+            this.MouseButtonPressed += this.GameWindow_MouseButtonPressed1;
             this.MouseButtonPressed += GameWindow_MouseButtonPressed;
 
             //this is the girl from MAP
             this.girl = map.Girl;
+        }
+
+        private void GameWindow_MouseButtonPressed1(object sender, MouseButtonEventArgs e)
+        {
+            Program.UI.OnClick(e.X, e.Y);
         }
 
         private void GameWindow_MouseButtonPressed(object sender, MouseButtonEventArgs e)
@@ -41,9 +48,6 @@ namespace Game.Graphics
         {
             var x = e.X;
             var y = e.Y;
-
-            Console.WriteLine("this is X: " + x);
-            Console.WriteLine("this is Y: " + y);
         }
 
         private void GameWindow_KeyPressed(object sender, KeyEventArgs e)
@@ -90,7 +94,7 @@ namespace Game.Graphics
 
         private void GameWindow_Closed(object sender, EventArgs e)
         {
-            StateSystem.GameState = States.Closed;
+            StateSystem.TryClose();
         }
 
         // Method to process inputs from keyboard
@@ -115,55 +119,39 @@ namespace Game.Graphics
 
         // Method to process the inputs from the joystick
         private void ProcessJoyInputs(object sender, JoystickMoveEventArgs e){
-
-            float moveX = 0.0f, moveY = 0.0f;
-
-
-            if (!IgnoreInput(e.Position))
+            if (e.Axis == Joystick.Axis.X)
             {
-                // Testing purposes
-                //Console.WriteLine($"{e.ToString()}");
-                if (e.Axis == Joystick.Axis.X)
+                if (e.Position < -bound) // Move to the left
                 {
-                    if (e.Position < -25.0f) // Move to the left
-                    {
-                        Console.WriteLine("Move Left");
-                        moveX -= speed;
-                    }
-
-                    if (e.Position > 25.0f) // Move to the right
-                    {
-                        Console.WriteLine("Move Right");
-                        // Face right
-                        moveX += speed;
-                    }
+                    moveX = -speed;
                 }
-                if (e.Axis == Joystick.Axis.Y)
+
+                else if (e.Position > bound) // Move to the right
                 {
-                    if (e.Position < -25.0f)
-                    { // Move up
-                        Console.WriteLine("Move Up");
-                        // Face up
-                        moveY -= speed;
-                    }
-                    if (e.Position > 25.0f)
-                    { // Move down
-                        Console.WriteLine("Move Down");
-                        // Face down
-                        moveY += speed;
-                    }
+                    // Face right
+                    moveX = speed;
+                }
+                else{
+                    moveX = 0.0f;
+                }
+            }
+            if (e.Axis == Joystick.Axis.Y)
+            {
+                if (e.Position < -bound)
+                { // Move up
+                    // Face up
+                    moveY = -speed;
+                }
+                else if (e.Position > bound)
+                { // Move down
+                    // Face down
+                    moveY = speed;
+                }
+                else{
+                    moveY = 0.0f;
                 }
             }
             girl.setVelocity(moveX, moveY);
-            
-        }
-
-
-        // Helper function to ignore inputs if the value is too low.
-        private bool IgnoreInput(float value){
-            
-            return Math.Abs(value) < 20.0f;
-
         }
     }
 }
