@@ -1,5 +1,6 @@
 ﻿using SFML.Graphics;
 using SFML.System;
+using Game.Models.Enviroment;
 using System.Collections.Generic;
 
 namespace Game.Graphics
@@ -10,10 +11,10 @@ namespace Game.Graphics
         private SurfaceManager _surfaces;
         private Camera _camera;
 
-        public GraphicsSystem()
+        public GraphicsSystem(Map map)
         {
             this._camera = new Camera();
-            this._context = new GameWindow();
+            this._context = new GameWindow(map);
             this._surfaces = new SurfaceManager();
 
             this._context.SetView(this._camera);
