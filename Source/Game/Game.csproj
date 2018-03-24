@@ -55,9 +55,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-	<Compile Include="Models\Inventory.cs" />
-	<Compile Include="Models\Item.cs" />
-	<Compile Include="Models\LittleGirl.cs" />
+    <Compile Include="Models\Inventory.cs" />
+    <Compile Include="Models\Item.cs" />
+    <Compile Include="Models\LittleGirl.cs" />
     <Compile Include="Graphics\GameWindow.cs" />
     <Compile Include="Graphics\GraphicsSystem.cs" />
     <Compile Include="Program.cs" />
@@ -68,8 +68,6 @@
   <ItemGroup>
     <None Include="app.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="NewFolder1\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
