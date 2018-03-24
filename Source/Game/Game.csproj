@@ -35,6 +35,9 @@
   <PropertyGroup>
     <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Mac|AnyCPU'">
+    <OutputPath>bin\Mac\</OutputPath>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="sfmlnet-audio-2">
       <HintPath>..\SFML\lib\sfmlnet-audio-2.dll</HintPath>
@@ -86,23 +89,11 @@
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PreBuildEvent>echo "Deleting any existing extlibs for SFML"
-del "csfml-audio-2.dll"
-del "csfml-graphics-2.dll"
-del "csfml-system-2.dll"
-del "csfml-window-2.dll"
-del "libsndfile-1.dll"
-del "openal32.dll"
-del "OpenTK.Compatibility.dll"
-del "OpenTK.dll"
-rd "Graphics\"</PreBuildEvent>
+    <PreBuildEvent>
+    </PreBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
-    <PostBuildEvent>echo "Copying extlibs for SFML"
-xcopy /Y "$(SolutionDir)SFML\extlibs\*.dll"
-
-echo "Copying graphics"
-mkdir "$(TargetDir)Graphics\"
-xcopy "$(SolutionDir)Graphics\*" "$(TargetDir)Graphics\" /s /i /y</PostBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
   </PropertyGroup>
 </Project>
