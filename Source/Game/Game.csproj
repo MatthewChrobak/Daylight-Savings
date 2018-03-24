@@ -55,9 +55,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Models\Inventory.cs" />
-    <Compile Include="Models\Item.cs" />
-    <Compile Include="Models\LittleGirl.cs" />
     <Compile Include="Graphics\Camera.cs" />
     <Compile Include="Graphics\DrawableComponent.cs" />
     <Compile Include="Graphics\GameWindow.cs" />
@@ -69,6 +66,7 @@
     <Compile Include="Models\Inventory.cs" />
     <Compile Include="Models\Item.cs" />
     <Compile Include="Models\LittleGirl.cs" />
+    <Compile Include="Models\Monster.cs" />
     <Compile Include="Models\Observable.cs" />
     <Compile Include="Models\Observer.cs" />
     <Compile Include="Models\Position.cs" />
