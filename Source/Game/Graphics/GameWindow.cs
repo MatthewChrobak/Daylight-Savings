@@ -57,9 +57,11 @@ namespace Game.Graphics
             {
                 Console.WriteLine("Up is pressed");
                 this.girl.girlDirection = Direction.UP;
-                if(!((this.girl.Y-25) <= 0)) {
-                    this.girl.Y -= 25;
+                if(((this.girl.Y-25) <= 0)) {
+                    this.girl.Y = 0;
                 }
+                else
+                    this.girl.Y -= 25;
                 Console.WriteLine(this.girl.Y);
                
             }
@@ -76,9 +78,11 @@ namespace Game.Graphics
             {
                 Console.WriteLine("Left is pressed");
                 this.girl.girlDirection = Direction.LEFT;
-                if(!((this.girl.X-25) <= 0)) {
-                    this.girl.X -= 25;
+                if (((this.girl.X - 25) <= 0)) {
+                    this.girl.X = 0;
                 }
+                else
+                    this.girl.X -= 25;
                 Console.WriteLine(this.girl.X);
             }
             else if (e.Code == Keyboard.Key.Right)
