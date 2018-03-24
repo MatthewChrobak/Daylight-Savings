@@ -1,4 +1,5 @@
 ﻿using SFML.Graphics;
+using System.Collections.Generic;
 
 namespace Game.Graphics
 {
@@ -19,14 +20,15 @@ namespace Game.Graphics
             this._surfaces.LoadTextures();
         }
 
-        public void Render()
+        public void RenderFrame(IEnumerable<DrawableComponent> components)
         {
             this._context.Clear(Color.Black);
             this._context.DispatchEvents();
 
-            var grass = this._surfaces.GetTextureByName("grass.png");
-            grass.Scale = new SFML.System.Vector2f(5000, 5000);
-            this._context.Draw(grass);
+            foreach (var component in components) {
+                var sprite = this._surfaces.GetSprite(component.TextureName);
+                this._context.Draw(sprite);
+            }
 
             this._context.Display();
         }

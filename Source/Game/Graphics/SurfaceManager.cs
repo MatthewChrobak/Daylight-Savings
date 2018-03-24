@@ -29,7 +29,7 @@ namespace Game.Graphics
             }
         }
 
-        public Sprite GetTextureByName(string textureName)
+        public Sprite GetSprite(string textureName)
         {
             if (!this._textures.ContainsKey(textureName)) {
                 Console.WriteLine($"Could not find the texture {textureName}");

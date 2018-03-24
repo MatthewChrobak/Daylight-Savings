@@ -9,7 +9,7 @@ namespace Game.Timing
         public void GameLoop()
         {
             // While the game is running.
-            while (StateSystem.GameState == States.Running) {
+            while (StateSystem.GameState != States.Closed) {
                 foreach (var @event in GameEvents) {
                     @event.Probe();
                 }
