@@ -83,16 +83,6 @@
     <None Include="app.config" />
   </ItemGroup>
   <ItemGroup />
-  <ItemGroup>
-    <Content Include="Libs\csfml-audio-2.dll" />
-    <Content Include="Libs\csfml-graphics-2.dll" />
-    <Content Include="Libs\csfml-system-2.dll" />
-    <Content Include="Libs\csfml-window-2.dll" />
-    <Content Include="Libs\libsndfile-1.dll" />
-    <Content Include="Libs\openal32.dll" />
-    <Content Include="Libs\OpenTK.Compatibility.dll" />
-    <Content Include="Libs\OpenTK.dll" />
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PreBuildEvent>echo "Deleting any existing extlibs for SFML"
