@@ -9,10 +9,11 @@ namespace Game.Graphics
 {
     public class GameWindow : RenderWindow
     {
-        private float bound = 30.0f;
+        private float bound = 15.0f;
         private LittleGirl girl;
 
-        private float speed = 1.0f;
+        private float speed = 2.0f;
+
         private float moveX;
         private float moveY;
 
@@ -107,15 +108,8 @@ namespace Game.Graphics
         private void ProcessJoyInputs(object sender, JoystickMoveEventArgs e){
             if (e.Axis == Joystick.Axis.X)
             {
-                if (e.Position < -bound) // Move to the left
-                {
-                    moveX = -speed;
-                }
-
-                else if (e.Position > bound) // Move to the right
-                {
-                    // Face right
-                    moveX = speed;
+                if(Math.Abs(e.Position) > bound){
+                    moveX = speed * (e.Position / 100);
                 }
                 else{
                     moveX = 0.0f;
@@ -123,15 +117,9 @@ namespace Game.Graphics
             }
             if (e.Axis == Joystick.Axis.Y)
             {
-                if (e.Position < -bound)
-                { // Move up
-                    // Face up
-                    moveY = -speed;
-                }
-                else if (e.Position > bound)
-                { // Move down
-                    // Face down
-                    moveY = speed;
+                if (Math.Abs(e.Position) > bound){
+                    moveY = speed * (e.Position / 100);
+
                 }
                 else{
                     moveY = 0.0f;
