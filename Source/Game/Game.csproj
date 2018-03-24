@@ -64,6 +64,7 @@
     <Compile Include="Graphics\GraphicsSystem.cs" />
     <Compile Include="Graphics\IDrawable.cs" />
     <Compile Include="Graphics\SurfaceManager.cs" />
+    <Compile Include="Models\Directions.cs" />
     <Compile Include="Models\Enviroment\Map.cs" />
     <Compile Include="Models\Enviroment\Tile.cs" />
     <Compile Include="Models\Inventory.cs" />
