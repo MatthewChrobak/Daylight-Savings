@@ -35,6 +35,9 @@
   <PropertyGroup>
     <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Mac|AnyCPU'">
+    <OutputPath>bin\Mac\</OutputPath>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="sfmlnet-audio-2">
       <HintPath>..\SFML\lib\sfmlnet-audio-2.dll</HintPath>
@@ -90,11 +93,7 @@
     </PreBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
-    <PostBuildEvent>echo "Copying extlibs for SFML"
-xcopy /D "$(SolutionDir)SFML\extlibs\*.dll"
-
-echo "Copying graphics"
-mkdir "$(TargetDir)Graphics\"
-xcopy "$(SolutionDir)Graphics\*" "$(TargetDir)Graphics\" /s /i /y</PostBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
   </PropertyGroup>
 </Project>
