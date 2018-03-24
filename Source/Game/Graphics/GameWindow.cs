@@ -48,9 +48,6 @@ namespace Game.Graphics
         {
             var x = e.X;
             var y = e.Y;
-
-            Console.WriteLine("this is X: " + x);
-            Console.WriteLine("this is Y: " + y);
         }
 
         private void GameWindow_KeyPressed(object sender, KeyEventArgs e)
@@ -112,13 +109,11 @@ namespace Game.Graphics
             {
                 if (e.Position < -bound) // Move to the left
                 {
-                    Console.WriteLine("Move Left");
                     moveX = -speed;
                 }
 
                 else if (e.Position > bound) // Move to the right
                 {
-                    Console.WriteLine("Move Right");
                     // Face right
                     moveX = speed;
                 }
@@ -130,13 +125,11 @@ namespace Game.Graphics
             {
                 if (e.Position < -bound)
                 { // Move up
-                    Console.WriteLine("Move Up");
                     // Face up
                     moveY = -speed;
                 }
                 else if (e.Position > bound)
                 { // Move down
-                    Console.WriteLine("Move Down");
                     // Face down
                     moveY = speed;
                 }

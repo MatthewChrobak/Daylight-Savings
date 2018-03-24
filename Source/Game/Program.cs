@@ -7,22 +7,21 @@ namespace Game
 {
     public static class Program
     {
-        public static Map Map { get; set; }
         public static UISystem UI { get; set; } = new UISystem();
 
         private static void Main(string[] args)
         {
-            Map = new Map();
-            var graphics = new GraphicsSystem(Map);
+            Map map = new Map();
+            var graphics = new GraphicsSystem(map);
             var events = new EventSystem();
 
             
-            events.GameEvents.Add(new Event(() => Map.Girl.Move(), 10));
+            events.GameEvents.Add(new Event(() => map.Girl.Move(), 10));
             events.GameEvents.Add(new Event(() => {
                 graphics.BeginRenderFrame();
 
                 if (StateSystem.GameState == States.InGame) {
-                    graphics.RenderToFrame(Map.GetDrawableComponents());
+                    graphics.RenderToFrame(map.GetDrawableComponents());
                 }
 
                 graphics.RenderToFrame(UI.GetDrawableComponents());
