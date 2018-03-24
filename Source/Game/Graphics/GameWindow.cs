@@ -48,29 +48,43 @@ namespace Game.Graphics
 
         private void GameWindow_KeyPressed(object sender, KeyEventArgs e)
         {
+
             if(e.Code == Keyboard.Key.Up)
             {
                 Console.WriteLine("Up is pressed");
                 this.girl.girlDirection = Direction.UP;
-                this.girl.Y -= 25;
+                if(!((this.girl.Y-25) <= 0)) {
+                    this.girl.Y -= 25;
+                }
+                Console.WriteLine(this.girl.Y);
+               
             }
             else if (e.Code == Keyboard.Key.Down)
             {
                 Console.WriteLine("Down is pressed");
                 this.girl.girlDirection = Direction.DOWN;
-                this.girl.Y += 25;
+                if (!((this.girl.Y + 25) >= Map.MAX_Y*Map.TILE_SIZE)) {
+                    this.girl.Y += 25;
+                }
+                Console.WriteLine(this.girl.Y);
             }
             else if (e.Code == Keyboard.Key.Left)
             {
                 Console.WriteLine("Left is pressed");
                 this.girl.girlDirection = Direction.LEFT;
-                this.girl.X -= 25;
+                if(!((this.girl.X-25) <= 0)) {
+                    this.girl.X -= 25;
+                }
+                Console.WriteLine(this.girl.X);
             }
             else if (e.Code == Keyboard.Key.Right)
             {
                 Console.WriteLine("Right is pressed");
                 this.girl.girlDirection = Direction.RIGHT;
-                this.girl.X += 25;
+                if (!((this.girl.X + 25) >= Map.MAX_X*Map.TILE_SIZE)) {
+                    this.girl.X += 25;
+                }
+                Console.WriteLine(this.girl.X);
             } 
         }
 
