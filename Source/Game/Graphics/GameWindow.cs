@@ -1,4 +1,5 @@
 ﻿using System;
+using Game.Timing;
 using SFML.Graphics;
 using SFML.Window;
 
@@ -13,7 +14,7 @@ namespace Game.Graphics
 
         private void GameWindow_Closed(object sender, EventArgs e)
         {
-
+            StateSystem.GameState = States.Closed;
         }
     }
 }
