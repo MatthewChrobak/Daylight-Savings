@@ -6,8 +6,8 @@ namespace Game.Models.Enviroment
     public class Map : IDrawable
     {
         public Tile[,] Tiles;
-        public const int MAX_X = 10;
-        public const int MAX_Y = 10;
+        public const int MAX_X = 100;
+        public const int MAX_Y = 100;
         public const int TILE_SIZE = 16;
 
         public LittleGirl Girl { get; set; }
@@ -32,15 +32,11 @@ namespace Game.Models.Enviroment
                     foreach (var component in this.Tiles[x, y].GetDrawableComponents()) {
                         yield return component;
                     }
-
-                    if (this.Girl.X >= x * TILE_SIZE && this.Girl.X <= (x + 1) * TILE_SIZE) {
-                        if (this.Girl.Y >= y * TILE_SIZE && this.Girl.Y <= (y + 1) * TILE_SIZE) {
-                            foreach (var component in this.Girl.GetDrawableComponents()) {
-                                yield return component;
-                            }
-                        }
-                    }
                 }
+            }
+
+            foreach (var component in this.Girl.GetDrawableComponents()) {
+                yield return component;
             }
         }
     }

@@ -1,9 +1,9 @@
-﻿using System;
-using Game.Timing;
-using Game.Models;
+﻿using Game.Models;
 using Game.Models.Enviroment;
+using Game.Timing;
 using SFML.Graphics;
 using SFML.Window;
+using System;
 
 namespace Game.Graphics
 {
@@ -13,8 +13,10 @@ namespace Game.Graphics
         private LittleGirl girl;
 
         private float speed = 2.0f;
+
         private float moveX;
         private float moveY;
+
 
         public GameWindow(Map map) : base(new VideoMode(960, 640), "Test")
         {
@@ -24,9 +26,16 @@ namespace Game.Graphics
             this.JoystickMoved += this.ProcessJoyInputs;
             this.KeyPressed += GameWindow_KeyPressed;
             this.MouseMoved += GameWindow_MouseMoved;
+            this.MouseButtonPressed += this.GameWindow_MouseButtonPressed1;
             this.MouseButtonPressed += GameWindow_MouseButtonPressed;
 
+            //this is the girl from MAP
             this.girl = map.Girl;
+        }
+
+        private void GameWindow_MouseButtonPressed1(object sender, MouseButtonEventArgs e)
+        {
+            Program.UI.OnClick(e.X, e.Y);
         }
 
         private void GameWindow_MouseButtonPressed(object sender, MouseButtonEventArgs e)
@@ -40,9 +49,6 @@ namespace Game.Graphics
         {
             var x = e.X;
             var y = e.Y;
-
-            Console.WriteLine("this is X: " + x);
-            Console.WriteLine("this is Y: " + y);
         }
 
         private void GameWindow_KeyPressed(object sender, KeyEventArgs e)
@@ -50,24 +56,32 @@ namespace Game.Graphics
             if(e.Code == Keyboard.Key.Up)
             {
                 Console.WriteLine("Up is pressed");
+                this.girl.girlDirection = Direction.UP;
+                this.girl.Y -= 25;
             }
             else if (e.Code == Keyboard.Key.Down)
             {
                 Console.WriteLine("Down is pressed");
+                this.girl.girlDirection = Direction.DOWN;
+                this.girl.Y += 25;
             }
             else if (e.Code == Keyboard.Key.Left)
             {
                 Console.WriteLine("Left is pressed");
+                this.girl.girlDirection = Direction.LEFT;
+                this.girl.X -= 25;
             }
             else if (e.Code == Keyboard.Key.Right)
             {
                 Console.WriteLine("Right is pressed");
+                this.girl.girlDirection = Direction.RIGHT;
+                this.girl.X += 25;
             } 
         }
 
         private void GameWindow_Closed(object sender, EventArgs e)
         {
-            StateSystem.GameState = States.Closed;
+            StateSystem.TryClose();
         }
 
         // Method to process inputs from keyboard
@@ -94,7 +108,6 @@ namespace Game.Graphics
         private void ProcessJoyInputs(object sender, JoystickMoveEventArgs e){
             if (e.Axis == Joystick.Axis.X)
             {
-
                 if(Math.Abs(e.Position) > bound){
                     moveX = speed * (e.Position / 100);
                 }
@@ -104,9 +117,9 @@ namespace Game.Graphics
             }
             if (e.Axis == Joystick.Axis.Y)
             {
-
                 if (Math.Abs(e.Position) > bound){
                     moveY = speed * (e.Position / 100);
+
                 }
                 else{
                     moveY = 0.0f;

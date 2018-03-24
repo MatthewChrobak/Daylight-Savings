@@ -25,6 +25,7 @@ namespace Game.Graphics
             foreach (string file in Directory.GetFiles(GRAPHICS_FOLDER, "*.png", SearchOption.AllDirectories)) {
                 var fi = new FileInfo(file);
                 var texture = new Texture(file);
+                texture.Smooth = true;
                 this._textures.Add(fi.Name, texture);
             }
         }
@@ -33,7 +34,7 @@ namespace Game.Graphics
         {
             if (!this._textures.ContainsKey(textureName)) {
                 Console.WriteLine($"Could not find the texture {textureName}");
-                return new Sprite();
+                throw new Exception();
             }
             return new Sprite(this._textures[textureName]);
         }

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Game.Graphics;
+using SFML.Graphics;
 using SFML.System;
 
 namespace Game.Models
@@ -10,6 +11,7 @@ namespace Game.Models
         public int health { get; set; }
         public Inventory littleGirlInventory;
         public string SurfaceName { get; set; } = "girl.png";
+        public Direction girlDirection;
 
         // Constructor for the Little Girl, setting her position
         public LittleGirl(int x, int y) : base(x, y)
@@ -22,8 +24,9 @@ namespace Game.Models
             yield return new DrawableComponent()
             {
                 TextureName = this.SurfaceName,
-                RenderSize = new Vector2f(25, 50),
-                Position = new Vector2f(this.X - 12.5f, this.Y - 50)
+                RenderSize = new Vector2f(70, 104),
+                Position = new Vector2f(this.X, this.Y),
+                Rect = new IntRect(0, 0, 513, 738)
             };
         }
 
