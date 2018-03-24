@@ -1,5 +1,6 @@
 ﻿using SFML.Graphics;
 using SFML.System;
+using Game.Models.Enviroment;
 using System.Collections.Generic;
 using Game.Models.Enviroment;
 

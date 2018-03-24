@@ -13,6 +13,7 @@ namespace Game
             var events = new EventSystem();
 
             events.GameEvents.Add(new Event(() => graphics.RenderFrame(map.GetDrawableComponents()), 16));
+            events.GameEvents.Add(new Event(() => map.Girl.Move(), 10));
 
             events.GameLoop();
         }
