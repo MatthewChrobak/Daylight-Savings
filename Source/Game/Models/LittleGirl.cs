@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Game.Graphics;
+using SFML.Graphics;
 using SFML.System;
 
 namespace Game.Models
@@ -24,7 +25,8 @@ namespace Game.Models
             {
                 TextureName = this.SurfaceName,
                 RenderSize = new Vector2f(70, 104),
-                Position = new Vector2f(this.X - 70, this.Y - 104)
+                Position = new Vector2f(0, 0),
+                Rect = new IntRect(0, 0, 513, 738)
             };
         }
 

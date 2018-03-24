@@ -1,11 +1,9 @@
-﻿using System;
-using Game.Models;
+﻿using Game.Models;
 using Game.Models.Enviroment;
 using Game.Timing;
-using Game.Models;
-using Game.Models.Enviroment;
 using SFML.Graphics;
 using SFML.Window;
+using System;
 
 namespace Game.Graphics
 {

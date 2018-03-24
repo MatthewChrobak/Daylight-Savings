@@ -13,7 +13,7 @@ namespace Game.UserInterface
             foreach(var component in Components[(int)StateSystem.GameState]) {
                 if (y >= component.Y && y <= component.Y + component.Height) {
                     if (x >= component.X && x <= component.X + component.Width) {
-                        component.Click(x, y);
+                        component.Click?.Invoke(x, y);
                     }
                 }
             }
@@ -22,7 +22,7 @@ namespace Game.UserInterface
         public void OnControllerButton(string button)
         {
             foreach (var component in Components[(int)StateSystem.GameState]) {
-                component.OnControllerButton(button);
+                component.OnControllerButton?.Invoke(button);
             }
         }
 
@@ -49,7 +49,15 @@ namespace Game.UserInterface
                 Width = 960,
                 X = 0,
                 Y = 0,
-                SurfaceName = "background.png",
+                SurfaceName = "background.png"
+            });
+            mainmenu.Add(new Button() {
+                Height = 50,
+                Width = 100,
+                X = 100, 
+                Y = 300,
+                ButtonText = "Play game",
+                SurfaceName = "shadowbox.png",
                 Click = (x, y) => StateSystem.GameState = States.InGame
             });
 
