@@ -8,6 +8,7 @@ namespace Game.Models.Enviroment
         public Tile[,] Tiles;
         public const int MAX_X = 10;
         public const int MAX_Y = 10;
+        public const int TILE_SIZE = 16;
 
         public Map()
         {
@@ -15,7 +16,7 @@ namespace Game.Models.Enviroment
 
             for (int x = 0; x < MAX_X; x++) {
                 for (int y = 0; y < MAX_Y; y++) {
-                    this.Tiles[x, y] = new Tile();
+                    this.Tiles[x, y] = new Tile(x * TILE_SIZE, y * TILE_SIZE);
                 }
             }
         }

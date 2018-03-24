@@ -27,6 +27,7 @@ namespace Game.Graphics
 
             foreach (var component in components) {
                 var sprite = this._surfaces.GetSprite(component.TextureName);
+                sprite.Position = component.Position;
                 this._context.Draw(sprite);
             }
 

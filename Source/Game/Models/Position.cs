@@ -2,15 +2,18 @@
 {
     public abstract class Position : Observable
     {
+        private float _x;
+        private float _y;
+
         public float X
         {
             get
             {
-                return this.X;
+                return this._x;
             }
             set
             {
-                this.X = value;
+                this._x = value;
                 this.NotifyAll();
             }
         }
@@ -19,11 +22,11 @@
 
             get
             {
-                return this.Y;
+                return this._y;
             }
             set
             {
-                this.Y = value;
+                this._y = value;
                 this.NotifyAll();
             }
         }
