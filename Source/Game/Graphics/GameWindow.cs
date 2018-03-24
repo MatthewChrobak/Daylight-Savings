@@ -1,4 +1,6 @@
 ﻿using System;
+using Game.Models;
+using Game.Models.Enviroment;
 using Game.Timing;
 using SFML.Graphics;
 using SFML.Window;
@@ -7,7 +9,9 @@ namespace Game.Graphics
 {
     public class GameWindow : RenderWindow
     {
-        public GameWindow() : base(new VideoMode(960, 640), "Test")
+        private LittleGirl girl;
+
+        public GameWindow(Map map) : base(new VideoMode(960, 640), "Test")
         {
             this.Closed += this.GameWindow_Closed;
             this.KeyPressed += this.ProcessKeyInputs;
@@ -16,6 +20,9 @@ namespace Game.Graphics
             this.KeyPressed += GameWindow_KeyPressed;
             this.MouseMoved += GameWindow_MouseMoved;
             this.MouseButtonPressed += GameWindow_MouseButtonPressed;
+
+            //This a girl from MAP
+            this.girl = map.Girl;
         }
 
         private void GameWindow_MouseButtonPressed(object sender, MouseButtonEventArgs e)
@@ -39,18 +46,26 @@ namespace Game.Graphics
             if(e.Code == Keyboard.Key.Up)
             {
                 Console.WriteLine("Up is pressed");
+                this.girl.girlDirection = Direction.UP;
+                this.girl.Y -= 25;
             }
             else if (e.Code == Keyboard.Key.Down)
             {
                 Console.WriteLine("Down is pressed");
+                this.girl.girlDirection = Direction.DOWN;
+                this.girl.Y += 25;
             }
             else if (e.Code == Keyboard.Key.Left)
             {
                 Console.WriteLine("Left is pressed");
+                this.girl.girlDirection = Direction.LEFT;
+                this.girl.X -= 25;
             }
             else if (e.Code == Keyboard.Key.Right)
             {
                 Console.WriteLine("Right is pressed");
+                this.girl.girlDirection = Direction.RIGHT;
+                this.girl.X += 25;
             } 
         }
 

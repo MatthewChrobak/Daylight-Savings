@@ -9,6 +9,7 @@ namespace Game.Models
         public int health { get; set; }
         public Inventory littleGirlInventory;
         public string SurfaceName { get; set; } = "girl.png";
+        public Direction girlDirection;
 
         // Constructor for the Little Girl, setting her position
         public LittleGirl(int x, int y) : base(x, y)

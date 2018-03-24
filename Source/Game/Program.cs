@@ -9,7 +9,7 @@ namespace Game
         static void Main(string[] args)
         {
             var map = new Map();
-            var graphics = new GraphicsSystem();
+            var graphics = new GraphicsSystem(map);
             var events = new EventSystem();
 
             events.GameEvents.Add(new Event(() => graphics.RenderFrame(map.GetDrawableComponents()), 16));
