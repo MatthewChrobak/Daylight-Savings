@@ -6,12 +6,9 @@ namespace Game.Models
 {
     public class LittleGirl : Position, IDrawable
     {
-        // Direction the little girl is facing
-        enum direction
-        {
-            LEFT, RIGHT, UP, DOWN
-        };
-
+        public int health { get; set; }
+        public Inventory littleGirlInventory;
+        public string SurfaceName { get; set; } = "girl.png";
 
         // Constructor for the Little Girl, setting her position
         public LittleGirl(int x, int y) : base(x, y)
@@ -19,25 +16,14 @@ namespace Game.Models
 
         }
 
-
-        public int health { get; set; }
-        public Inventory littleGirlInventory;
-
-        //public string SurfaceName { get; set; } = "grass.png";
-
         public IEnumerable<DrawableComponent> GetDrawableComponents()
         {
             yield return new DrawableComponent()
             {
                 TextureName = this.SurfaceName,
-                RenderSize = new Vector2f(16, 16),
-                Position = new Vector2f(this.X, this.Y)
+                RenderSize = new Vector2f(25, 50),
+                Position = new Vector2f(this.X - 12.5f, this.Y - 50)
             };
-        }
-
-        IEnumerable<DrawableComponent> IDrawable.GetDrawableComponents()
-        {
-            throw new System.NotImplementedException();
         }
     }
 }

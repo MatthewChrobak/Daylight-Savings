@@ -8,13 +8,13 @@
     <OutputType>Exe</OutputType>
     <RootNamespace>Game</RootNamespace>
     <AssemblyName>Game</AssemblyName>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
+    <PlatformTarget>x86</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -31,6 +31,9 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="sfmlnet-audio-2">
@@ -61,11 +64,13 @@
     <Compile Include="Graphics\GraphicsSystem.cs" />
     <Compile Include="Graphics\IDrawable.cs" />
     <Compile Include="Graphics\SurfaceManager.cs" />
+    <Compile Include="Models\Directions.cs" />
     <Compile Include="Models\Enviroment\Map.cs" />
     <Compile Include="Models\Enviroment\Tile.cs" />
     <Compile Include="Models\Inventory.cs" />
     <Compile Include="Models\Item.cs" />
     <Compile Include="Models\LittleGirl.cs" />
+    <Compile Include="Models\Monster.cs" />
     <Compile Include="Models\Observable.cs" />
     <Compile Include="Models\Observer.cs" />
     <Compile Include="Models\Position.cs" />
@@ -80,4 +85,16 @@
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>
+    </PreBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PostBuildEvent>echo "Copying extlibs for SFML"
+xcopy /D "$(SolutionDir)SFML\extlibs\*.dll"
+
+echo "Copying graphics"
+mkdir "$(TargetDir)Graphics\"
+xcopy "$(SolutionDir)Graphics\*" "$(TargetDir)Graphics\" /s /i /y</PostBuildEvent>
+  </PropertyGroup>
 </Project>
