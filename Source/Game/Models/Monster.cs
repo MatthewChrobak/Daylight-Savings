@@ -36,6 +36,7 @@ namespace Game.Models
                 if ((Game.Program.map.smushy[i].X + range) >= x && x >= (Game.Program.map.smushy[i].X - range)
                     && (Game.Program.map.smushy[i].Y + range) >= y && y >= (Game.Program.map.smushy[i].Y - range)) {
                     Game.Program.map.Girl.health -= (float)0.01;
+                    Program.map.Girl.flagForHitCounter = 1;
                 }
             }
         }

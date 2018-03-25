@@ -5,7 +5,6 @@ using SFML.System;
 using Game.Models.Enviroment;
 using System;
 using Game.Sounds;
-using Game.Models;
 
 namespace Game.Models
 {
@@ -21,7 +20,7 @@ namespace Game.Models
 
         public int animStep = 0;
         public bool halfStep = false;
-        private int flagForHitCounter = 0;
+        public int flagForHitCounter = 0;
 
         // Constructor for the Little Girl, setting her position
         public LittleGirl(int x, int y) : base(x, y)
@@ -36,7 +35,7 @@ namespace Game.Models
                 TextureName = this.SurfaceName,
                 RenderSize = new Vector2f(70, 104),
                 Position = new Vector2f(this.X - 35, this.Y - 100),
-                Rect = new IntRect(513 * (int)girlDirection, 738 * animStep, 513, 738)
+                Rect = new IntRect(513 * (int)girlDirection, 800 * animStep, 513, 800)
             };
 
             if (this.flagForHitCounter > 0) {
@@ -65,9 +64,7 @@ namespace Game.Models
 
         public void Move()
         {
-
-            //Mob Dmg
-            foreach (var smushy in Game.Program.map.smushy) {
+            foreach (var smushy in Program.map.smushy) {
                 smushy.SmushyDamage(this.X, this.Y);
             }
 
@@ -94,7 +91,7 @@ namespace Game.Models
 
             this.girlDirection = Direction.DOWN;
 
-            if (Math.Abs(velocity.Y) < Math.Abs(velocity.X))
+            if (Math.Abs(velocity.Y) > Math.Abs(velocity.X))
             {
                 if (velocity.Y > 0)
                 {
@@ -102,11 +99,7 @@ namespace Game.Models
                 }
                 else if (velocity.Y < 0)
                 {
-
-                }
-                else
-                {
-
+                    girlDirection = Direction.UP;
                 }
             }
 
@@ -138,8 +131,6 @@ namespace Game.Models
 
             this.X = nextX;
             this.Y = nextY;
-
-           
         }
 
         public void HealthLossFromFog()
@@ -152,7 +143,6 @@ namespace Game.Models
                 if (Program.map.FogEntities[i].X <= (Program.map.Girl.X + 125) && Program.map.FogEntities[i].X >= (Program.map.Girl.X - 125) 
                     && Program.map.FogEntities[i].Y <= (Program.map.Girl.Y + 62) && Program.map.FogEntities[i].Y >= (Program.map.Girl.Y - 62))
                 {
-                    Console.WriteLine("Hit " + Program.map.Girl.flagForHitCounter);
                     Program.map.Girl.health -= 1;
                     Program.map.Girl.flagForHitCounter = 1;
                     return;

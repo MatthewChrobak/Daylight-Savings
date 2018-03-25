@@ -88,6 +88,7 @@
     <Compile Include="Timing\StateSystem.cs" />
     <Compile Include="UserInterface\Button.cs" />
     <Compile Include="UserInterface\HealthBar.cs" />
+    <Compile Include="UserInterface\LightDisplay.cs" />
     <Compile Include="UserInterface\UIComponent.cs" />
     <Compile Include="UserInterface\UISystem.cs" />
   </ItemGroup>
