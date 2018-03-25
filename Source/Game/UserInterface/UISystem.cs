@@ -6,6 +6,9 @@ namespace Game.UserInterface
 {
     public class UISystem : IDrawable
     {
+        public static float MouseX = 0;
+        public static float MouseY = 0;
+
         public List<UIComponent>[] Components = new List<UIComponent>[(int)States.Closed + 1];
 
         public void OnClick(float x, float y)
@@ -24,6 +27,12 @@ namespace Game.UserInterface
             foreach (var component in Components[(int)StateSystem.GameState]) {
                 component.OnControllerButton?.Invoke(button);
             }
+        }
+
+        public void OnMouseMove(float x, float y)
+        {
+            MouseX = x;
+            MouseY = y;
         }
 
         public IEnumerable<DrawableComponent> GetDrawableComponents()
@@ -58,7 +67,12 @@ namespace Game.UserInterface
                 Y = 300,
                 ButtonText = "Play game",
                 SurfaceName = "shadowbox.png",
-                Click = (x, y) => StateSystem.GameState = States.InGame
+                Click = (x, y) => StateSystem.GameState = States.InGame,
+                OnControllerButton = (code) => {
+                    if (code == "7") {
+                        StateSystem.GameState = States.InGame;
+                    }
+                }
             });
 
             this.Components[(int)States.MainMenu] = mainmenu;
