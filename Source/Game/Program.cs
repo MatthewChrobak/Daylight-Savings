@@ -1,5 +1,6 @@
 ﻿using Game.Graphics;
 using Game.Models.Enviroment;
+using Game.Sounds;
 using Game.Timing;
 using Game.UserInterface;
 
@@ -27,6 +28,8 @@ namespace Game
                 graphics.RenderToFrame(UI.GetDrawableComponents());
                 graphics.EndRenderFrame();
             }, 16));
+            
+            MusicManager.addMusic("Theme.ogg", true);
 
             events.GameLoop();
         }

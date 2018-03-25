@@ -4,6 +4,7 @@ using Game.Timing;
 using SFML.Graphics;
 using SFML.Window;
 using System;
+using Game.Sounds;
 
 namespace Game.Graphics
 {
@@ -64,13 +65,12 @@ namespace Game.Graphics
                 else
                     this.girl.Y -= 25;
                 Console.WriteLine(this.girl.Y);
-               
             }
             else if (e.Code == Keyboard.Key.Down)
             {
                 Console.WriteLine("Down is pressed");
                 this.girl.girlDirection = Direction.DOWN;
-                if (!((this.girl.Y + 25) >= Map.MAX_Y*Map.TILE_SIZE)) {
+                if (!((this.girl.Y + 25) >= Map.MAX_Y*Tile.TILE_SIZE)) {
                     this.girl.Y += 25;
                 }
                 Console.WriteLine(this.girl.Y);
@@ -90,11 +90,13 @@ namespace Game.Graphics
             {
                 Console.WriteLine("Right is pressed");
                 this.girl.girlDirection = Direction.RIGHT;
-                if (!((this.girl.X + 25) >= Map.MAX_X*Map.TILE_SIZE)) {
+                if (!((this.girl.X + 25) >= Map.MAX_X*Tile.TILE_SIZE)) {
                     this.girl.X += 25;
                 }
                 Console.WriteLine(this.girl.X);
-            } 
+            }
+
+            SoundManager.addMusic("footstep.ogg");
         }
 
         private void GameWindow_Closed(object sender, EventArgs e)
