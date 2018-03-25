@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using SFML.Graphics;
 using SFML.System;
+using Game.Models;
 
 namespace Game.UserInterface {
     class HealthBar:UIComponent, IDrawable {
@@ -20,7 +21,7 @@ namespace Game.UserInterface {
                 RenderSize = new Vector2f(this.Width, this.Height),
             };
 
-            var healthPercentage = Program.map.Girl.health / Game.Program.map.Girl.health;
+            var healthPercentage = Program.map.Girl.health / LittleGirl.MaxHealth;
 
             // Foreground
             yield return new DrawableComponent() {
