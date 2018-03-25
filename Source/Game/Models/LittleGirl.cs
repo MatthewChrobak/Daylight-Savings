@@ -80,11 +80,11 @@ namespace Game.Models
 
 
             //check max boundaries
-            if (this.Y + velocity.Y >= Map.MAX_Y * Tile.TILE_SIZE)
+            if (this.Y + velocity.Y >= Program.map.MAX_Y * Tile.TILE_SIZE)
             {
                 setVelocity(velocity.X, 0);
             }
-            if (this.X + velocity.X >= Map.MAX_X * Tile.TILE_SIZE)
+            if (this.X + velocity.X >= Program.map.MAX_X * Tile.TILE_SIZE)
             {
                 setVelocity(0, velocity.Y);
             }
@@ -133,6 +133,13 @@ namespace Game.Models
             this.Y = nextY;
         }
 
+        public void BringBackToLife_Tutorial()
+        {
+            if (Program.map.Girl.health < 0) {
+                Program.map.Girl.health = LittleGirl.MaxHealth;
+            }
+        }
+
         public void HealthLossFromFog()
         {
             if (Program.map.Girl.flagForHitCounter != 0) {
@@ -145,7 +152,6 @@ namespace Game.Models
                 {
                     Program.map.Girl.health -= 1;
                     Program.map.Girl.flagForHitCounter = 1;
-                    SoundManager.addSound("hit.ogg");
                     return;
                 }
             }
@@ -209,7 +215,6 @@ namespace Game.Models
                     {
                         Program.map.Girl.health += 1;
                         Program.map.potion.RemoveAt(i);
-                        SoundManager.addSound("potion.ogg");
                     }
                 }
             }

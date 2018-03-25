@@ -2,6 +2,7 @@
 using SFML.System;
 using System.Collections.Generic;
 using Game.Models;
+using System;
 
 namespace Game.Graphics
 {
@@ -28,6 +29,11 @@ namespace Game.Graphics
         public void SetCameraFocus(Position pos)
         {
             pos.Attach(_camera);
+        }
+
+        public void RemoveCameraFocus()
+        {
+            Program.map.Girl.Detatch(this._camera);
         }
 
         public void BeginRenderFrame()

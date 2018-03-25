@@ -18,6 +18,12 @@
             Program.NewGame();
             GameState = States.InGame;
         }
+
+        public static void NewTutorial()
+        {
+            Program.NewTutorial();
+            GameState = States.InGame;
+        }
     }
 
     public enum States

@@ -73,6 +73,7 @@
     <Compile Include="Models\Entities\Tree.cs" />
     <Compile Include="Models\Enviroment\Map.cs" />
     <Compile Include="Models\Enviroment\Tile.cs" />
+    <Compile Include="Models\Enviroment\TutorialMap.cs" />
     <Compile Include="Models\Inventory.cs" />
     <Compile Include="Models\Item.cs" />
     <Compile Include="Models\LittleGirl.cs" />
