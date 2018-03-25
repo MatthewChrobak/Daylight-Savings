@@ -56,7 +56,7 @@ namespace Game.Models
             if(this.Y+velocity.Y >= Map.MAX_Y * Tile.TILE_SIZE) {
                 setVelocity(velocity.X, 0);
             }
-            if(this.X+velocity.X>= Map.MAX_X * Tile.TILE_SIZE) {
+                if(this.X+velocity.X>= Map.MAX_X * Tile.TILE_SIZE) {
                 setVelocity(0, velocity.Y);
             }
 
