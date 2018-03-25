@@ -14,7 +14,9 @@ namespace Game.Models
         public Inventory littleGirlInventory;
         public string SurfaceName { get; set; } = "girl.png";
         public Direction girlDirection;
+
         public int animStep = 0;
+        public bool halfStep = false;
 
         // Constructor for the Little Girl, setting her position
         public LittleGirl(int x, int y) : base(x, y)
@@ -61,12 +63,24 @@ namespace Game.Models
             this.X += velocity.X;
             this.Y += velocity.Y;
             Console.WriteLine("X position: " + this.X + " Y position: " + this.Y);
-
-
         }
 
         public void UpdateAnimation()
         {
+            if (this.velocity.X == 0 && this.velocity.Y == 0) {
+                this.animStep = 0;
+                return;
+            }
+            
+            if (Math.Abs(this.velocity.X) < 1.5f && Math.Abs(this.velocity.Y) < 1.5f) {
+                if (!this.halfStep) {
+                    this.halfStep = true;
+                    return;
+                } else {
+                    this.halfStep = false;
+                }
+            }
+
             this.animStep += 1;
             this.animStep %= 8;
         }
