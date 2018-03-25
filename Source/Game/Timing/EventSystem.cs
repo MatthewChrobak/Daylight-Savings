@@ -13,6 +13,7 @@ namespace Game.Timing
                 foreach (var @event in GameEvents) {
                     @event.Probe();
                 }
+                System.Threading.Thread.Yield();
             }
         }
     }

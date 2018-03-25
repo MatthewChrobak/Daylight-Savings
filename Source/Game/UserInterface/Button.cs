@@ -11,7 +11,8 @@ namespace Game.UserInterface
         {
             yield return new DrawableComponent() {
                 RenderText = ButtonText,
-                Position = new SFML.System.Vector2f(this.X, this.Y)
+                Position = new SFML.System.Vector2f(this.X, this.Y),
+                AbsolutePositioning = true
             };
 
             foreach (var component in base.GetDrawableComponents()) {

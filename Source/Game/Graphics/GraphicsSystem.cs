@@ -14,8 +14,8 @@ namespace Game.Graphics
 
         public GraphicsSystem(Map map)
         {
-            this._camera = new Camera();
             this._context = new GameWindow(map);
+            this._camera = new Camera(this._context);
             this._surfaces = new SurfaceManager();
 
             this._context.SetView(this._camera);
@@ -23,6 +23,9 @@ namespace Game.Graphics
             this._surfaces.LoadTextures();
 
             this._font = new Font("fonts/opensans.ttf");
+
+
+            map.Girl.Attach(_camera);
         }
 
         public void BeginRenderFrame()
@@ -47,7 +50,15 @@ namespace Game.Graphics
             var sprite = this._surfaces.GetSprite(component.TextureName);
 
             var pos = (Vector2f)component.Position;
-            sprite.Position = pos;
+
+            if (component.AbsolutePositioning) {
+                sprite.Position = new Vector2f(
+                    pos.X + this._camera.Center.X - (this._camera.Size.X / 2),
+                    pos.Y + this._camera.Center.Y - (this._camera.Size.Y / 2)
+                    );
+            } else {
+                sprite.Position = pos;
+            }
 
             if (component.Rect != null) {
                 var rect = (IntRect)component.Rect;
@@ -80,7 +91,15 @@ namespace Game.Graphics
             text.CharacterSize = component.CharacterSize;
 
             if (component.Position != null) {
-                text.Position = (Vector2f)component.Position;
+                var pos = (Vector2f)component.Position;
+                if (component.AbsolutePositioning) {
+                    text.Position = new Vector2f(
+                        pos.X + this._camera.Center.X - (this._camera.Size.X / 2),
+                        pos.Y + this._camera.Center.Y - (this._camera.Size.Y / 2)
+                        );
+                } else {
+                    text.Position = pos;
+                }
             }
 
             this._context.Draw(text);
