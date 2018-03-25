@@ -24,6 +24,9 @@ namespace Game.Models.Enviroment
         public int winningCondition = 15;
         public int currentLevel = 1;
 
+        public int Level = 0;
+        public int CloudsRemaining = 0;
+
 
         public List<Tree> Trees;
         public LittleGirl Girl { get; set; }
@@ -80,7 +83,7 @@ namespace Game.Models.Enviroment
             FogEntities = new List<Fog>();
 
             for (int i = 0; i < numStartFog; i++) {
-                FogEntities.Add(new Fog((MAX_X * Tile.TILE_SIZE) / 2, 0));
+                FogEntities.Add(new Fog((MAX_X*Tile.TILE_SIZE)/2, 0));
             }
 
             Trees = new List<Tree>();
@@ -143,7 +146,7 @@ namespace Game.Models.Enviroment
             Game.Program.map.potion.Add(new Potion(rnd.Next(1, MAX_X * Tile.TILE_SIZE), rnd.Next(1, MAX_Y * Tile.TILE_SIZE)));
         }
         public void CloudSpawning() {
-            Game.Program.map.FogEntities.Add(new Fog(rnd.Next(1, MAX_X * Tile.TILE_SIZE), rnd.Next(1, MAX_Y * Tile.TILE_SIZE)));
+            Game.Program.map.FogEntities.Add(new Fog((MAX_X * Tile.TILE_SIZE) / 2, 0));
         }
         public void LightSpawning() {
             Game.Program.map.light.Add(new Light(rnd.Next(1, MAX_X * Tile.TILE_SIZE), rnd.Next(1, MAX_Y * Tile.TILE_SIZE)));
