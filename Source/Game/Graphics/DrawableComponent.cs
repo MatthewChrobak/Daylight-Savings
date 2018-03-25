@@ -12,5 +12,7 @@ namespace Game.Graphics
 
         public string RenderText { get; set; } = null;
         public uint CharacterSize { get; set; } = 11;
+
+        public bool AbsolutePositioning { get; set; } = false;
     }
 }

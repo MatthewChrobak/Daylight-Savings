@@ -20,7 +20,8 @@ namespace Game.UserInterface
             yield return new DrawableComponent() {
                 Position = new SFML.System.Vector2f(X, Y),
                 TextureName = SurfaceName,
-                RenderSize = new SFML.System.Vector2f(Width, Height)
+                RenderSize = new SFML.System.Vector2f(Width, Height),
+                AbsolutePositioning = true
             };
         }
     }
