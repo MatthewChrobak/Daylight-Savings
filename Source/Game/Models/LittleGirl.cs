@@ -11,7 +11,7 @@ namespace Game.Models
     public class LittleGirl : Position, IDrawable
     {
         public Vector2f velocity { get; set; }
-        public int health { get; set; }
+        public float health { get; set; } = 5;
         public Inventory littleGirlInventory = new Inventory();
         public string SurfaceName { get; set; } = "girl.png";
         public Direction girlDirection;
@@ -69,9 +69,6 @@ namespace Game.Models
             this.X += velocity.X;
             this.Y += velocity.Y;
 
-
-
-
             this.girlDirection = Direction.DOWN;
 
             if (Math.Abs(velocity.Y) < Math.Abs(velocity.X)) {
@@ -92,6 +89,21 @@ namespace Game.Models
                 }
             }
         }
+
+        public void HealthLossFromFog()
+        {
+            for (int i = 0; i < Program.map.FogEntities.Count; i++)
+            {  
+                if (Program.map.FogEntities[i].X <= (Program.map.Girl.X + 125) && Program.map.FogEntities[i].X >= (Program.map.Girl.X - 125) && Program.map.FogEntities[i].Y <= (Program.map.Girl.Y + 62) && Program.map.FogEntities[i].Y >= (Program.map.Girl.Y - 62))
+                {
+                    Program.map.Girl.health -= 1;
+                    Console.Write(Program.map.Girl.health);
+                    return;
+                }
+            }
+            
+        }
+
         public void UpdateAnimation()
         {
             if (this.velocity.X == 0 && this.velocity.Y == 0) {
@@ -111,6 +123,10 @@ namespace Game.Models
             this.animStep += 1;
             this.animStep %= 8;
 
+            if (this.animStep % 4 == 1) {
+                SoundManager.addSound("footstep.ogg");
+            }
+
             this.itemSurroundingCheck();
         }
 
@@ -124,6 +140,7 @@ namespace Game.Models
                     && (Game.Program.map.light[i].Y + range) >= this.Y && this.Y >= (Game.Program.map.light[i].Y - range)) {
                     Program.map.Girl.littleGirlInventory.items.Add(new LightItem());
                     Program.map.light.RemoveAt(i);
+                    SoundManager.addSound("chime.ogg");
                 }
             }
                 /*

@@ -16,6 +16,7 @@ namespace Game.Models.Enviroment
 
         public LittleGirl Girl { get; set; }
         public List<Light> light;
+        public Smushy smushy { get; set; }
         Random rnd = new Random();
 
         public Map()
@@ -28,22 +29,27 @@ namespace Game.Models.Enviroment
             this.Tiles = new Tile[MAX_X, MAX_Y];
 
             this.light = new List<Light>();
-            for (int i = 0; i < 10; i++) {
+            for (int i = 0; i < 10; i++)
+            {
                 light.Add(new Light(rnd.Next(1, MAX_X * Tile.TILE_SIZE), rnd.Next(1, MAX_Y * Tile.TILE_SIZE)));
             }
             this.Girl = new LittleGirl(700, 700);
 
-            for (int x = 0; x < MAX_X; x++) {
-                for (int y = 0; y < MAX_Y; y++) {
+            this.smushy = new Smushy(100, 100);
+
+            for (int x = 0; x < MAX_X; x++)
+            {
+                for (int y = 0; y < MAX_Y; y++)
+                {
                     this.Tiles[x, y] = new Tile(x * Tile.TILE_SIZE, y * Tile.TILE_SIZE);
                 }
             }
 
             FogEntities = new List<Fog>();
-            for (int i = 0; i < 10; i++) {
+            for (int i = 0; i < 10; i++)
+            {
                 FogEntities.Add(new Fog(0, 0));
             }
-
         }
 
         public void UpdateFog()
@@ -51,48 +57,62 @@ namespace Game.Models.Enviroment
             //In case we're adding more items than just light lulz
             int positionOfLightItemInInventory = -1;
 
-            for(int i = 0; i < Program.map.Girl.littleGirlInventory.items.Count; i++)
+            for (int i = 0; i < Program.map.Girl.littleGirlInventory.items.Count; i++)
             {
-                if(Program.map.Girl.littleGirlInventory.items[i].GetType() == typeof(LightItem))
+                if (Program.map.Girl.littleGirlInventory.items[i].GetType() == typeof(LightItem))
                 {
                     positionOfLightItemInInventory = i;
                     break;
                 }
             }
-            
-            if (positionOfLightItemInInventory >= 0) { 
-                
-                for (int i = 0; i < Program.map.FogEntities.Count; i++)
+
+            for (int i = 0; i < Program.map.FogEntities.Count; i++)
+            {
+                if (Program.map.FogEntities[i].X <= (Program.map.Girl.X + 125) && Program.map.FogEntities[i].X >= (Program.map.Girl.X - 125) && Program.map.FogEntities[i].Y <= (Program.map.Girl.Y + 62) && Program.map.FogEntities[i].Y >= (Program.map.Girl.Y - 62))
                 {
-                    if (Program.map.FogEntities[i].X <= (Program.map.Girl.X + 125) && Program.map.FogEntities[i].X >= (Program.map.Girl.X - 125) && Program.map.FogEntities[i].Y <= (Program.map.Girl.Y + 62) && Program.map.FogEntities[i].Y >= (Program.map.Girl.Y - 62))
+                    if (positionOfLightItemInInventory >= 0)
                     {
                         Program.map.DeleteFog(i);
                         Program.map.Girl.littleGirlInventory.items.RemoveAt(positionOfLightItemInInventory);
                         positionOfLightItemInInventory = -1;
                         return;
                     }
-                }        
+               
+                }
             }
         }
-        
+
 
         public void UpdateFogPositions()
         {
-            foreach (var fog in this.FogEntities) {
+            foreach (var fog in this.FogEntities)
+            {
                 fog.UpdatePosition();
             }
         }
+
 
         public void DeleteFog(int FogToDelete)
         {
             FogEntities.RemoveAt(FogToDelete);
         }
+        public void UpdateSmushyPositions()
+        {
+            this.smushy.UpdatePosition();
+
+        }
 
         public void UpdateFogAnimations()
         {
-            foreach (var fog in this.FogEntities) {
+            foreach (var fog in this.FogEntities)
+            {
                 fog.UpdateAnim();
             }
+        }
+
+        public void UpdateSmushyAnimations()
+        {
+            this.smushy.UpdateAnimation();
         }
 
         public void UpdateGirlAnimations()
@@ -102,29 +122,41 @@ namespace Game.Models.Enviroment
 
         public IEnumerable<DrawableComponent> GetDrawableComponents()
         {
-            for (int y = 0; y < MAX_Y; y++) {
-                for (int x = 0; x < MAX_X; x++) {
-                    foreach (var component in this.Tiles[x, y].GetDrawableComponents()) {
+            for (int y = 0; y < MAX_Y; y++)
+            {
+                for (int x = 0; x < MAX_X; x++)
+                {
+                    foreach (var component in this.Tiles[x, y].GetDrawableComponents())
+                    {
                         yield return component;
                     }
                 }
             }
 
 
-            for (int i = 0; i < light.Count; i++) {
-                foreach (var component in light[i].GetDrawableComponents()) {
+            for (int i = 0; i < light.Count; i++)
+            {
+                foreach (var component in light[i].GetDrawableComponents())
+                {
                     yield return component;
                 }
             }
-            foreach (var component in this.Girl.GetDrawableComponents()) {
+            foreach (var component in this.Girl.GetDrawableComponents())
+            {
                 yield return component;
             }
 
 
-            foreach (var fog in this.FogEntities) {
-                foreach (var component in fog.GetDrawableComponents()) {
+            foreach (var fog in this.FogEntities)
+            {
+                foreach (var component in fog.GetDrawableComponents())
+                {
                     yield return component;
                 }
+            }
+            foreach (var component in this.smushy.GetDrawableComponents())
+            {
+                yield return component;
             }
         }
     }
