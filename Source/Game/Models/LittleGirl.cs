@@ -2,11 +2,13 @@
 using Game.Graphics;
 using SFML.Graphics;
 using SFML.System;
+using Game.Models.Collision;
 
 namespace Game.Models
 {
-    public class LittleGirl : Position, IDrawable
+    public class LittleGirl : Collider, IDrawable
     {
+        
         public Vector2f velocity { get; set; }
         public int health { get; set; }
         public Inventory littleGirlInventory;
@@ -14,7 +16,7 @@ namespace Game.Models
         public Direction girlDirection;
 
         // Constructor for the Little Girl, setting her position
-        public LittleGirl(int x, int y) : base(x, y)
+        public LittleGirl(Vector2f center, float radius) : base(center, radius)
         {
 
         }
