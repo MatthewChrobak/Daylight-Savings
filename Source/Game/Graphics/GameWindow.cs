@@ -18,7 +18,7 @@ namespace Game.Graphics
         private float moveY;
 
 
-        public GameWindow() : base(new VideoMode(960, 640), "Test")
+        public GameWindow() : base(new VideoMode(960, 640), "Daylight Savings")
         {
             this.Closed += this.GameWindow_Closed;
             this.KeyPressed += this.ProcessKeyInputs;
@@ -42,7 +42,7 @@ namespace Game.Graphics
 
         private void GameWindow_MouseButtonPressed1(object sender, MouseButtonEventArgs e)
         {
-            Program.UI.OnClick(e.X, e.Y);
+            //Program.UI.OnClick(e.X, e.Y);
         }
 
         private void GameWindow_MouseButtonPressed(object sender, MouseButtonEventArgs e)

@@ -20,7 +20,11 @@ namespace Game.Timing
                     Program.Graphics.BeginRenderFrame();
 
                     if (StateSystem.GameState == States.InGame) {
-                        Program.Graphics.RenderToFrame(Program.map.GetDrawableComponents());
+                        if (Program.map as TutorialMap != null) {
+                            Program.Graphics.RenderToFrame(((TutorialMap)Program.map).GetDrawableComponents());
+                        } else {
+                            Program.Graphics.RenderToFrame(Program.map.GetDrawableComponents());
+                        }
                     }
 
                     Program.Graphics.RenderToFrame(Program.UI.GetDrawableComponents());

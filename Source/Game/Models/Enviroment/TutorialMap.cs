@@ -1,6 +1,10 @@
-﻿namespace Game.Models.Enviroment
+﻿using Game.Graphics;
+using SFML.System;
+using System.Collections.Generic;
+
+namespace Game.Models.Enviroment
 {
-    public class TutorialMap : Map
+    public class TutorialMap : Map, IDrawable
     {
         public TutorialMap()
         {
@@ -43,6 +47,37 @@
             if (this.light.Count != 1) {
                 this.light.Add(new Light(3 * Tile.TILE_SIZE, 7.5f * Tile.TILE_SIZE));
             }
+        }
+
+        public new IEnumerable<DrawableComponent> GetDrawableComponents()
+        {
+            foreach (var component in base.GetDrawableComponents()) {
+                yield return component;
+            }
+
+            yield return new DrawableComponent() {
+                TextureName = "fogexpl.png",
+                Position = new Vector2f(-1 * Tile.TILE_SIZE, -2 * Tile.TILE_SIZE),
+                RenderSize = new Vector2f(150, 150)
+            };
+
+            yield return new DrawableComponent() {
+                TextureName = "potionsexpl.png",
+                Position = new Vector2f((MAX_X - 2)* Tile.TILE_SIZE, -2 * Tile.TILE_SIZE),
+                RenderSize = new Vector2f(150, 150)
+            };
+
+            yield return new DrawableComponent() {
+                TextureName = "lightexpl.png",
+                Position = new Vector2f(-1 * Tile.TILE_SIZE, (MAX_Y - 2) * Tile.TILE_SIZE),
+                RenderSize = new Vector2f(150, 150)
+            };
+
+            yield return new DrawableComponent() {
+                TextureName = "smushyexpl.png",
+                Position = new Vector2f((MAX_X - 2) * Tile.TILE_SIZE, (MAX_Y - 2) * Tile.TILE_SIZE),
+                RenderSize = new Vector2f(150, 150)
+            };
         }
     }
 }
