@@ -24,6 +24,7 @@ namespace Game.Graphics
             this.KeyPressed += this.ProcessKeyInputs;
             this.JoystickConnected += this.JoyConnected;
             this.JoystickMoved += this.ProcessJoyInputs;
+            this.JoystickButtonPressed += this.GameWindow_JoystickButtonPressed;
             this.KeyPressed += GameWindow_KeyPressed;
             this.MouseMoved += GameWindow_MouseMoved;
             this.MouseButtonPressed += this.GameWindow_MouseButtonPressed1;
@@ -31,6 +32,16 @@ namespace Game.Graphics
 
             //this is the girl from MAP
             this.girl = map.Girl;
+        }
+
+        private void GameWindow_JoystickButtonPressed(object sender, JoystickButtonEventArgs e)
+        {
+            Console.WriteLine(e.Button);
+            Program.UI.OnControllerButton(e.Button.ToString());
+
+            if (e.Button == 6) {
+                StateSystem.TryClose();
+            }
         }
 
         private void GameWindow_MouseButtonPressed1(object sender, MouseButtonEventArgs e)

@@ -1,11 +1,13 @@
 ﻿using System.Collections.Generic;
 using Game.Graphics;
 using Game.Models.Collision;
+using Game.Models.Entities;
 
 namespace Game.Models.Enviroment
 {
     public class Map : IDrawable
     {
+        public List<Fog> FogEntities = new List<Fog>();
         public Tile[,] Tiles;
         public const int MAX_X = 10;
         public const int MAX_Y = 10;
@@ -26,6 +28,24 @@ namespace Game.Models.Enviroment
                     this.Tiles[x, y] = new Tile(x * Tile.TILE_SIZE, y * Tile.TILE_SIZE);
                 }
             }
+
+            for (int i = 0; i < 10; i++) {
+                FogEntities.Add(new Fog(0, 0));
+            }
+        }
+
+        public void UpdateFogPositions()
+        {
+            foreach (var fog in this.FogEntities) {
+                fog.UpdatePosition();
+            }
+        }
+
+        public void UpdateFogAnim()
+        {
+            foreach (var fog in this.FogEntities) {
+                fog.UpdateAnim();
+            }
         }
 
         public IEnumerable<DrawableComponent> GetDrawableComponents()
@@ -40,6 +60,12 @@ namespace Game.Models.Enviroment
 
             foreach (var component in this.Girl.GetDrawableComponents()) {
                 yield return component;
+            }
+
+            foreach (var fog in this.FogEntities) {
+                foreach (var component in fog.GetDrawableComponents()) {
+                    yield return component;
+                }
             }
             foreach (var component in this.testCircle.GetDrawableComponents())
             {

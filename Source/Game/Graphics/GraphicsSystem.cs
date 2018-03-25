@@ -89,7 +89,7 @@ namespace Game.Graphics
         {
             var text = new Text(component.RenderText, this._font);
             text.CharacterSize = component.CharacterSize;
-
+            
             if (component.Position != null) {
                 var pos = (Vector2f)component.Position;
                 if (component.AbsolutePositioning) {
