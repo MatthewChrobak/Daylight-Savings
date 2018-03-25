@@ -9,21 +9,27 @@ namespace Game.Models.Enviroment
 {
     public class Map : IDrawable
     {
-        public List<Fog> FogEntities = new List<Fog>();
+        public List<Fog> FogEntities;
         public Tile[,] Tiles;
         public const int MAX_X = 30;
         public const int MAX_Y = 15;
-        public const int MAX_COIN = 10;
 
         public LittleGirl Girl { get; set; }
-        public Light[] light = new Light[MAX_COIN];
+        public List<Light> light;
         Random rnd = new Random();
 
         public Map()
         {
+            this.Reset();
+        }
+
+        public void Reset()
+        {
             this.Tiles = new Tile[MAX_X, MAX_Y];
-            for(int i = 0; i < light.Length; i++) {
-                light[i] = new Light(rnd.Next(1, MAX_X * Tile.TILE_SIZE), rnd.Next(1, MAX_Y * Tile.TILE_SIZE));
+
+            this.light = new List<Light>();
+            for (int i = 0; i < 10; i++) {
+                light.Add(new Light(rnd.Next(1, MAX_X * Tile.TILE_SIZE), rnd.Next(1, MAX_Y * Tile.TILE_SIZE)));
             }
             this.Girl = new LittleGirl(rnd.Next(1, MAX_X * Tile.TILE_SIZE), rnd.Next(1, MAX_Y * Tile.TILE_SIZE));
 
@@ -33,11 +39,10 @@ namespace Game.Models.Enviroment
                 }
             }
 
+            FogEntities = new List<Fog>();
             for (int i = 0; i < 10; i++) {
                 FogEntities.Add(new Fog(0, 0));
             }
-
-
         }
 
         public void UpdateFogPositions()
@@ -47,11 +52,16 @@ namespace Game.Models.Enviroment
             }
         }
 
-        public void UpdateFogAnim()
+        public void UpdateFogAnimations()
         {
             foreach (var fog in this.FogEntities) {
                 fog.UpdateAnim();
             }
+        }
+
+        public void UpdateGirlAnimations()
+        {
+            this.Girl.UpdateAnimation();
         }
 
         public IEnumerable<DrawableComponent> GetDrawableComponents()
@@ -65,7 +75,7 @@ namespace Game.Models.Enviroment
             }
 
 
-            for (int i = 0; i < light.Length; i++) {
+            for (int i = 0; i < light.Count; i++) {
                 foreach (var component in light[i].GetDrawableComponents()) {
                     yield return component;
                 }

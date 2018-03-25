@@ -68,10 +68,10 @@ namespace Game.UserInterface
                 Y = 300,
                 ButtonText = "Play game",
                 SurfaceName = "shadowbox.png",
-                Click = (x, y) => StateSystem.GameState = States.InGame,
+                Click = (x, y) => StateSystem.NewGame(),
                 OnControllerButton = (code) => {
                     if (code == "7") {
-                        StateSystem.GameState = States.InGame;
+                        StateSystem.NewGame();
                     }
                 }
             });
