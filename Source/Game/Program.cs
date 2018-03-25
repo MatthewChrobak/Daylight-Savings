@@ -27,6 +27,8 @@ namespace Game
                 graphics.RenderToFrame(UI.GetDrawableComponents());
                 graphics.EndRenderFrame();
             }, 16));
+            events.GameEvents.Add(new Event(map.UpdateFogPositions, 8));
+            events.GameEvents.Add(new Event(map.UpdateFogAnim, 250));
 
             events.GameLoop();
         }

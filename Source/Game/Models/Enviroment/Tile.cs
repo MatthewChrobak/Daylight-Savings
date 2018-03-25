@@ -7,6 +7,7 @@ namespace Game.Models.Enviroment
     public class Tile : Position, IDrawable
     {
         public string SurfaceName { get; set; } = "grass.png";
+        public bool HasCloud = false;
         public const int TILE_SIZE = 48;
 
         public Tile(float x, float y) : base(x, y)
