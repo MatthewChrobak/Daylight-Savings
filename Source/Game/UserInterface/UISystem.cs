@@ -1,7 +1,6 @@
 ﻿using Game.Graphics;
 using Game.Timing;
 using System.Collections.Generic;
-using Game.Sounds;
 
 namespace Game.UserInterface
 {
@@ -9,6 +8,8 @@ namespace Game.UserInterface
     {
         public static float MouseX = 0;
         public static float MouseY = 0;
+
+        public static int Choice = 0;
 
         public List<UIComponent>[] Components = new List<UIComponent>[(int)States.Closed + 1];
 
@@ -73,21 +74,56 @@ namespace Game.UserInterface
                 Width = 960,
                 X = 0,
                 Y = 0,
-                SurfaceName = "background.png"
+                SurfaceName = "background.png",
+                OnControllerButton = (button) => {
+                    if (button == "4") {
+                        Choice = 1;
+                    } else  if (button == "5") {
+                        Choice = 0;
+                    }
+                }
+            });
+            mainmenu.Add(new UIComponent() {
+                Width = 500,
+                Height = 100,
+                X = 960 / 2 - 250,
+                Y = 100,
+                SurfaceName = "titlescreen.png"
+            });
+            mainmenu.Add(new Marker() {
+                Width = 250,
+                Height = 100,
+                X = 50,
+                Y = 250,
+                SurfaceName = "lightbox.png"
             });
             mainmenu.Add(new Button() {
                 Height = 50,
                 Width = 100,
-                X = 100,
-                Y = 300,
-                ButtonText = "Play game",
-                SurfaceName = "shadowbox.png",
+                X = 960 - 960 / 2 + 50,
+                Y = 400,
+                ButtonText = "Play Game",
+                SurfaceName = "whitebox.png",
                 Click = (x, y) => StateSystem.NewGame(),
                 OnControllerButton = (code) => {
-                    if (code == "7") {
+                    if (code == "0" && Choice == 0) {
                         StateSystem.NewGame();
                     }
                 }     
+            });
+            mainmenu.Add(new Button() {
+                Height = 50,
+                Width = 100,
+                X = 960 / 3 - 50,
+                Y = 400,
+                ButtonText = "Play Tutorial",
+                SurfaceName = "whitebox.png",
+                Click = (x, y) => StateSystem.NewTutorial(),
+                OnControllerButton = (code) => {
+                    if (code == "0" && Choice == 1) {
+                        StateSystem.NewTutorial();
+                    }
+                }
             });
             gameOver.Add(new UIComponent()
             {
@@ -96,20 +132,6 @@ namespace Game.UserInterface
                 X = 0,
                 Y = 0,
                 SurfaceName = "someBackground.png"
-            });
-            mainmenu.Add(new Button() {
-                Height = 50,
-                Width = 100,
-                X = 300,
-                Y = 300,
-                ButtonText = "Play game",
-                SurfaceName = "shadowbox.png",
-                Click = (x, y) => StateSystem.NewTutorial(),
-                OnControllerButton = (code) => {
-                    if (code == "7") {
-                        StateSystem.NewTutorial();
-                    }
-                }
             });
 
             this.Components[(int)States.MainMenu] = mainmenu;
