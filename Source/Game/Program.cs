@@ -9,10 +9,9 @@ namespace Game
     public static class Program
     {
         public static UISystem UI { get; set; } = new UISystem();
-
+        public static Map map { get; set; } = new Map();
         private static void Main(string[] args)
         {
-            Map map = new Map();
             var graphics = new GraphicsSystem(map);
             var events = new EventSystem();
 
@@ -32,7 +31,7 @@ namespace Game
             events.GameEvents.Add(new Event(map.UpdateFogAnim, 250));
             
             MusicManager.addMusic("Theme.ogg", true);
-
+            map.Girl.itemSurroundingCheck();
             events.GameLoop();
         }
     }

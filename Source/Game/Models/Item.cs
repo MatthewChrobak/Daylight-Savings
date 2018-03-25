@@ -26,7 +26,7 @@ namespace Game.Models
                 TextureName = this.SurfaceName,
                 RenderSize = new Vector2f(50, 50),
                 Position = new Vector2f(this.X, this.Y),
-                Rect = new IntRect(0, 0, 100, 100)
+                Rect = new IntRect(96, 80, 16, 16)
             };
         }
     }

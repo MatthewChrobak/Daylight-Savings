@@ -16,7 +16,7 @@ namespace Game.Models.Enviroment
         public const int MAX_COIN = 10;
 
         public LittleGirl Girl { get; set; }
-        Light[] light = new Light[MAX_COIN];
+        public Light[] light = new Light[MAX_COIN];
         Random rnd = new Random();
 
         public Map()
@@ -25,7 +25,7 @@ namespace Game.Models.Enviroment
             for(int i = 0; i < light.Length; i++) {
                 light[i] = new Light(rnd.Next(1, MAX_X * Tile.TILE_SIZE), rnd.Next(1, MAX_Y * Tile.TILE_SIZE));
             }
-            this.Girl = new LittleGirl(100, 100);
+            this.Girl = new LittleGirl(rnd.Next(1, MAX_X * Tile.TILE_SIZE), rnd.Next(1, MAX_Y * Tile.TILE_SIZE));
 
             for (int x = 0; x < MAX_X; x++) {
                 for (int y = 0; y < MAX_Y; y++) {
@@ -36,6 +36,7 @@ namespace Game.Models.Enviroment
             for (int i = 0; i < 10; i++) {
                 FogEntities.Add(new Fog(0, 0));
             }
+
         }
 
         public void UpdateFogPositions()

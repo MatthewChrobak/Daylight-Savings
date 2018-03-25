@@ -62,9 +62,16 @@ namespace Game.Models
 
             this.X += velocity.X;
             this.Y += velocity.Y;
-            Console.WriteLine("X position: " + this.X + " Y position: " + this.Y);
 
+           
 
+        }
+
+        public void itemSurroundingCheck() {
+            foreach(var i in Game.Program.map.light) {
+                Console.WriteLine("X is: " + i.X + " Y is: " + i.Y);
+            }
+                
         }
     }
 }
