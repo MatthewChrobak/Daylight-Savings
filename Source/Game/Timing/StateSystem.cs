@@ -6,7 +6,7 @@
 
         public static void TryClose()
         {
-            if (GameState == States.InGame) {
+            if (GameState == States.InGame || GameState == States.GameOver) {
                 GameState = States.MainMenu;
             } else {
                 GameState = States.Closed;
@@ -17,6 +17,12 @@
         {
             Program.NewGame();
             GameState = States.InGame;
+        }
+
+        public static void EndGame()
+        {
+            Program.Events.Clear();
+            GameState = States.GameOver;
         }
 
         public static void NewTutorial()
@@ -30,6 +36,7 @@
     {
         MainMenu,
         InGame,
+        GameOver,
         Closed
     }
 }

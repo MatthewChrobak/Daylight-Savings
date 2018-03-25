@@ -5,6 +5,7 @@ using SFML.System;
 using Game.Models.Enviroment;
 using System;
 using Game.Sounds;
+using Game.Timing;
 
 namespace Game.Models
 {
@@ -154,6 +155,14 @@ namespace Game.Models
                     Program.map.Girl.flagForHitCounter = 1;
                     return;
                 }
+            }
+        }
+
+        public void CheckHealth()
+        {
+            if (Program.map.Girl.health <= 0)
+            {
+                StateSystem.EndGame();
             }
         }
 
