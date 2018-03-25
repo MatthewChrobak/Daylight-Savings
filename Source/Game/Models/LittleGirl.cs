@@ -185,7 +185,7 @@ namespace Game.Models
                 if (Program.map.potion[i].X <= (Program.map.Girl.X + range) && Program.map.potion[i].X >= (Program.map.Girl.X - range)
                     && Program.map.potion[i].Y <= (Program.map.Girl.Y + range) && Program.map.potion[i].Y >= (Program.map.Girl.Y - range))
                 {
-                    if (Program.map.Girl.health < 5)
+                    if (Program.map.Girl.health < MaxHealth)
                     {
                         Program.map.Girl.health += 1;
                         Console.Write(Program.map.Girl.health);
