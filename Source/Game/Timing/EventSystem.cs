@@ -29,7 +29,7 @@ namespace Game.Timing
             GameEvents.Add(new Event(Program.map.UpdateLightAnimations, 125, true));
             GameEvents.Add(new Event(Program.map.UpdateFog, 8, true));
 
-            GameEvents.Add(new Event(Program.map.Girl.HealthLossFromFog, 2000, true));
+            GameEvents.Add(new Event(Program.map.Girl.HealthLossFromFog, 100, true));
         }
 
         public void GameLoop()

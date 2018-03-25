@@ -14,5 +14,6 @@ namespace Game.Graphics
         public uint CharacterSize { get; set; } = 11;
 
         public bool AbsolutePositioning { get; set; } = false;
+        public Color? Color { get; set; } = null;
     }
 }
