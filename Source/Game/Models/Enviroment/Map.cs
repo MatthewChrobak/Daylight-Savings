@@ -14,6 +14,7 @@ namespace Game.Models.Enviroment
         public const int MAX_X = 30;
         public const int MAX_Y = 15;
 
+        public List<Tree> Trees;
         public LittleGirl Girl { get; set; }
         public List<Light> light;
         Random rnd = new Random();
@@ -42,6 +43,15 @@ namespace Game.Models.Enviroment
             FogEntities = new List<Fog>();
             for (int i = 0; i < 10; i++) {
                 FogEntities.Add(new Fog(0, 0));
+            }
+
+            Trees = new List<Tree>();
+            int numTrees = rnd.Next(5, 10);
+            for (int i = 0; i < numTrees; i++) {
+                this.Trees.Add(new Tree() {
+                    X = rnd.Next(0, MAX_X * Tile.TILE_SIZE),
+                    Y = rnd.Next(0, MAX_Y * Tile.TILE_SIZE)
+                });
             }
         }
 
@@ -74,20 +84,35 @@ namespace Game.Models.Enviroment
                 }
             }
 
-
-            for (int i = 0; i < light.Count; i++) {
-                foreach (var component in light[i].GetDrawableComponents()) {
+            foreach (var lightComponent in this.light) {
+                foreach (var component in lightComponent.GetDrawableComponents()) {
                     yield return component;
                 }
             }
-            foreach (var component in this.Girl.GetDrawableComponents()) {
-                yield return component;
-            }
 
+            for (int y = 0; y < MAX_Y; y++) {
+                for (int x = 0; x < MAX_X; x++) {
+                    if (this.Girl.InRange(x * Tile.TILE_SIZE, y * Tile.TILE_SIZE, (x + 1) * Tile.TILE_SIZE, (y + 1) * Tile.TILE_SIZE)) {
+                        foreach (var component in this.Girl.GetDrawableComponents()) {
+                            yield return component;
+                        }
+                    }
 
-            foreach (var fog in this.FogEntities) {
-                foreach (var component in fog.GetDrawableComponents()) {
-                    yield return component;
+                    foreach (var fog in this.FogEntities) {
+                        if (fog.InRange(x * Tile.TILE_SIZE, y * Tile.TILE_SIZE, (x + 1) * Tile.TILE_SIZE, (y + 1) * Tile.TILE_SIZE)) {
+                            foreach (var component in fog.GetDrawableComponents()) {
+                                yield return component;
+                            }
+                        }
+                    }
+
+                    foreach (var tree in this.Trees) {
+                        if (tree.InRange(x * Tile.TILE_SIZE, y * Tile.TILE_SIZE, (x + 1) * Tile.TILE_SIZE, (y + 1) * Tile.TILE_SIZE)) {
+                            foreach (var component in tree.GetDrawableComponents()) {
+                                yield return component;
+                            }
+                        }
+                    }
                 }
             }
         }

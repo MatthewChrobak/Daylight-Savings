@@ -41,5 +41,10 @@
             X = xPosition;
             Y = yPosition;
         }
+
+        public bool InRange(int xLb, int yLb, int xUb, int yUb)
+        {
+            return (xLb <= this.X && this.X <= xUb) && (yLb <= this.Y && this.Y <= yUb);
+        }
     }
 }
