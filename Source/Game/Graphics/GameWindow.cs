@@ -6,23 +6,21 @@ using SFML.Graphics;
 using SFML.Window;
 using System;
 using System.Collections.Generic;
+using Game.Sounds;
 
 namespace Game.Graphics
 {
     public class GameWindow : RenderWindow
     {
         private float bound = 15.0f;
-        private LittleGirl girl;
 
         private float speed = 2.0f;
 
         private float moveX;
         private float moveY;
 
-        private List<Collider> _allColliders;
 
-
-        public GameWindow(Map map) : base(new VideoMode(960, 640), "Test")
+        public GameWindow() : base(new VideoMode(960, 640), "Daylight Savings")
         {
             this.Closed += this.GameWindow_Closed;
             this.KeyPressed += this.ProcessKeyInputs;
@@ -34,15 +32,10 @@ namespace Game.Graphics
             this.MouseButtonPressed += this.GameWindow_MouseButtonPressed1;
             this.MouseButtonPressed += GameWindow_MouseButtonPressed;
 
-
-            _allColliders = map._Colliders;
-            //this is the girl from MAP
-            this.girl = map.Girl;
         }
 
         private void GameWindow_JoystickButtonPressed(object sender, JoystickButtonEventArgs e)
         {
-            Console.WriteLine(e.Button);
             Program.UI.OnControllerButton(e.Button.ToString());
 
             if (e.Button == 6) {
@@ -52,14 +45,12 @@ namespace Game.Graphics
 
         private void GameWindow_MouseButtonPressed1(object sender, MouseButtonEventArgs e)
         {
-            Program.UI.OnClick(e.X, e.Y);
+            //Program.UI.OnClick(e.X, e.Y);
         }
 
         private void GameWindow_MouseButtonPressed(object sender, MouseButtonEventArgs e)
         {
             var ButtonClick = e.Button;
-
-            Console.WriteLine("The Button " + ButtonClick + " is clicked");
         }
 
         private void GameWindow_MouseMoved(object sender, MouseMoveEventArgs e)
@@ -70,37 +61,42 @@ namespace Game.Graphics
 
         private void GameWindow_KeyPressed(object sender, KeyEventArgs e)
         {
-            foreach(var col in _allColliders)
+
+            Game.Program.map.Girl.itemSurroundingCheck();
+            if (e.Code == Keyboard.Key.Up)
             {
-                if (this.girl.CollidedWith(col, 1.0f))
-                {
-                    return;
+                Program.map.Girl.girlDirection = Direction.UP;
+                if(((Program.map.Girl.Y-25) <= 0)) {
+                    Program.map.Girl.Y = 0;
                 }
-            }
-            if(e.Code == Keyboard.Key.Up)
-            {
-                Console.WriteLine("Up is pressed");
-                this.girl.girlDirection = Direction.UP;
-                this.girl.Y -= 25;
+                else {
+                    Program.map.Girl.Y -= 25;
+                }
             }
             else if (e.Code == Keyboard.Key.Down)
             {
-                Console.WriteLine("Down is pressed");
-                this.girl.girlDirection = Direction.DOWN;
-                this.girl.Y += 25;
+                Program.map.Girl.girlDirection = Direction.DOWN;
+                if (!((Program.map.Girl.Y + 25) >= Program.map.MAX_Y*Tile.TILE_SIZE)) {
+                    Program.map.Girl.Y += 25;
+                }
             }
             else if (e.Code == Keyboard.Key.Left)
             {
-                Console.WriteLine("Left is pressed");
-                this.girl.girlDirection = Direction.LEFT;
-                this.girl.X -= 25;
+                Program.map.Girl.girlDirection = Direction.LEFT;
+                if (((Program.map.Girl.X - 25) <= 0)) {
+                    Program.map.Girl.X = 0;
+                }
+                else {
+                    Program.map.Girl.X -= 25;
+                }
             }
             else if (e.Code == Keyboard.Key.Right)
             {
-                Console.WriteLine("Right is pressed");
-                this.girl.girlDirection = Direction.RIGHT;
-                this.girl.X += 25;
-            } 
+                Program.map.Girl.girlDirection = Direction.RIGHT;
+                if (!((Program.map.Girl.X + 25) >= Program.map.MAX_X*Tile.TILE_SIZE)) {
+                    Program.map.Girl.X += 25;
+                }
+            }
         }
 
         private void GameWindow_Closed(object sender, EventArgs e)
@@ -115,29 +111,22 @@ namespace Game.Graphics
 
             if (window != null)
             {
-                if (e.Code == Keyboard.Key.E)
-                    System.Console.WriteLine("Wow");
                 if (e.Code == Keyboard.Key.Escape)
-                    StateSystem.GameState = States.Closed;
+                    StateSystem.TryClose();
             }
 
         }
 
         // Method to detect if joystick is connected
         private void JoyConnected(object sender, JoystickConnectEventArgs e){
-            Console.WriteLine("Joystick Connected");
+
         }
 
         // Method to process the inputs from the joystick
         private void ProcessJoyInputs(object sender, JoystickMoveEventArgs e){
-            foreach (var col in _allColliders)
-            {
-                if (this.girl.CollidedWith(col, 1.0f))
-                {
-                    Console.WriteLine("Collided");
-                    girl.setVelocity(0.0f, 0.0f);
-                    return;
-                }
+
+            if (StateSystem.GameState != States.InGame) {
+                return;
             }
 
             if (e.Axis == Joystick.Axis.X)
@@ -152,14 +141,13 @@ namespace Game.Graphics
             if (e.Axis == Joystick.Axis.Y)
             {
                 if (Math.Abs(e.Position) > bound){
-                    moveY = speed * (e.Position / 100);
-
+                    moveY = speed * (e.Position / 100);                   
                 }
                 else{
                     moveY = 0.0f;
                 }
             }
-            girl.setVelocity(moveX, moveY);
+            Program.map.Girl.setVelocity(moveX, moveY);
         }
 
     }

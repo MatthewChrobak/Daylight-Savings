@@ -9,6 +9,8 @@ namespace Game.UserInterface
         public static float MouseX = 0;
         public static float MouseY = 0;
 
+        public static int Choice = 0;
+
         public List<UIComponent>[] Components = new List<UIComponent>[(int)States.Closed + 1];
 
         public void OnClick(float x, float y)
@@ -52,30 +54,93 @@ namespace Game.UserInterface
 
 
             var mainmenu = new List<UIComponent>();
+            var gameUI = new List<UIComponent>();
+            var gameOver = new List<UIComponent>();
 
+
+            //HealthBar Components
+            gameUI.Add(new HealthBar() {
+                X = 0,
+                Y = 0,
+                Height = 50,
+                Width = 200,
+                SurfaceName = "Full_HealthBar.png"
+            });
+            gameUI.Add(new LightDisplay());
+            gameUI.Add(new CloudsRemaining() {
+                Width = 300,
+                Height = 50
+            });
+
+            // Mainmenu Components
             mainmenu.Add(new UIComponent() {
                 Height = 640,
                 Width = 960,
                 X = 0,
                 Y = 0,
-                SurfaceName = "background.png"
+                SurfaceName = "background.png",
+                OnControllerButton = (button) => {
+                    if (button == "4") {
+                        Choice = 1;
+                    } else  if (button == "5") {
+                        Choice = 0;
+                    }
+                }
+            });
+            mainmenu.Add(new UIComponent() {
+                Width = 500,
+                Height = 100,
+                X = 960 / 2 - 250,
+                Y = 100,
+                SurfaceName = "titlescreen.png"
+            });
+            mainmenu.Add(new Marker() {
+                Width = 250,
+                Height = 100,
+                X = 50,
+                Y = 250,
+                SurfaceName = "lightbox.png"
             });
             mainmenu.Add(new Button() {
                 Height = 50,
                 Width = 100,
-                X = 100, 
-                Y = 300,
-                ButtonText = "Play game",
-                SurfaceName = "shadowbox.png",
-                Click = (x, y) => StateSystem.GameState = States.InGame,
+                X = 960 - 960 / 2 + 50,
+                Y = 400,
+                ButtonText = "Play Game",
+                SurfaceName = "whitebox.png",
+                Click = (x, y) => StateSystem.NewGame(),
                 OnControllerButton = (code) => {
-                    if (code == "7") {
-                        StateSystem.GameState = States.InGame;
+                    if (code == "0" && Choice == 0) {
+                        StateSystem.NewGame();
+                    }
+                }     
+            });
+            mainmenu.Add(new Button() {
+                Height = 50,
+                Width = 100,
+                X = 960 / 3 - 50,
+                Y = 400,
+                ButtonText = "Play Tutorial",
+                SurfaceName = "whitebox.png",
+                Click = (x, y) => StateSystem.NewTutorial(),
+                OnControllerButton = (code) => {
+                    if (code == "0" && Choice == 1) {
+                        StateSystem.NewTutorial();
                     }
                 }
             });
+            gameOver.Add(new UIComponent()
+            {
+                Height = 640,
+                Width = 960,
+                X = 0,
+                Y = 0,
+                SurfaceName = "someBackground.png"
+            });
 
             this.Components[(int)States.MainMenu] = mainmenu;
+            this.Components[(int)States.InGame] = gameUI;
+            this.Components[(int)States.GameOver] = gameOver;
         }
     }
 }

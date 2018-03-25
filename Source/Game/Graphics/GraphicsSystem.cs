@@ -1,7 +1,8 @@
 ﻿using SFML.Graphics;
 using SFML.System;
-using Game.Models.Enviroment;
 using System.Collections.Generic;
+using Game.Models;
+using System;
 
 namespace Game.Graphics
 {
@@ -12,9 +13,9 @@ namespace Game.Graphics
         private Camera _camera;
         private Font _font;
 
-        public GraphicsSystem(Map map)
+        public GraphicsSystem()
         {
-            this._context = new GameWindow(map);
+            this._context = new GameWindow();
             this._camera = new Camera(this._context);
             this._surfaces = new SurfaceManager();
 
@@ -22,10 +23,17 @@ namespace Game.Graphics
 
             this._surfaces.LoadTextures();
 
-            this._font = new Font("fonts/opensans.ttf");
+            this._font = new Font("fonts/RockSalt-Regular.ttf");
+        }
 
+        public void SetCameraFocus(Position pos)
+        {
+            pos.Attach(_camera);
+        }
 
-            map.Girl.Attach(_camera);
+        public void RemoveCameraFocus()
+        {
+            Program.map.Girl.Detatch(this._camera);
         }
 
         public void BeginRenderFrame()
@@ -80,6 +88,10 @@ namespace Game.Graphics
                         size.Y / sprite.Texture.Size.Y
                         );
                 }
+            }
+
+            if (component.Color != null) {
+                sprite.Color = (Color)component.Color;
             }
 
             this._context.Draw(sprite);
