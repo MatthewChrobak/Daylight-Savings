@@ -23,7 +23,7 @@ namespace Game.Graphics
 
             this._surfaces.LoadTextures();
 
-            this._font = new Font("fonts/opensans.ttf");
+            this._font = new Font("fonts/RockSalt-Regular.ttf");
         }
 
         public void SetCameraFocus(Position pos)

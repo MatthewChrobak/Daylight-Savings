@@ -12,6 +12,7 @@ namespace Game.Models.Enviroment
         public List<DisappatingFog> DisappatingFogs;
         public List<Fog> FogEntities;
         public Tile[,] Tiles;
+
         public int MAX_X = 30;
         public int MAX_Y = 15;
         public int numStartPotions = 3;
@@ -20,12 +21,14 @@ namespace Game.Models.Enviroment
         public int numStartFog = 10;
         public int numStartSmushy = 5;
 
+
         public List<Tree> Trees;
         public LittleGirl Girl { get; set; }
         public List<Light> light;
         public List<Smushy> smushy { get; set; }
         public List<Potion> potion;
         Random rnd = new Random();
+        public BigBoss bigBoss;
 
         public int LittleGirlStartX = 700;
         public int LittleGirlStartY = 700;
@@ -52,6 +55,10 @@ namespace Game.Models.Enviroment
                 potion.Add(new Potion(rnd.Next(1, MAX_X * Tile.TILE_SIZE), rnd.Next(1, MAX_Y * Tile.TILE_SIZE)));
             }
 
+            this.Girl = new LittleGirl(350, 350);
+
+            this.bigBoss = new BigBoss((MAX_X*Tile.TILE_SIZE)/2, 0);
+
             smushy = new List<Smushy>();
             for(int i = 0; i < numStartSmushy; i++) {
                 smushy.Add(new Smushy(rnd.Next(1, MAX_X * Tile.TILE_SIZE), rnd.Next(1, MAX_Y * Tile.TILE_SIZE)));
@@ -67,6 +74,7 @@ namespace Game.Models.Enviroment
 
             DisappatingFogs = new List<DisappatingFog>();
             FogEntities = new List<Fog>();
+
             for (int i = 0; i < numStartFog; i++) {
                 FogEntities.Add(new Fog(0, 0));
             }
@@ -110,6 +118,9 @@ namespace Game.Models.Enviroment
             }
         }
 
+        public void UpdateBigBossAnimations() {
+            this.bigBoss.UpdateAnimation();
+        } 
 
         public void UpdateFogPositions()
         {
@@ -118,7 +129,20 @@ namespace Game.Models.Enviroment
                 fog.UpdatePosition();
             }
         }
-        
+
+        //Spwaning for item, smushy, light and cloud
+        public void SmushySpawning() {
+            Game.Program.map.smushy.Add(new Smushy(rnd.Next(1, MAX_X * Tile.TILE_SIZE), rnd.Next(1, MAX_Y * Tile.TILE_SIZE)));
+        }
+        public void ItemSpawning() {
+            Game.Program.map.potion.Add(new Potion(rnd.Next(1, MAX_X * Tile.TILE_SIZE), rnd.Next(1, MAX_Y * Tile.TILE_SIZE)));
+        }
+        public void CloudSpawning() {
+            Game.Program.map.FogEntities.Add(new Fog(rnd.Next(1, MAX_X * Tile.TILE_SIZE), rnd.Next(1, MAX_Y * Tile.TILE_SIZE)));
+        }
+        public void LightSpawning() {
+            Game.Program.map.light.Add(new Light(rnd.Next(1, MAX_X * Tile.TILE_SIZE), rnd.Next(1, MAX_Y * Tile.TILE_SIZE)));
+        }
         public void UpdateSmushyPositions() {
             foreach(var smushy in this.smushy) {
                 smushy.UpdatePosition();
@@ -182,6 +206,7 @@ namespace Game.Models.Enviroment
                     RenderSize = new Vector2f(Tile.TILE_SIZE * 3, Tile.TILE_SIZE * 3)
                 };
             }
+            
 
             for (int y = 0; y < MAX_Y; y++) {
                 for (int x = 0; x < MAX_X; x++) {
@@ -190,7 +215,9 @@ namespace Game.Models.Enviroment
                     }
                 }
             }
-
+            foreach (var components in bigBoss.GetDrawableComponents()) {
+                yield return components;
+            }
             foreach (var lightComponent in this.light) {
                 foreach (var component in lightComponent.GetDrawableComponents()) {
                     yield return component;

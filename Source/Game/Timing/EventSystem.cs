@@ -2,10 +2,10 @@
 using System;
 using System.Collections.Generic;
 
-namespace Game.Timing
-{
+namespace Game.Timing {
     public class EventSystem
     {
+        public static Random rnd = new Random();
         public List<Event> GameEvents { private set; get; } = new List<Event>();
 
         public EventSystem()
@@ -37,6 +37,7 @@ namespace Game.Timing
         {
             lock (GameEvents) {
                 GameEvents.Add(new Event(Program.map.Girl.Move, 8, true));
+                GameEvents.Add(new Event(Program.map.UpdateBigBossAnimations, 125, true));
                 GameEvents.Add(new Event(Program.map.UpdateFogPositions, 8, true));
                 GameEvents.Add(new Event(Program.map.UpdateFogAnimations, 250, true));
                 GameEvents.Add(new Event(Program.map.UpdateSmushyAnimations, 100, true));
@@ -51,6 +52,7 @@ namespace Game.Timing
         public void AddTutorialEvents()
         {
             lock (GameEvents) {
+                GameEvents.Add(new Event(Program.map.UpdateBigBossAnimations, 125, true));
                 GameEvents.Add(new Event(Program.map.Girl.Move, 8, true));
                 GameEvents.Add(new Event(Program.map.UpdateFogAnimations, 250, true));
                 GameEvents.Add(new Event(Program.map.UpdateSmushyAnimations, 100, true));
