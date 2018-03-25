@@ -77,7 +77,7 @@ namespace Game.Models.Enviroment
             FogEntities = new List<Fog>();
 
             for (int i = 0; i < numStartFog; i++) {
-                FogEntities.Add(new Fog(0, 0));
+                FogEntities.Add(new Fog((MAX_X * Tile.TILE_SIZE) / 2, 0));
             }
 
             Trees = new List<Tree>();
