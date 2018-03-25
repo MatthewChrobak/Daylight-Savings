@@ -68,8 +68,10 @@ namespace Game.Graphics
                 if(((Program.map.Girl.Y-25) <= 0)) {
                     Program.map.Girl.Y = 0;
                 }
-                else
+                else {
                     Program.map.Girl.Y -= 25;
+                }
+
                 Console.WriteLine(Program.map.Girl.Y);
             }
             else if (e.Code == Keyboard.Key.Down)
@@ -88,8 +90,10 @@ namespace Game.Graphics
                 if (((Program.map.Girl.X - 25) <= 0)) {
                     Program.map.Girl.X = 0;
                 }
-                else
+                else {
                     Program.map.Girl.X -= 25;
+                }
+
                 Console.WriteLine(Program.map.Girl.X);
             }
             else if (e.Code == Keyboard.Key.Right)

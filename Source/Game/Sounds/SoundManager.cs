@@ -13,16 +13,14 @@ namespace Game.Sounds
 
         public static void addMusic(string fileName, bool loop = false, float volume = 100.0f)
         {
-            gameMusic.Add(new Music("music/" + fileName)
-            {
+            gameMusic.Add(new Music("music/" + fileName) {
                 Loop = loop,
                 Volume = volume
             });
             gameMusic.Last().Play();
 
             // If there is no GC, initialize it.
-            if (musicDisposer == null)
-            {
+            if (musicDisposer == null) {
                 musicDisposer = new Thread(MonitorMusic);
                 musicDisposer.Start();
             }
@@ -30,48 +28,34 @@ namespace Game.Sounds
 
         public static void stopMusic()
         {
-            for(int i = 0; i < gameMusic.Count; i++)
-            {
+            for (int i = 0; i < gameMusic.Count; i++) {
                 gameMusic[i].Stop();
             }
         }
 
         private static void MonitorMusic()
         {
-            while (StateSystem.GameState != States.Closed)
-           
-                for (int i = 0; i < gameMusic.Count; i++)
-                {
-                    if (gameMusic[i].Status == SoundStatus.Stopped)
-                    {
+            while (StateSystem.GameState != States.Closed) {
+                for (int i = 0; i < gameMusic.Count; i++) {
+                    if (gameMusic[i].Status == SoundStatus.Stopped) {
                         gameMusic[i].Dispose();
                         gameMusic.RemoveAt(i);
                         i--;
                     }
                 }
-
                 Thread.Yield();
             }
         }
+    }
     
 
 
     public static class SoundManager
     {
-        private static List<SoundBuffer> gameSound = new List<SoundBuffer>();
-
         public static void addSound(string fileName)
         {
-            gameSound.Add(new SoundBuffer("music/" + fileName)
-            {
-                
-            });
-
-            Sound Q = new Sound(gameSound[0]);
-            Q.Play();
-
+            new Sound(new SoundBuffer("music/" + fileName)).Play();
         }
     }
-
 }
 

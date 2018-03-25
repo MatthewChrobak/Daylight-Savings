@@ -4,6 +4,7 @@ using SFML.Graphics;
 using SFML.System;
 using Game.Models.Enviroment;
 using System;
+using Game.Sounds;
 
 namespace Game.Models
 {
@@ -31,7 +32,7 @@ namespace Game.Models
                 TextureName = this.SurfaceName,
                 RenderSize = new Vector2f(70, 104),
                 Position = new Vector2f(this.X - 35, this.Y - 100),
-                Rect = new IntRect(0, 738 * animStep, 513, 738)
+                Rect = new IntRect(513 * (int)girlDirection, 738 * animStep, 513, 738)
             };
         }
 
@@ -62,6 +63,29 @@ namespace Game.Models
 
             this.X += velocity.X;
             this.Y += velocity.Y;
+
+
+
+
+            this.girlDirection = Direction.DOWN;
+
+            if (Math.Abs(velocity.Y) < Math.Abs(velocity.X)) {
+                if (velocity.Y > 0) {
+                    girlDirection = Direction.DOWN;
+                } else if (velocity.Y < 0) {
+
+                } else {
+
+                }
+            }
+
+            if (Math.Abs(velocity.X) > Math.Abs(velocity.Y)) {
+                if (velocity.X > 0) {
+                    girlDirection = Direction.RIGHT;
+                } else if (velocity.X < 0) {
+                    girlDirection = Direction.LEFT;
+                }
+            }
         }
         public void UpdateAnimation()
         {
@@ -81,6 +105,10 @@ namespace Game.Models
 
             this.animStep += 1;
             this.animStep %= 8;
+
+            if (this.animStep % 4 == 1) {
+                SoundManager.addSound("footstep.ogg");
+            }
 
             this.itemSurroundingCheck();
         }
