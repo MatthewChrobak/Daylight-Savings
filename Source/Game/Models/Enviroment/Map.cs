@@ -20,6 +20,8 @@ namespace Game.Models.Enviroment
         public int numStartLight = 10;
         public int numStartFog = 10;
         public int numStartSmushy = 5;
+        public int numOfCloud = 0;
+        public int winningCondition = 15;
 
         public int Level = 0;
         public int CloudsRemaining = 0;
@@ -32,6 +34,7 @@ namespace Game.Models.Enviroment
         public List<Potion> potion;
         Random rnd = new Random();
         public BigBoss bigBoss;
+        public BigBoss bigBossTransformation;
 
         public int LittleGirlStartX = 700;
         public int LittleGirlStartY = 700;
@@ -115,6 +118,7 @@ namespace Game.Models.Enviroment
                         Program.map.DeleteFog(i);
                         Program.map.Girl.littleGirlInventory.items.RemoveAt(positionOfLightItemInInventory);
                         positionOfLightItemInInventory = -1;
+                        numOfCloud++;
                         return;
                     }            
                 }
@@ -122,7 +126,7 @@ namespace Game.Models.Enviroment
         }
 
         public void UpdateBigBossAnimations() {
-            this.bigBoss.UpdateAnimation();
+            this.bigBoss.UpdateBigBossAnimationRange();
         } 
 
         public void UpdateFogPositions()
@@ -185,6 +189,10 @@ namespace Game.Models.Enviroment
             }
         }
 
+        public void UpdateBigBossTranformedAnimations() {
+            this.bigBoss.UpdateBigBossTranformation();
+        }
+
         public void UpdateGirlAnimations()
         {
             this.Girl.UpdateAnimation();
@@ -218,9 +226,11 @@ namespace Game.Models.Enviroment
                     }
                 }
             }
+
             foreach (var components in bigBoss.GetDrawableComponents()) {
                 yield return components;
             }
+
             foreach (var lightComponent in this.light) {
                 foreach (var component in lightComponent.GetDrawableComponents()) {
                     yield return component;
@@ -274,6 +284,9 @@ namespace Game.Models.Enviroment
                                 yield return component;
                             }
                         }
+                    }
+                    if (numOfCloud==winningCondition) { 
+                        Program.map.bigBoss.bossTexture = "BigBossTransformation.png";       
                     }
                 }
             }

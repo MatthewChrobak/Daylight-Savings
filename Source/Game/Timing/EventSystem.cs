@@ -36,6 +36,7 @@ namespace Game.Timing {
         public void AddGameEvents()
         {
             lock (GameEvents) {
+                GameEvents.Add(new Event(Program.map.UpdateBigBossTranformedAnimations, 125, true));
                 GameEvents.Add(new Event(Program.map.Girl.Move, 8, true));
                 GameEvents.Add(new Event(Program.map.UpdateBigBossAnimations, 125, true));
                 GameEvents.Add(new Event(Program.map.UpdateFogPositions, 8, true));
@@ -67,7 +68,6 @@ namespace Game.Timing {
                 GameEvents.Add(new Event(Program.map.UpdateFog, 8, true));
                 GameEvents.Add(new Event(Program.map.Girl.HealthLossFromFog, 100, true));
                 GameEvents.Add(new Event(Program.map.Girl.BringBackToLife_Tutorial, 500, true));
-
                 GameEvents.Add(new Event(((TutorialMap)Program.map).RespawnFogs, 3000, true));
                 GameEvents.Add(new Event(((TutorialMap)Program.map).RespawnPotions, 3000, true));
                 GameEvents.Add(new Event(((TutorialMap)Program.map).RespawnSmushy, 3000, true));
