@@ -206,6 +206,7 @@ namespace Game.Models.Enviroment
                     RenderSize = new Vector2f(Tile.TILE_SIZE * 3, Tile.TILE_SIZE * 3)
                 };
             }
+            
 
             for (int y = 0; y < MAX_Y; y++) {
                 for (int x = 0; x < MAX_X; x++) {
@@ -214,7 +215,9 @@ namespace Game.Models.Enviroment
                     }
                 }
             }
-
+            foreach (var components in bigBoss.GetDrawableComponents()) {
+                yield return components;
+            }
             foreach (var lightComponent in this.light) {
                 foreach (var component in lightComponent.GetDrawableComponents()) {
                     yield return component;
@@ -268,10 +271,6 @@ namespace Game.Models.Enviroment
                                 yield return component;
                             }
                         }
-                    }
-
-                    foreach(var components in bigBoss.GetDrawableComponents()) {
-                        yield return components;
                     }
                 }
             }
