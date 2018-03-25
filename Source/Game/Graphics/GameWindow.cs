@@ -48,8 +48,6 @@ namespace Game.Graphics
         private void GameWindow_MouseButtonPressed(object sender, MouseButtonEventArgs e)
         {
             var ButtonClick = e.Button;
-
-            Console.WriteLine("The Button " + ButtonClick + " is clicked");
         }
 
         private void GameWindow_MouseMoved(object sender, MouseMoveEventArgs e)
@@ -60,10 +58,10 @@ namespace Game.Graphics
 
         private void GameWindow_KeyPressed(object sender, KeyEventArgs e)
         {
+            return;
             Game.Program.map.Girl.itemSurroundingCheck();
             if (e.Code == Keyboard.Key.Up)
             {
-                Console.WriteLine("Up is pressed");
                 Program.map.Girl.girlDirection = Direction.UP;
                 if(((Program.map.Girl.Y-25) <= 0)) {
                     Program.map.Girl.Y = 0;
@@ -71,21 +69,16 @@ namespace Game.Graphics
                 else {
                     Program.map.Girl.Y -= 25;
                 }
-
-                Console.WriteLine(Program.map.Girl.Y);
             }
             else if (e.Code == Keyboard.Key.Down)
             {
-                Console.WriteLine("Down is pressed");
                 Program.map.Girl.girlDirection = Direction.DOWN;
-                if (!((Program.map.Girl.Y + 25) >= Map.MAX_Y*Tile.TILE_SIZE)) {
+                if (!((Program.map.Girl.Y + 25) >= Program.map.MAX_Y*Tile.TILE_SIZE)) {
                     Program.map.Girl.Y += 25;
                 }
-                Console.WriteLine(Program.map.Girl.Y);
             }
             else if (e.Code == Keyboard.Key.Left)
             {
-                Console.WriteLine("Left is pressed");
                 Program.map.Girl.girlDirection = Direction.LEFT;
                 if (((Program.map.Girl.X - 25) <= 0)) {
                     Program.map.Girl.X = 0;
@@ -93,17 +86,13 @@ namespace Game.Graphics
                 else {
                     Program.map.Girl.X -= 25;
                 }
-
-                Console.WriteLine(Program.map.Girl.X);
             }
             else if (e.Code == Keyboard.Key.Right)
             {
-                Console.WriteLine("Right is pressed");
                 Program.map.Girl.girlDirection = Direction.RIGHT;
-                if (!((Program.map.Girl.X + 25) >= Map.MAX_X*Tile.TILE_SIZE)) {
+                if (!((Program.map.Girl.X + 25) >= Program.map.MAX_X*Tile.TILE_SIZE)) {
                     Program.map.Girl.X += 25;
                 }
-                Console.WriteLine(Program.map.Girl.X);
             }
         }
 
@@ -120,7 +109,7 @@ namespace Game.Graphics
             if (window != null)
             {
                 if (e.Code == Keyboard.Key.E)
-                    System.Console.WriteLine("Wow");
+
                 if (e.Code == Keyboard.Key.Escape)
                     StateSystem.GameState = States.Closed;
             }
@@ -129,11 +118,15 @@ namespace Game.Graphics
 
         // Method to detect if joystick is connected
         private void JoyConnected(object sender, JoystickConnectEventArgs e){
-            Console.WriteLine("Joystick Connected");
+
         }
 
         // Method to process the inputs from the joystick
         private void ProcessJoyInputs(object sender, JoystickMoveEventArgs e){
+            if (StateSystem.GameState != States.InGame) {
+                return;
+            }
+
             if (e.Axis == Joystick.Axis.X)
             {
                 if(Math.Abs(e.Position) > bound){

@@ -73,6 +73,7 @@
     <Compile Include="Models\Entities\Tree.cs" />
     <Compile Include="Models\Enviroment\Map.cs" />
     <Compile Include="Models\Enviroment\Tile.cs" />
+    <Compile Include="Models\Enviroment\TutorialMap.cs" />
     <Compile Include="Models\Inventory.cs" />
     <Compile Include="Models\Item.cs" />
     <Compile Include="Models\LittleGirl.cs" />
@@ -88,6 +89,7 @@
     <Compile Include="Timing\StateSystem.cs" />
     <Compile Include="UserInterface\Button.cs" />
     <Compile Include="UserInterface\HealthBar.cs" />
+    <Compile Include="UserInterface\LightDisplay.cs" />
     <Compile Include="UserInterface\UIComponent.cs" />
     <Compile Include="UserInterface\UISystem.cs" />
   </ItemGroup>

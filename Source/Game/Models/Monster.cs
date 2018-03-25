@@ -15,6 +15,38 @@ namespace Game.Models
         
     }
 
+    public class BigBoss: Position, IDrawable {
+        private static Random rnd = new Random();
+        public (int X, int Y) TargetPosition;
+        public int animationStep = 0;
+        public int waitCount = 0;
+
+        public BigBoss(float x, float y) : base(x, y) {
+            this.animationStep = 0;
+        }
+
+        public void SmushyDamage(float x, float y) {
+           
+        }
+
+        public IEnumerable<DrawableComponent> GetDrawableComponents() {
+
+            yield return new DrawableComponent() {
+                TextureName = "BigBoss.png",
+                RenderSize = new Vector2f(300, 150),
+                Position = new Vector2f(this.X-150,this.Y-120),
+                Rect = new IntRect(0, 159 * animationStep, 250,  159)
+            };
+        }
+
+        public void UpdateAnimation() {
+            animationStep += 1;
+            animationStep %= 4;
+        }
+
+    }
+
+
     public class Smushy: Position, IDrawable
     {
         private static Random rnd = new Random();
@@ -25,6 +57,19 @@ namespace Game.Models
         public Smushy(float x, float y) : base(x, y) {
             this.animationStep = 0;
             this.GetNewPos();
+        }
+
+        public void SmushyDamage(float x, float y) {
+            int range = 20;
+
+            for (int i = 0; i < Game.Program.map.smushy.Count; i++) {
+
+                if ((Game.Program.map.smushy[i].X + range) >= x && x >= (Game.Program.map.smushy[i].X - range)
+                    && (Game.Program.map.smushy[i].Y + range) >= y && y >= (Game.Program.map.smushy[i].Y - range)) {
+                    Game.Program.map.Girl.health -= (float)0.01;
+                    Program.map.Girl.flagForHitCounter = 1;
+                }
+            }
         }
 
         public IEnumerable<DrawableComponent> GetDrawableComponents() {
@@ -38,14 +83,15 @@ namespace Game.Models
         }
 
         public void GetNewPos() {
-            TargetPosition.X = rnd.Next(0, Map.MAX_X * Tile.TILE_SIZE);
-            TargetPosition.Y = rnd.Next(0, Map.MAX_Y * Tile.TILE_SIZE);
+            TargetPosition.X = rnd.Next(0, Program.map.MAX_X * Tile.TILE_SIZE);
+            TargetPosition.Y = rnd.Next(0, Program.map.MAX_Y * Tile.TILE_SIZE);
         }
 
         public void UpdateAnimation() {
             animationStep += 1;
             animationStep %= 8;
         }
+
 
         public void UpdatePosition() {
             {

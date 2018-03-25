@@ -21,7 +21,7 @@ namespace Game.Models
 
         public int animStep = 0;
         public bool halfStep = false;
-        private int flagForHitCounter = 0;
+        public int flagForHitCounter = 0;
 
         // Constructor for the Little Girl, setting her position
         public LittleGirl(int x, int y) : base(x, y)
@@ -36,7 +36,7 @@ namespace Game.Models
                 TextureName = this.SurfaceName,
                 RenderSize = new Vector2f(70, 104),
                 Position = new Vector2f(this.X - 35, this.Y - 100),
-                Rect = new IntRect(513 * (int)girlDirection, 738 * animStep, 513, 738)
+                Rect = new IntRect(513 * (int)girlDirection, 800 * animStep, 513, 800)
             };
 
             if (this.flagForHitCounter > 0) {
@@ -65,6 +65,9 @@ namespace Game.Models
 
         public void Move()
         {
+            foreach (var smushy in Program.map.smushy) {
+                smushy.SmushyDamage(this.X, this.Y);
+            }
 
             //Check 0 boundaries
             if (this.Y + velocity.Y < 0)
@@ -78,18 +81,18 @@ namespace Game.Models
 
 
             //check max boundaries
-            if (this.Y + velocity.Y >= Map.MAX_Y * Tile.TILE_SIZE)
+            if (this.Y + velocity.Y >= Program.map.MAX_Y * Tile.TILE_SIZE)
             {
                 setVelocity(velocity.X, 0);
             }
-            if (this.X + velocity.X >= Map.MAX_X * Tile.TILE_SIZE)
+            if (this.X + velocity.X >= Program.map.MAX_X * Tile.TILE_SIZE)
             {
                 setVelocity(0, velocity.Y);
             }
 
             this.girlDirection = Direction.DOWN;
 
-            if (Math.Abs(velocity.Y) < Math.Abs(velocity.X))
+            if (Math.Abs(velocity.Y) > Math.Abs(velocity.X))
             {
                 if (velocity.Y > 0)
                 {
@@ -97,11 +100,7 @@ namespace Game.Models
                 }
                 else if (velocity.Y < 0)
                 {
-
-                }
-                else
-                {
-
+                    girlDirection = Direction.UP;
                 }
             }
 
@@ -135,6 +134,13 @@ namespace Game.Models
             this.Y = nextY;
         }
 
+        public void BringBackToLife_Tutorial()
+        {
+            if (Program.map.Girl.health < 0) {
+                Program.map.Girl.health = LittleGirl.MaxHealth;
+            }
+        }
+
         public void HealthLossFromFog()
         {
             if (Program.map.Girl.flagForHitCounter != 0) {
@@ -145,10 +151,8 @@ namespace Game.Models
                 if (Program.map.FogEntities[i].X <= (Program.map.Girl.X + 125) && Program.map.FogEntities[i].X >= (Program.map.Girl.X - 125) 
                     && Program.map.FogEntities[i].Y <= (Program.map.Girl.Y + 62) && Program.map.FogEntities[i].Y >= (Program.map.Girl.Y - 62))
                 {
-                    Console.WriteLine("Hit " + Program.map.Girl.flagForHitCounter);
                     Program.map.Girl.health -= 1;
                     Program.map.Girl.flagForHitCounter = 1;
-                    SoundManager.addSound("hit.ogg");
                     return;
                 }
             }
@@ -156,7 +160,7 @@ namespace Game.Models
 
         public void CheckHealth()
         {
-            if (Program.map.Girl.health == 0)
+            if (Program.map.Girl.health <= 0)
             {
                 StateSystem.EndGame();
             }
@@ -220,7 +224,6 @@ namespace Game.Models
                     {
                         Program.map.Girl.health += 1;
                         Program.map.potion.RemoveAt(i);
-                        SoundManager.addSound("potion.ogg");
                     }
                 }
             }

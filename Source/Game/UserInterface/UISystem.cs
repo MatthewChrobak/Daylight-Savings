@@ -65,6 +65,7 @@ namespace Game.UserInterface
                 Width = 200,
                 SurfaceName = "Full_HealthBar.png"
             });
+            gameUI.Add(new LightDisplay());
 
             // Mainmenu Components
             mainmenu.Add(new UIComponent() {
@@ -95,6 +96,20 @@ namespace Game.UserInterface
                 X = 0,
                 Y = 0,
                 SurfaceName = "someBackground.png"
+            });
+            mainmenu.Add(new Button() {
+                Height = 50,
+                Width = 100,
+                X = 300,
+                Y = 300,
+                ButtonText = "Play game",
+                SurfaceName = "shadowbox.png",
+                Click = (x, y) => StateSystem.NewTutorial(),
+                OnControllerButton = (code) => {
+                    if (code == "7") {
+                        StateSystem.NewTutorial();
+                    }
+                }
             });
 
             this.Components[(int)States.MainMenu] = mainmenu;
