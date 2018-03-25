@@ -4,6 +4,7 @@ using Game.Graphics;
 using Game.Models;
 using Game.Models.Entities;
 using SFML.System;
+using Game.Sounds;
 
 namespace Game.Models.Enviroment
 {
@@ -111,6 +112,7 @@ namespace Game.Models.Enviroment
                         Program.map.DisappatingFogs.Add(new DisappatingFog(Program.map.FogEntities[i].X, Program.map.FogEntities[i].Y));
                         Program.map.DeleteFog(i);
                         Program.map.Girl.littleGirlInventory.items.RemoveAt(positionOfLightItemInInventory);
+                        SoundManager.addSound("cloudDissapearance.ogg");
                         positionOfLightItemInInventory = -1;
                         return;
                     }            

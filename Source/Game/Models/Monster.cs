@@ -7,6 +7,7 @@ using SFML.System;
 using SFML.Graphics;
 using System.Threading.Tasks;
 using Game.Models.Enviroment;
+using Game.Sounds;
 
 namespace Game.Models
 {

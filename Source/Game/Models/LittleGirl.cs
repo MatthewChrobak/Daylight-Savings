@@ -153,6 +153,7 @@ namespace Game.Models
                 {
                     Program.map.Girl.health -= 1;
                     Program.map.Girl.flagForHitCounter = 1;
+                    SoundManager.addSound("hit.ogg");
                     return;
                 }
             }
@@ -224,6 +225,7 @@ namespace Game.Models
                     {
                         Program.map.Girl.health += 1;
                         Program.map.potion.RemoveAt(i);
+                        SoundManager.addSound("potion.ogg");
                     }
                 }
             }
