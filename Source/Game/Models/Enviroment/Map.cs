@@ -21,7 +21,7 @@ namespace Game.Models.Enviroment
         public int numStartFog = 10;
         public int numStartSmushy = 5;
         public int numOfCloud = 0;
-        public int winningCondition = 1;
+        public int winningCondition = 15;
         public int currentLevel = 1;
 
         public int Level = 0;
@@ -111,7 +111,7 @@ namespace Game.Models.Enviroment
 
             for (int i = 0; i < Program.map.FogEntities.Count; i++)
             {
-                if (Program.map.FogEntities[i].X <= (Program.map.Girl.X + 125) && Program.map.FogEntities[i].X >= (Program.map.Girl.X - 125) && Program.map.FogEntities[i].Y <= (Program.map.Girl.Y + 62) && Program.map.FogEntities[i].Y >= (Program.map.Girl.Y - 62))
+                if (Program.map.FogEntities[i].X <= (Program.map.Girl.X + 123) && Program.map.FogEntities[i].X >= (Program.map.Girl.X - 123) && Program.map.FogEntities[i].Y <= (Program.map.Girl.Y + 63) && Program.map.FogEntities[i].Y >= (Program.map.Girl.Y - 63))
                 {
                     if (positionOfLightItemInInventory >= 0)
                     {
@@ -120,7 +120,7 @@ namespace Game.Models.Enviroment
                         Program.map.Girl.littleGirlInventory.items.RemoveAt(positionOfLightItemInInventory);
                         positionOfLightItemInInventory = -1;
                         numOfCloud++;
-                        Console.WriteLine("This Number of Cloud killed: " + numOfCloud);
+                        Console.WriteLine("The number of cloud killed: " + numOfCloud);
                         return;
                     }            
                 }
@@ -287,7 +287,6 @@ namespace Game.Models.Enviroment
                             }
                         }
                     }
-
                     if (numOfCloud >= winningCondition) {
 
                         if (Program.map.bigBoss.bossTexture == "doggo.png") {
@@ -306,7 +305,7 @@ namespace Game.Models.Enviroment
                             Program.map.bigBoss.frameHeight = 160;
                         }
                         
-                        winningCondition += 1;
+                        winningCondition += 15;
                     }
                 }
             }
