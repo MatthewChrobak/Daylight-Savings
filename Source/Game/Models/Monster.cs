@@ -15,6 +15,7 @@ namespace Game.Models
         
     }
 
+
     public class Smushy: Position, IDrawable
     {
         private static Random rnd = new Random();
@@ -25,6 +26,19 @@ namespace Game.Models
         public Smushy(float x, float y) : base(x, y) {
             this.animationStep = 0;
             this.GetNewPos();
+        }
+
+        public void SmushyDamage(float x, float y) {
+            int range = 20;
+
+            for (int i = 0; i < Game.Program.map.smushy.Count; i++) {
+
+                if ((Game.Program.map.smushy[i].X + range) >= x && x >= (Game.Program.map.smushy[i].X - range)
+                    && (Game.Program.map.smushy[i].Y + range) >= y && y >= (Game.Program.map.smushy[i].Y - range)) {
+                    Console.WriteLine("Slim Damaged Received");
+                    Game.Program.map.Girl.health -= (float)0.01;
+                }
+            }
         }
 
         public IEnumerable<DrawableComponent> GetDrawableComponents() {
