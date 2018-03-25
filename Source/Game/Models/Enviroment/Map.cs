@@ -4,6 +4,7 @@ using Game.Graphics;
 using Game.Models;
 using Game.Models.Entities;
 using SFML.System;
+using Game.Sounds;
 
 namespace Game.Models.Enviroment
 {
@@ -124,6 +125,7 @@ namespace Game.Models.Enviroment
         public void DeleteFog(int FogToDelete)
         {
             FogEntities.RemoveAt(FogToDelete);
+            SoundManager.addSound("cloudDissapearance.ogg");
         }
 
         public void UpdateFogAnimations()
