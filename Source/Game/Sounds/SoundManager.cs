@@ -72,7 +72,7 @@ namespace Game.Sounds
                 soundDisposer = new Thread(MonitorSounds);
                 soundDisposer.Start();
             }
-        }
+        } 
 
         private static void MonitorSounds()
         {
