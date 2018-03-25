@@ -20,9 +20,10 @@ namespace Game.Models
         public (int X, int Y) TargetPosition;
         public int animationStep = 0;
         public int waitCount = 0;
+        public string bossTexture = "BigBoss.png";
 
         public BigBoss(float x, float y) : base(x, y) {
-            this.animationStep = 0;
+            this.animationStep = 1;
         }
 
         public void BigBossDamage(float x, float y) {
@@ -31,13 +32,13 @@ namespace Game.Models
 
         public void UpdateBigBossTranformation() {
             animationStep += 1;
-            animationStep += 3;
+            animationStep %= 3;
         }
 
         public IEnumerable<DrawableComponent> GetDrawableComponents() {
 
             yield return new DrawableComponent() {
-                TextureName = "BigBoss.png",
+                TextureName = bossTexture,
                 RenderSize = new Vector2f(300, 150),
                 Position = new Vector2f(this.X-150,this.Y-120),
                 Rect = new IntRect(0, 159 * animationStep, 250,  159)
@@ -46,7 +47,7 @@ namespace Game.Models
 
         public void UpdateBigBossAnimationRange() {
             animationStep += 1;
-            animationStep %= 4;
+            animationStep %= 3;
         }
 
     }

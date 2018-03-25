@@ -21,7 +21,7 @@ namespace Game.Models.Enviroment
         public int numStartFog = 10;
         public int numStartSmushy = 5;
         public int numOfCloud = 0;
-        public const int winningCondition = 15;
+        public int winningCondition = 15;
 
 
         public List<Tree> Trees;
@@ -115,6 +115,7 @@ namespace Game.Models.Enviroment
                         Program.map.DeleteFog(i);
                         Program.map.Girl.littleGirlInventory.items.RemoveAt(positionOfLightItemInInventory);
                         positionOfLightItemInInventory = -1;
+                        numOfCloud++;
                         return;
                     }            
                 }
@@ -281,16 +282,8 @@ namespace Game.Models.Enviroment
                             }
                         }
                     }
-                    if (numOfCloud == winningCondition) {
-                        this.bigBoss = null;
-                        bigBossTransformation = new BigBoss((MAX_X * Tile.TILE_SIZE) / 2, 0);
-                        foreach(var bigBossTransformed in this.bigBossTransformation.GetDrawableComponents()) {
-                            bigBossTransformed.TextureName = "BigBossTransformation.png";
-                            break;
-                        }
-                        foreach (var components in this.bigBossTransformation.GetDrawableComponents()) {
-                            yield return components;                           
-                        }
+                    if (numOfCloud==winningCondition) { 
+                        Program.map.bigBoss.bossTexture = "BigBossTransformation.png";       
                     }
                 }
             }
