@@ -9,6 +9,7 @@ namespace Game.Models.Enviroment
 {
     public class Map : IDrawable
     {
+        public List<DisappatingFog> DisappatingFogs;
         public List<Fog> FogEntities;
         public Tile[,] Tiles;
         public const int MAX_X = 30;
@@ -51,6 +52,7 @@ namespace Game.Models.Enviroment
                 }
             }
 
+            DisappatingFogs = new List<DisappatingFog>();
             FogEntities = new List<Fog>();
             for (int i = 0; i < numFog; i++) {
                 FogEntities.Add(new Fog(0, 0));
@@ -86,6 +88,7 @@ namespace Game.Models.Enviroment
                 {
                     if (positionOfLightItemInInventory >= 0)
                     {
+                        Program.map.DisappatingFogs.Add(new DisappatingFog(Program.map.FogEntities[i].X, Program.map.FogEntities[i].Y));
                         Program.map.DeleteFog(i);
                         Program.map.Girl.littleGirlInventory.items.RemoveAt(positionOfLightItemInInventory);
                         positionOfLightItemInInventory = -1;
@@ -117,6 +120,14 @@ namespace Game.Models.Enviroment
 
         public void UpdateFogAnimations()
         {
+            for (int i = 0; i < this.DisappatingFogs.Count; i++) {
+                DisappatingFogs[i].animStep += 1;
+                if (DisappatingFogs[i].animStep == 4) {
+                    DisappatingFogs.RemoveAt(i);
+                    i--;
+                }
+            }
+
             foreach (var fog in this.FogEntities)
             {
                 fog.UpdateAnim();
@@ -177,6 +188,14 @@ namespace Game.Models.Enviroment
                     }
 
                     foreach (var fog in this.FogEntities) {
+                        if (fog.InRange(x * Tile.TILE_SIZE, y * Tile.TILE_SIZE, (x + 1) * Tile.TILE_SIZE, (y + 1) * Tile.TILE_SIZE)) {
+                            foreach (var component in fog.GetDrawableComponents()) {
+                                yield return component;
+                            }
+                        }
+                    }
+
+                    foreach (var fog in this.DisappatingFogs) {
                         if (fog.InRange(x * Tile.TILE_SIZE, y * Tile.TILE_SIZE, (x + 1) * Tile.TILE_SIZE, (y + 1) * Tile.TILE_SIZE)) {
                             foreach (var component in fog.GetDrawableComponents()) {
                                 yield return component;
