@@ -2,10 +2,11 @@
 {
     public static class StateSystem
     {
-        public static States GameState { get; set; }
+        public static States GameState { get; private set; }
 
         public static void TryClose()
         {
+            Program.Events.Clear();
             if (GameState == States.InGame || GameState == States.GameOver) {
                 GameState = States.MainMenu;
             } else {

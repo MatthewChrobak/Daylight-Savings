@@ -49,10 +49,10 @@ namespace Game.Timing {
                 GameEvents.Add(new Event(Program.map.Girl.HealthLossFromFog, 100, true));
                 GameEvents.Add(new Event(Program.map.Girl.CheckHealth, 100, true));
 
-                GameEvents.Add(new Event(Program.map.CloudSpawning, 1000 * 15, true));
+                GameEvents.Add(new Event(Program.map.CloudSpawning, 1000 * 5, true));
                 GameEvents.Add(new Event(Program.map.ItemSpawning, 1000 * 45, true));
-                GameEvents.Add(new Event(Program.map.LightSpawning, 1000 * 15, true));
-                GameEvents.Add(new Event(Program.map.SmushySpawning, 1000 * 10, true));
+                GameEvents.Add(new Event(Program.map.LightSpawning, 1000 * 5, true));
+                GameEvents.Add(new Event(Program.map.SmushySpawning, 1000 * 7, true));
             }
         }
 

@@ -111,7 +111,7 @@ namespace Game.Models.Enviroment
 
             for (int i = 0; i < Program.map.FogEntities.Count; i++)
             {
-                if (Program.map.FogEntities[i].X <= (Program.map.Girl.X + 125) && Program.map.FogEntities[i].X >= (Program.map.Girl.X - 125) && Program.map.FogEntities[i].Y <= (Program.map.Girl.Y + 62) && Program.map.FogEntities[i].Y >= (Program.map.Girl.Y - 62))
+                if (Program.map.FogEntities[i].X <= (Program.map.Girl.X + 120) && Program.map.FogEntities[i].X >= (Program.map.Girl.X - 120) && Program.map.FogEntities[i].Y <= (Program.map.Girl.Y + 60) && Program.map.FogEntities[i].Y >= (Program.map.Girl.Y - 60))
                 {
                     if (positionOfLightItemInInventory >= 0)
                     {
@@ -120,7 +120,6 @@ namespace Game.Models.Enviroment
                         Program.map.Girl.littleGirlInventory.items.RemoveAt(positionOfLightItemInInventory);
                         positionOfLightItemInInventory = -1;
                         numOfCloud++;
-                        Console.WriteLine("This Number of Cloud killed: " + numOfCloud);
                         return;
                     }            
                 }
@@ -289,7 +288,7 @@ namespace Game.Models.Enviroment
                     }
                     if (numOfCloud >= winningCondition) {
                         Program.map.bigBoss.bossTexture = "BigBossTransformation.png";
-                        winningCondition += 10;
+                        winningCondition += 15;
                     }
                 }
             }

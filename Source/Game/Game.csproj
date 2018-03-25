@@ -88,6 +88,7 @@
     <Compile Include="Timing\EventSystem.cs" />
     <Compile Include="Timing\StateSystem.cs" />
     <Compile Include="UserInterface\Button.cs" />
+    <Compile Include="UserInterface\CloudsRemaining.cs" />
     <Compile Include="UserInterface\HealthBar.cs" />
     <Compile Include="UserInterface\LightDisplay.cs" />
     <Compile Include="UserInterface\Marker.cs" />

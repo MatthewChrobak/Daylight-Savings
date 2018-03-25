@@ -66,13 +66,13 @@ namespace Game.Models
         }
 
         public void SmushyDamage(float x, float y) {
-            int range = 20;
+            int range = 30;
 
             for (int i = 0; i < Game.Program.map.smushy.Count; i++) {
 
                 if ((Game.Program.map.smushy[i].X + range) >= x && x >= (Game.Program.map.smushy[i].X - range)
                     && (Game.Program.map.smushy[i].Y + range) >= y && y >= (Game.Program.map.smushy[i].Y - range)) {
-                    Game.Program.map.Girl.health -= (float)0.01;
+                    Game.Program.map.Girl.health -= (float)0.03;
                     Program.map.Girl.flagForHitCounter = 1;
                 }
             }
