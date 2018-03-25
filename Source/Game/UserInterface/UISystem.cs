@@ -84,7 +84,7 @@ namespace Game.UserInterface
                 }
             });
             mainmenu.Add(new Marker() {
-                Width = 200,
+                Width = 250,
                 Height = 100,
                 X = 50,
                 Y = 250,
@@ -93,7 +93,7 @@ namespace Game.UserInterface
             mainmenu.Add(new Button() {
                 Height = 50,
                 Width = 100,
-                X = 960 - 960 / 2,
+                X = 960 - 960 / 2 + 50,
                 Y = 300,
                 ButtonText = "Play Game",
                 SurfaceName = "whitebox.png",
@@ -104,18 +104,10 @@ namespace Game.UserInterface
                     }
                 }     
             });
-            gameOver.Add(new UIComponent()
-            {
-                Height = 640,
-                Width = 960,
-                X = 0,
-                Y = 0,
-                SurfaceName = "someBackground.png"
-            });
             mainmenu.Add(new Button() {
                 Height = 50,
                 Width = 100,
-                X = 960 / 3,
+                X = 960 / 3 - 50,
                 Y = 300,
                 ButtonText = "Play Tutorial",
                 SurfaceName = "whitebox.png",
@@ -125,6 +117,14 @@ namespace Game.UserInterface
                         StateSystem.NewTutorial();
                     }
                 }
+            });
+            gameOver.Add(new UIComponent()
+            {
+                Height = 640,
+                Width = 960,
+                X = 0,
+                Y = 0,
+                SurfaceName = "someBackground.png"
             });
 
             this.Components[(int)States.MainMenu] = mainmenu;
