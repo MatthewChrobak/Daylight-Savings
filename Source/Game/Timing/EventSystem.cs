@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System;
 
 namespace Game.Timing
 {
@@ -26,6 +27,8 @@ namespace Game.Timing
             GameEvents.Add(new Event(Program.map.UpdateSmushyPositions, 1, true));
             GameEvents.Add(new Event(Program.map.UpdateGirlAnimations, 100, true));
             GameEvents.Add(new Event(Program.map.UpdateFog, 8, true));
+
+            GameEvents.Add(new Event(Program.map.Girl.HealthLossFromFog, 2000, true));
         }
 
         public void GameLoop()
