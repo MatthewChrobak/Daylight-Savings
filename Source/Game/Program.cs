@@ -16,7 +16,7 @@ namespace Game
 
         private static void Main(string[] args)
         {
-            MusicManager.addMusic("Theme.ogg", true);
+            MusicManager.addMusic("Theme.ogg", true, 30);
             map.Girl.itemSurroundingCheck();
             Events.GameLoop();
         }

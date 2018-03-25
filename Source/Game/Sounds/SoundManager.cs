@@ -13,11 +13,13 @@ namespace Game.Sounds
 
         public static void addMusic(string fileName, bool loop = false, float volume = 100.0f)
         {
-            gameMusic.Add(new Music("music/" + fileName) {
-                Loop = loop,
-                Volume = volume
-            });
-            gameMusic.Last().Play();
+            lock (gameMusic) {
+                gameMusic.Add(new Music("music/" + fileName) {
+                    Loop = loop,
+                    Volume = volume
+                });
+                gameMusic.Last().Play();
+            }
 
             // If there is no GC, initialize it.
             if (musicDisposer == null) {
@@ -36,13 +38,16 @@ namespace Game.Sounds
         private static void MonitorMusic()
         {
             while (StateSystem.GameState != States.Closed) {
-                for (int i = 0; i < gameMusic.Count; i++) {
-                    if (gameMusic[i].Status == SoundStatus.Stopped) {
-                        gameMusic[i].Dispose();
-                        gameMusic.RemoveAt(i);
-                        i--;
+                lock (gameMusic) {
+                    for (int i = 0; i < gameMusic.Count; i++) {
+                        if (gameMusic[i].Status == SoundStatus.Stopped) {
+                            gameMusic[i].Dispose();
+                            gameMusic.RemoveAt(i);
+                            i--;
+                        }
                     }
                 }
+
                 Thread.Yield();
             }
         }
@@ -52,10 +57,38 @@ namespace Game.Sounds
 
     public static class SoundManager
     {
+        private static List<Sound> Sounds = new List<Sound>();
+        private static Thread soundDisposer = null;
+
         public static void addSound(string fileName)
         {
-            new Sound(new SoundBuffer("music/" + fileName)).Play();
+            lock (Sounds) {
+                Sounds.Add(new Sound(new SoundBuffer("music/" + fileName)));
+                Sounds.Last().Play();
+            }
 
+            // If there is no GC, initialize it.
+            if (soundDisposer == null) {
+                soundDisposer = new Thread(MonitorSounds);
+                soundDisposer.Start();
+            }
+        }
+
+        private static void MonitorSounds()
+        {
+            while (StateSystem.GameState != States.Closed) {
+                lock(Sounds) {
+                    for (int i = 0; i < Sounds.Count; i++) {
+                        if (Sounds[i].Status == SoundStatus.Stopped) {
+                            Sounds[i].Dispose();
+                            Sounds.RemoveAt(i);
+                            i--;
+                        }
+                    }
+                }
+
+                Thread.Yield();
+            }
         }
     }
 }

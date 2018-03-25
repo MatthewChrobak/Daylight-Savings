@@ -1,6 +1,5 @@
 ﻿using SFML.Graphics;
 using SFML.System;
-using Game.Models.Enviroment;
 using System.Collections.Generic;
 using Game.Models;
 
@@ -83,6 +82,10 @@ namespace Game.Graphics
                         size.Y / sprite.Texture.Size.Y
                         );
                 }
+            }
+
+            if (component.Color != null) {
+                sprite.Color = (Color)component.Color;
             }
 
             this._context.Draw(sprite);

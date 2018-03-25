@@ -20,6 +20,7 @@ namespace Game.Models
 
         public int animStep = 0;
         public bool halfStep = false;
+        private int flagForHitCounter = 0;
 
         // Constructor for the Little Girl, setting her position
         public LittleGirl(int x, int y) : base(x, y)
@@ -29,13 +30,29 @@ namespace Game.Models
 
         public IEnumerable<DrawableComponent> GetDrawableComponents()
         {
-            yield return new DrawableComponent()
+            var comp = new DrawableComponent()
             {
                 TextureName = this.SurfaceName,
                 RenderSize = new Vector2f(70, 104),
                 Position = new Vector2f(this.X - 35, this.Y - 100),
                 Rect = new IntRect(513 * (int)girlDirection, 738 * animStep, 513, 738)
             };
+
+            if (this.flagForHitCounter > 0) {
+
+                if (this.flagForHitCounter < 5) {
+                    comp.Color = Color.Red;
+                } else {
+                    if (this.flagForHitCounter % 10 < 5) {
+                        comp.Color = new Color(50, 255, 255);
+                    }
+                }
+                
+                this.flagForHitCounter += 1;
+                this.flagForHitCounter %= 75;
+            }
+
+            yield return comp;
         }
 
 
@@ -119,13 +136,18 @@ namespace Game.Models
 
         public void HealthLossFromFog()
         {
+            if (Program.map.Girl.flagForHitCounter != 0) {
+                return;
+            }
             for (int i = 0; i < Program.map.FogEntities.Count; i++)
             {
                 if (Program.map.FogEntities[i].X <= (Program.map.Girl.X + 125) && Program.map.FogEntities[i].X >= (Program.map.Girl.X - 125) 
                     && Program.map.FogEntities[i].Y <= (Program.map.Girl.Y + 62) && Program.map.FogEntities[i].Y >= (Program.map.Girl.Y - 62))
                 {
+                    Console.WriteLine("Hit " + Program.map.Girl.flagForHitCounter);
                     Program.map.Girl.health -= 1;
-                    Console.Write(Program.map.Girl.health);
+                    Program.map.Girl.flagForHitCounter = 1;
+                    SoundManager.addSound("hit.ogg");
                     return;
                 }
             }
@@ -185,10 +207,9 @@ namespace Game.Models
                 if (Program.map.potion[i].X <= (Program.map.Girl.X + range) && Program.map.potion[i].X >= (Program.map.Girl.X - range)
                     && Program.map.potion[i].Y <= (Program.map.Girl.Y + range) && Program.map.potion[i].Y >= (Program.map.Girl.Y - range))
                 {
-                    if (Program.map.Girl.health < 5)
+                    if (Program.map.Girl.health < MaxHealth)
                     {
                         Program.map.Girl.health += 1;
-                        Console.Write(Program.map.Girl.health);
                         Program.map.potion.RemoveAt(i);
                         SoundManager.addSound("potion.ogg");
                     }
