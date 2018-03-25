@@ -54,7 +54,7 @@ namespace Game.Sounds
     {
         public static void addSound(string fileName)
         {
-            new Sound(new SoundBuffer("music/" + fileName)).Play();
+           // new Sound(new SoundBuffer("music/" + fileName)).Play();
         }
     }
 }
