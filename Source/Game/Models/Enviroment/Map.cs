@@ -37,6 +37,7 @@ namespace Game.Models.Enviroment
                 FogEntities.Add(new Fog(0, 0));
             }
 
+
         }
 
         public void UpdateFogPositions()

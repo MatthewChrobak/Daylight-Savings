@@ -63,15 +63,26 @@ namespace Game.Models
             this.X += velocity.X;
             this.Y += velocity.Y;
 
-           
+            itemSurroundingCheck();
 
         }
 
         public void itemSurroundingCheck() {
-            foreach(var i in Game.Program.map.light) {
-                Console.WriteLine("X is: " + i.X + " Y is: " + i.Y);
+
+            int range = 30;
+
+            for (int i = 0; i < Game.Program.map.light.Length; i++) {
+
+                if ((Game.Program.map.light[i].X + range >= this.X && this.X >= Game.Program.map.light[i].X - range) 
+                    && (Game.Program.map.light[i].Y + range >= this.Y && this.Y >= Game.Program.map.light[i].Y - range)) {
+                   
+                }
             }
-                
+                /*
+                 * debugging purpose
+                 * Console.WriteLine("X is: " + i.X + " Y is: " + i.Y); 
+                 */
+   
         }
     }
 }

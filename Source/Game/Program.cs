@@ -31,7 +31,7 @@ namespace Game
             events.GameEvents.Add(new Event(map.UpdateFogAnim, 250));
             
             MusicManager.addMusic("Theme.ogg", true);
-            map.Girl.itemSurroundingCheck();
+            
             events.GameLoop();
         }
     }
