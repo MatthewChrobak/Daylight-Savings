@@ -108,10 +108,8 @@ namespace Game.Graphics
 
             if (window != null)
             {
-                if (e.Code == Keyboard.Key.E)
-
                 if (e.Code == Keyboard.Key.Escape)
-                    StateSystem.GameState = States.Closed;
+                    StateSystem.TryClose();
             }
 
         }

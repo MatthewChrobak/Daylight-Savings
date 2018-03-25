@@ -285,7 +285,7 @@ namespace Game.Models.Enviroment
                             }
                         }
                     }
-                    if (numOfCloud==winningCondition) { 
+                    if (numOfCloud>=winningCondition) { 
                         Program.map.bigBoss.bossTexture = "BigBossTransformation.png";       
                     }
                 }

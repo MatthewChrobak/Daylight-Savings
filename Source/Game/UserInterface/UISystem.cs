@@ -67,6 +67,10 @@ namespace Game.UserInterface
                 SurfaceName = "Full_HealthBar.png"
             });
             gameUI.Add(new LightDisplay());
+            gameUI.Add(new CloudsRemaining() {
+                Width = 300,
+                Height = 50
+            });
 
             // Mainmenu Components
             mainmenu.Add(new UIComponent() {
