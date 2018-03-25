@@ -15,32 +15,67 @@ namespace Game.Models
         
     }
 
-    public class Smoshy: Position, IDrawable
+    public class Smushy: Position, IDrawable
     {
-        public string SurfaceName { get; set; } = "";
+        private static Random rnd = new Random();
+        public (int X, int Y) TargetPosition;
+        public int animationStep = 0;
+        public int waitCount = 0;
 
-        public Smoshy(float x, float y) : base(x, y) {
-
+        public Smushy(float x, float y) : base(x, y) {
+            this.animationStep = 0;
+            this.GetNewPos();
         }
 
         public IEnumerable<DrawableComponent> GetDrawableComponents() {
 
             yield return new DrawableComponent() {
-                TextureName = this.SurfaceName,
-                RenderSize = new Vector2f(50, 50),
-                Position = new Vector2f(this.X - Tile.TILE_SIZE / 2, this.Y - Tile.TILE_SIZE / 2),
-                Rect = new IntRect()
+                TextureName = "smushy.png",
+                RenderSize = new Vector2f(25, 50),
+                Position = new Vector2f(this.X - 11, this.Y - 37),
+                Rect = new IntRect(22 * animationStep, 0, 22, 43)
             };
         }
-    }
 
-    public class Goblin : Monster
-    {
+        public void GetNewPos() {
+            TargetPosition.X = rnd.Next(0, Map.MAX_X * Tile.TILE_SIZE);
+            TargetPosition.Y = rnd.Next(0, Map.MAX_Y * Tile.TILE_SIZE);
+        }
 
-    }
+        public void UpdateAnimation() {
+            animationStep += 1;
+            animationStep %= 8;
+        }
 
-    public class Zombie : Monster
-    {
+        public void UpdatePosition() {
+            {
+                float moveSpeed = 1.0f;
 
+                if (this.X >= TargetPosition.X && this.X <= TargetPosition.X + Tile.TILE_SIZE) {
+                    if (this.Y >= TargetPosition.Y && this.Y <= TargetPosition.Y + Tile.TILE_SIZE) {
+                        waitCount += 1;
+
+                        // Did we wait long enough?
+                        if (waitCount >= 100) {
+                            this.GetNewPos();
+                            waitCount = 0;
+                        }
+                    }
+                }
+
+                if (this.X < TargetPosition.X) {
+                    this.X += moveSpeed;
+                }
+                else if (this.X > TargetPosition.X) {
+                    this.X -= moveSpeed;
+                }
+                if (this.Y < TargetPosition.Y) {
+                    this.Y += moveSpeed;
+                }
+                else if (this.Y > TargetPosition.Y) {
+                    this.Y -= moveSpeed;
+                }
+            }
+        }
     }
 }

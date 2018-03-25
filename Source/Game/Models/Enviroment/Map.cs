@@ -16,7 +16,7 @@ namespace Game.Models.Enviroment
 
         public LittleGirl Girl { get; set; }
         public List<Light> light;
-        public Smoshy smoshy;
+        public Smushy smushy { get; set; }
         Random rnd = new Random();
 
         public Map()
@@ -34,6 +34,8 @@ namespace Game.Models.Enviroment
             }
             this.Girl = new LittleGirl(rnd.Next(1, MAX_X * Tile.TILE_SIZE), rnd.Next(1, MAX_Y * Tile.TILE_SIZE));
 
+            this.smushy = new Smushy(100, 100);
+
             for (int x = 0; x < MAX_X; x++) {
                 for (int y = 0; y < MAX_Y; y++) {
                     this.Tiles[x, y] = new Tile(x * Tile.TILE_SIZE, y * Tile.TILE_SIZE);
@@ -44,6 +46,8 @@ namespace Game.Models.Enviroment
             for (int i = 0; i < 10; i++) {
                 FogEntities.Add(new Fog(0, 0));
             }
+
+           
         }
 
         public void UpdateFogPositions()
@@ -53,11 +57,19 @@ namespace Game.Models.Enviroment
             }
         }
 
+        public void UpdateSmushyPositions() {
+            this.smushy.UpdatePosition();
+        }
+
         public void UpdateFogAnimations()
         {
             foreach (var fog in this.FogEntities) {
                 fog.UpdateAnim();
             }
+        }
+
+        public void UpdateSmushyAnimations() {
+            this.smushy.UpdateAnimation();
         }
 
         public void UpdateGirlAnimations()
@@ -90,6 +102,9 @@ namespace Game.Models.Enviroment
                 foreach (var component in fog.GetDrawableComponents()) {
                     yield return component;
                 }
+            }
+            foreach (var component in this.smushy.GetDrawableComponents()) {
+                yield return component;
             }
         }
     }
