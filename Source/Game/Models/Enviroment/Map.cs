@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Game.Graphics;
 using Game.Models;
 using Game.Models.Entities;
-
+using SFML.System;
 
 namespace Game.Models.Enviroment
 {
@@ -76,6 +76,23 @@ namespace Game.Models.Enviroment
 
         public IEnumerable<DrawableComponent> GetDrawableComponents()
         {
+            for (int y = -3; y < 0; y++) {
+                for (int x = 0; x < MAX_X; x++) {
+                    yield return new DrawableComponent() {
+                        TextureName = "grass2.png",
+                        Position = new Vector2f(x * Tile.TILE_SIZE, y * Tile.TILE_SIZE),
+                        RenderSize = new Vector2f(Tile.TILE_SIZE, Tile.TILE_SIZE)
+                    };
+                }
+            }
+            for (int x = 0; x < MAX_X; x += 3) {
+                yield return new DrawableComponent() {
+                    TextureName = "top border.png",
+                    Position = new Vector2f(x * Tile.TILE_SIZE, -3 * Tile.TILE_SIZE),
+                    RenderSize = new Vector2f(Tile.TILE_SIZE * 3, Tile.TILE_SIZE * 3)
+                };
+            }
+
             for (int y = 0; y < MAX_Y; y++) {
                 for (int x = 0; x < MAX_X; x++) {
                     foreach (var component in this.Tiles[x, y].GetDrawableComponents()) {
@@ -116,7 +133,29 @@ namespace Game.Models.Enviroment
                 }
             }
 
+            for (int y = -2; y < MAX_Y; y += 3) {
+                yield return new DrawableComponent() {
+                    TextureName = "left border.png",
+                    Position = new Vector2f(-2 * Tile.TILE_SIZE, y * Tile.TILE_SIZE),
+                    RenderSize = new Vector2f(Tile.TILE_SIZE * 3, Tile.TILE_SIZE * 3)
+                };
+            }
 
+            for (int y = -2; y < MAX_Y; y += 3) {
+                yield return new DrawableComponent() {
+                    TextureName = "right border.png",
+                    Position = new Vector2f(Map.MAX_X * Tile.TILE_SIZE - Tile.TILE_SIZE, y * Tile.TILE_SIZE),
+                    RenderSize = new Vector2f(Tile.TILE_SIZE * 3, Tile.TILE_SIZE * 3)
+                };
+            }
+
+            for (int x = 0; x < MAX_X; x+= 3) {
+                yield return new DrawableComponent() {
+                    TextureName = "bottom border.png",
+                    Position = new Vector2f(x * Tile.TILE_SIZE, Map.MAX_Y * Tile.TILE_SIZE - Tile.TILE_SIZE),
+                    RenderSize = new Vector2f(Tile.TILE_SIZE * 3, Tile.TILE_SIZE * 3)
+                };
+            }
         }
     }
 }
