@@ -69,6 +69,7 @@
     <Compile Include="Graphics\SurfaceManager.cs" />
     <Compile Include="Models\Directions.cs" />
     <Compile Include="Models\Entities\Fog.cs" />
+    <Compile Include="Models\Entities\Tree.cs" />
     <Compile Include="Models\Enviroment\Map.cs" />
     <Compile Include="Models\Enviroment\Tile.cs" />
     <Compile Include="Models\Inventory.cs" />
@@ -95,11 +96,10 @@
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PreBuildEvent>
-    </PreBuildEvent>
+    <PreBuildEvent>rd "Graphics\</PreBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
-    <PostBuildEvent>
-    </PostBuildEvent>
+    <PostBuildEvent>mkdir "$(TargetDir)Graphics\"
+xcopy "$(SolutionDir)Graphics\*" "$(TargetDir)Graphics\" /s /i /y</PostBuildEvent>
   </PropertyGroup>
 </Project>
