@@ -21,7 +21,8 @@ namespace Game.Models.Enviroment
         public int numStartFog = 10;
         public int numStartSmushy = 5;
         public int numOfCloud = 0;
-        public int winningCondition = 15;
+        public int winningCondition = 1;
+        public int currentLevel = 1;
 
         public int Level = 0;
         public int CloudsRemaining = 0;
@@ -119,6 +120,7 @@ namespace Game.Models.Enviroment
                         Program.map.Girl.littleGirlInventory.items.RemoveAt(positionOfLightItemInInventory);
                         positionOfLightItemInInventory = -1;
                         numOfCloud++;
+                        Console.WriteLine("This Number of Cloud killed: " + numOfCloud);
                         return;
                     }            
                 }
@@ -285,8 +287,26 @@ namespace Game.Models.Enviroment
                             }
                         }
                     }
-                    if (numOfCloud>=winningCondition) { 
-                        Program.map.bigBoss.bossTexture = "BigBossTransformation.png";       
+
+                    if (numOfCloud >= winningCondition) {
+
+                        if (Program.map.bigBoss.bossTexture == "doggo.png") {
+                            Program.map.bigBoss.bossTexture = "victory dog.png";
+                            Program.map.bigBoss.numSteps = 4;
+                            Program.map.bigBoss.frameHeight = 138;
+                        }
+                        if (Program.map.bigBoss.bossTexture == "BigBossTransformation.png") {
+                            Program.map.bigBoss.bossTexture = "doggo.png";
+                            Program.map.bigBoss.numSteps = 3;
+                            Program.map.bigBoss.frameHeight = 162;
+                        }
+                        if (Program.map.bigBoss.bossTexture == "BigBoss.png") {
+                            Program.map.bigBoss.bossTexture = "BigBossTransformation.png";
+                            Program.map.bigBoss.numSteps = 3;
+                            Program.map.bigBoss.frameHeight = 160;
+                        }
+                        
+                        winningCondition += 1;
                     }
                 }
             }

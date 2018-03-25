@@ -56,6 +56,7 @@ namespace Game.UserInterface
             var mainmenu = new List<UIComponent>();
             var gameUI = new List<UIComponent>();
             var gameOver = new List<UIComponent>();
+            var gamewin = new List<UIComponent>();
 
 
             //HealthBar Components
@@ -138,9 +139,18 @@ namespace Game.UserInterface
                 SurfaceName = "someBackground.png"
             });
 
+            gamewin.Add(new UIComponent() {
+                Height = 640,
+                Width = 960,
+                X = 0,
+                Y = 0,
+                SurfaceName = "winscreen.png"
+            });
+
             this.Components[(int)States.MainMenu] = mainmenu;
             this.Components[(int)States.InGame] = gameUI;
             this.Components[(int)States.GameOver] = gameOver;
+            this.Components[(int)States.Win] = gamewin;
         }
     }
 }

@@ -19,20 +19,24 @@ namespace Game.Models
         private static Random rnd = new Random();
         public (int X, int Y) TargetPosition;
         public int animationStep = 0;
+        public int numSteps;
+        public int frameHeight;
         public int waitCount = 0;
         public string bossTexture = "BigBoss.png";
 
         public BigBoss(float x, float y) : base(x, y) {
             this.animationStep = 1;
+            this.frameHeight = 160;
+            this.numSteps = 4;
         }
 
         public void BigBossDamage(float x, float y) {
-           
+            
         }
 
         public void UpdateBigBossTranformation() {
             animationStep += 1;
-            animationStep %= 3;
+            animationStep %= numSteps;
         }
 
         public IEnumerable<DrawableComponent> GetDrawableComponents() {
@@ -41,7 +45,7 @@ namespace Game.Models
                 TextureName = bossTexture,
                 RenderSize = new Vector2f(300, 150),
                 Position = new Vector2f(this.X-150,this.Y-120),
-                Rect = new IntRect(0, 159 * animationStep, 250,  159)
+                Rect = new IntRect(0, frameHeight * animationStep, 250,  frameHeight)
             };
         }
 
