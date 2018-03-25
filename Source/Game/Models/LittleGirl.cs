@@ -84,6 +84,13 @@ namespace Game.Models
             this.animStep += 1;
             this.animStep %= 8;
         }
+
+        public void itemSurroundingCheck() {
+            foreach(var i in Game.Program.map.light) {
+                Console.WriteLine("X is: " + i.X + " Y is: " + i.Y);
+            }
+                
+        }
     }
 }
 

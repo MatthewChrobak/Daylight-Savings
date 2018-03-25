@@ -5,7 +5,7 @@ namespace Game.Models
 {
     public class Inventory
     {
-        public Item[] littleGirlInventory { get; set; } = new Item[10];
+        public Item[] littleGirlInventory { get; set; } = new Item[20];
 
 
         //Functions to add and remove items
