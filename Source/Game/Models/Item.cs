@@ -12,6 +12,10 @@ namespace Game.Models
        
     }
 
+    public class LightItem:Item {
+
+    }
+
     public class Light : Position, IDrawable
     {
 

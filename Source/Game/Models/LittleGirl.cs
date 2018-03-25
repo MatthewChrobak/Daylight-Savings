@@ -11,7 +11,7 @@ namespace Game.Models
     {
         public Vector2f velocity { get; set; }
         public int health { get; set; }
-        public Inventory littleGirlInventory;
+        public Inventory littleGirlInventory = new Inventory();
         public string SurfaceName { get; set; } = "girl.png";
         public Direction girlDirection;
 
@@ -62,7 +62,6 @@ namespace Game.Models
 
             this.X += velocity.X;
             this.Y += velocity.Y;
-            Console.WriteLine("X position: " + this.X + " Y position: " + this.Y);
         }
         public void UpdateAnimation()
         {
@@ -94,8 +93,8 @@ namespace Game.Models
 
                 if ((Game.Program.map.light[i].X + range >= this.X && this.X >= Game.Program.map.light[i].X - range) 
                     && (Game.Program.map.light[i].Y + range >= this.Y && this.Y >= Game.Program.map.light[i].Y - range)) {
+                    Program.map.Girl.littleGirlInventory.items.Add(new LightItem());
                     Program.map.light.RemoveAt(i);
-                    Console.WriteLine("REMOVED");
                 }
             }
                 /*
