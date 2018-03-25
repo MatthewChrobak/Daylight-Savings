@@ -4,6 +4,7 @@ using SFML.Graphics;
 using SFML.System;
 using Game.Models.Enviroment;
 using System;
+using Game.Sounds;
 
 namespace Game.Models
 {
@@ -104,6 +105,10 @@ namespace Game.Models
 
             this.animStep += 1;
             this.animStep %= 8;
+
+            if (this.animStep % 4 == 1) {
+                SoundManager.addSound("footstep.ogg");
+            }
 
             this.itemSurroundingCheck();
         }
