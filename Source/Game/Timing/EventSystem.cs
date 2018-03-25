@@ -24,7 +24,7 @@ namespace Game.Timing
                 Program.Graphics.EndRenderFrame();
             }, 16, false));
 
-            GameEvents.Add(new Event(Program.map.UpdateBigBossAnimations, 50, true));
+            GameEvents.Add(new Event(Program.map.UpdateBigBossAnimations, 100, true));
             GameEvents.Add(new Event(Program.map.TimerIncrementor, 1, true));
             GameEvents.Add(new Event(Program.map.UpdateFogPositions, 8, true));
             GameEvents.Add(new Event(Program.map.UpdateFogAnimations, 250, true));

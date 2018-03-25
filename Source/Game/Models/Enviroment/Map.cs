@@ -48,9 +48,9 @@ namespace Game.Models.Enviroment
             }
 
 
-            this.Girl = new LittleGirl(700, 700);
+            this.Girl = new LittleGirl(350, 350);
 
-            this.bigBoss = new BigBoss(((Map.MAX_X * Tile.TILE_SIZE) / 2), 0);
+            this.bigBoss = new BigBoss((MAX_X*Tile.TILE_SIZE)/2, 0);
 
             smushy = new List<Smushy>();
             for(int i = 0; i < numSmushy; i++) {
@@ -68,7 +68,7 @@ namespace Game.Models.Enviroment
             DisappatingFogs = new List<DisappatingFog>();
             FogEntities = new List<Fog>();
             for (int i = 0; i < numFog; i++) {
-                FogEntities.Add(new Fog(0, 0));
+                FogEntities.Add(new Fog((MAX_X * Tile.TILE_SIZE) / 2, 0));
             }
 
             Trees = new List<Tree>();

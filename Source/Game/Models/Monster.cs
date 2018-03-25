@@ -34,8 +34,8 @@ namespace Game.Models
             yield return new DrawableComponent() {
                 TextureName = "BigBoss.png",
                 RenderSize = new Vector2f(300, 150),
-                Position = new Vector2f(this.X,this.Y-804),
-                Rect = new IntRect(22 * animationStep, 0, 2500, 1609)
+                Position = new Vector2f(this.X-150,this.Y-75),
+                Rect = new IntRect(0, 159 * animationStep, 250,  159)
             };
         }
 
