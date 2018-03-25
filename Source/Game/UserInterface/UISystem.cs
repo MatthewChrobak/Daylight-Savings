@@ -1,6 +1,7 @@
 ﻿using Game.Graphics;
 using Game.Timing;
 using System.Collections.Generic;
+using Game.Sounds;
 
 namespace Game.UserInterface
 {
@@ -63,7 +64,7 @@ namespace Game.UserInterface
             mainmenu.Add(new Button() {
                 Height = 50,
                 Width = 100,
-                X = 100, 
+                X = 100,
                 Y = 300,
                 ButtonText = "Play game",
                 SurfaceName = "shadowbox.png",

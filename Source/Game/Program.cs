@@ -1,5 +1,6 @@
 ﻿using Game.Graphics;
 using Game.Models.Enviroment;
+using Game.Sounds;
 using Game.Timing;
 using Game.UserInterface;
 
@@ -29,6 +30,8 @@ namespace Game
             }, 16));
             events.GameEvents.Add(new Event(map.UpdateFogPositions, 8));
             events.GameEvents.Add(new Event(map.UpdateFogAnim, 250));
+            
+            MusicManager.addMusic("Theme.ogg", true);
 
             events.GameLoop();
         }

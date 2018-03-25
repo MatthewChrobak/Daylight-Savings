@@ -4,6 +4,7 @@ using Game.Timing;
 using SFML.Graphics;
 using SFML.Window;
 using System;
+using Game.Sounds;
 
 namespace Game.Graphics
 {
@@ -75,7 +76,6 @@ namespace Game.Graphics
                 else
                     this.girl.Y -= 25;
                 Console.WriteLine(this.girl.Y);
-               
             }
             else if (e.Code == Keyboard.Key.Down)
             {
@@ -105,7 +105,9 @@ namespace Game.Graphics
                     this.girl.X += 25;
                 }
                 Console.WriteLine(this.girl.X);
-            } 
+            }
+
+            SoundManager.addSound("footstep.ogg");
         }
 
         private void GameWindow_Closed(object sender, EventArgs e)

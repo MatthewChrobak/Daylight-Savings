@@ -11,12 +11,9 @@ namespace Game.Models.Enviroment
     {
         public List<Fog> FogEntities = new List<Fog>();
         public Tile[,] Tiles;
-
         public const int MAX_X = 30;
         public const int MAX_Y = 15;
         public const int MAX_COIN = 10;
-
-
 
         public LittleGirl Girl { get; set; }
         Light[] light = new Light[MAX_COIN];
