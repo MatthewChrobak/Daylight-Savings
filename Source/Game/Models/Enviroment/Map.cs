@@ -111,7 +111,7 @@ namespace Game.Models.Enviroment
 
             for (int i = 0; i < Program.map.FogEntities.Count; i++)
             {
-                if (Program.map.FogEntities[i].X <= (Program.map.Girl.X + 120) && Program.map.FogEntities[i].X >= (Program.map.Girl.X - 120) && Program.map.FogEntities[i].Y <= (Program.map.Girl.Y + 60) && Program.map.FogEntities[i].Y >= (Program.map.Girl.Y - 60))
+                if (Program.map.FogEntities[i].X <= (Program.map.Girl.X + 123) && Program.map.FogEntities[i].X >= (Program.map.Girl.X - 123) && Program.map.FogEntities[i].Y <= (Program.map.Girl.Y + 63) && Program.map.FogEntities[i].Y >= (Program.map.Girl.Y - 63))
                 {
                     if (positionOfLightItemInInventory >= 0)
                     {
@@ -120,6 +120,7 @@ namespace Game.Models.Enviroment
                         Program.map.Girl.littleGirlInventory.items.RemoveAt(positionOfLightItemInInventory);
                         positionOfLightItemInInventory = -1;
                         numOfCloud++;
+                        Console.WriteLine("The number of cloud killed: " + numOfCloud);
                         return;
                     }            
                 }

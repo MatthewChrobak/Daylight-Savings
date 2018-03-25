@@ -66,7 +66,7 @@ namespace Game.Models
         }
 
         public void SmushyDamage(float x, float y) {
-            int range = 30;
+            int range = 25;
 
             for (int i = 0; i < Game.Program.map.smushy.Count; i++) {
 
