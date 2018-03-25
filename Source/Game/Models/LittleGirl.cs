@@ -5,6 +5,7 @@ using SFML.System;
 using Game.Models.Enviroment;
 using System;
 using Game.Sounds;
+using Game.Models;
 
 namespace Game.Models
 {
@@ -46,6 +47,11 @@ namespace Game.Models
 
         public void Move()
         {
+
+            //Mob Dmg
+            foreach (var smushy in Game.Program.map.smushy) {
+                smushy.SmushyDamage(this.X, this.Y);
+            }
 
             //Check 0 boundaries
             if (this.Y + velocity.Y < 0)
@@ -100,6 +106,8 @@ namespace Game.Models
 
             this.X = nextX;
             this.Y = nextY;
+
+           
         }
 
         public void HealthLossFromFog()
