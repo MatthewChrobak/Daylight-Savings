@@ -25,8 +25,13 @@ namespace Game.Models
             this.animationStep = 0;
         }
 
-        public void SmushyDamage(float x, float y) {
+        public void BigBossDamage(float x, float y) {
            
+        }
+
+        public void UpdateBigBossTranformation() {
+            animationStep += 1;
+            animationStep += 3;
         }
 
         public IEnumerable<DrawableComponent> GetDrawableComponents() {
@@ -39,7 +44,7 @@ namespace Game.Models
             };
         }
 
-        public void UpdateAnimation() {
+        public void UpdateBigBossAnimationRange() {
             animationStep += 1;
             animationStep %= 4;
         }
