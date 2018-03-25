@@ -16,6 +16,7 @@ namespace Game.Models.Enviroment
 
         public LittleGirl Girl { get; set; }
         public List<Light> light;
+        public Smoshy smoshy;
         Random rnd = new Random();
 
         public Map()

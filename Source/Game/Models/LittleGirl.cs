@@ -10,7 +10,7 @@ namespace Game.Models
     public class LittleGirl : Position, IDrawable
     {
         public Vector2f velocity { get; set; }
-        public int health { get; set; }
+        public float health { get; set; } = 5;
         public Inventory littleGirlInventory = new Inventory();
         public string SurfaceName { get; set; } = "girl.png";
         public Direction girlDirection;

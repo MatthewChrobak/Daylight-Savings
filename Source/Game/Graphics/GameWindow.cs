@@ -33,7 +33,6 @@ namespace Game.Graphics
 
         private void GameWindow_JoystickButtonPressed(object sender, JoystickButtonEventArgs e)
         {
-            Console.WriteLine(e.Button);
             Program.UI.OnControllerButton(e.Button.ToString());
 
             if (e.Button == 6) {
