@@ -21,7 +21,7 @@ namespace Game.Models.Enviroment
         public int numStartFog = 10;
         public int numStartSmushy = 5;
         public int numOfCloud = 0;
-        public int winningCondition = 1;
+        public int winningCondition = 15;
         public int currentLevel = 1;
 
         public int Level = 0;
