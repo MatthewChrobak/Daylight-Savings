@@ -119,7 +119,8 @@ namespace Game.Models.Enviroment
                         Program.map.DeleteFog(i);
                         Program.map.Girl.littleGirlInventory.items.RemoveAt(positionOfLightItemInInventory);
                         positionOfLightItemInInventory = -1;
-                        numOfCloud++; 
+                        numOfCloud++;
+                        Console.WriteLine("This Number of Cloud killed: " + numOfCloud);
                         return;
                     }            
                 }
@@ -288,18 +289,7 @@ namespace Game.Models.Enviroment
                     }
                     if (numOfCloud >= winningCondition) {
                         Program.map.bigBoss.bossTexture = "BigBossTransformation.png";
-                        numStartFog *= 2;
-                        numStartLight *= 2;
-                        numStartSmushy *= 2;
-
-                        for (int i = 0; i < numStartSmushy; i++)
-                            SmushySpawning();
-
-                        for (int i = 0; i < numStartLight; i++)
-                            LightSpawning();
-
-                        for (int i = 0; i < numStartFog; i++)
-                            CloudSpawning();
+                        winningCondition += 10;
                     }
                 }
             }
