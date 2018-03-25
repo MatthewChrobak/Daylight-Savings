@@ -30,8 +30,6 @@ namespace Game.Models
                 Position = new Vector2f(this.X, this.Y),
                 Rect = new IntRect(0, 0, 513, 738)
             };
-
-
         }
 
 

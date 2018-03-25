@@ -45,14 +45,16 @@ namespace Game.Models.Enviroment
                 }
             }
 
-            foreach (var component in this.Girl.GetDrawableComponents()) {
-                yield return component;
-            }
-            for(int i = 0; i < light.Length; i++) {
+
+            for (int i = 0; i < light.Length; i++) {
                 foreach (var component in light[i].GetDrawableComponents()) {
                     yield return component;
                 }
             }
+            foreach (var component in this.Girl.GetDrawableComponents()) {
+                yield return component;
+            }
+            
             
         }
     }

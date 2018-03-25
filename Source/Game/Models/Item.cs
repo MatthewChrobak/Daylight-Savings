@@ -30,16 +30,5 @@ namespace Game.Models
             };
         }
     }
-
-    public class PowerOrb : Item
-    {
-
-    }
-
-    public class Knife : Item
-    {
-
-    }
-
 }
 
