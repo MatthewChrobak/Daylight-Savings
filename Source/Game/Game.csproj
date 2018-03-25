@@ -68,6 +68,7 @@
     <Compile Include="Graphics\IDrawable.cs" />
     <Compile Include="Graphics\SurfaceManager.cs" />
     <Compile Include="Models\Directions.cs" />
+    <Compile Include="Models\Entities\DisappatingFog.cs" />
     <Compile Include="Models\Entities\Fog.cs" />
     <Compile Include="Models\Entities\Tree.cs" />
     <Compile Include="Models\Enviroment\Map.cs" />
@@ -86,6 +87,7 @@
     <Compile Include="Timing\EventSystem.cs" />
     <Compile Include="Timing\StateSystem.cs" />
     <Compile Include="UserInterface\Button.cs" />
+    <Compile Include="UserInterface\HealthBar.cs" />
     <Compile Include="UserInterface\UIComponent.cs" />
     <Compile Include="UserInterface\UISystem.cs" />
   </ItemGroup>

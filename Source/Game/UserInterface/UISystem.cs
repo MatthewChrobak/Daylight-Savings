@@ -53,7 +53,19 @@ namespace Game.UserInterface
 
 
             var mainmenu = new List<UIComponent>();
+            var gameUI = new List<UIComponent>();
 
+
+            //HealthBar Components
+            gameUI.Add(new HealthBar() {
+                X = 0,
+                Y = 0,
+                Height = 50,
+                Width = 200,
+                SurfaceName = "Full_HealthBar.png"
+            });
+
+            // Mainmenu Components
             mainmenu.Add(new UIComponent() {
                 Height = 640,
                 Width = 960,
@@ -77,6 +89,7 @@ namespace Game.UserInterface
             });
 
             this.Components[(int)States.MainMenu] = mainmenu;
+            this.Components[(int)States.InGame] = gameUI;
         }
     }
 }

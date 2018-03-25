@@ -3,22 +3,26 @@ using System.Collections.Generic;
 using Game.Graphics;
 using Game.Models;
 using Game.Models.Entities;
-
+using SFML.System;
 
 namespace Game.Models.Enviroment
 {
     public class Map : IDrawable
     {
+        public List<DisappatingFog> DisappatingFogs;
         public List<Fog> FogEntities;
         public Tile[,] Tiles;
         public const int MAX_X = 30;
         public const int MAX_Y = 15;
+        public const int numLight = 10;
+        public const int numFog = 10;
+        public const int numSmushy = 5;
 
         public List<Tree> Trees;
         public LittleGirl Girl { get; set; }
         public List<Light> light;
+        public List<Smushy> smushy { get; set; }
         public List<Potion> potion;
-        public Smushy smushy { get; set; }
         Random rnd = new Random();
 
         public Map()
@@ -31,8 +35,7 @@ namespace Game.Models.Enviroment
             this.Tiles = new Tile[MAX_X, MAX_Y];
 
             this.light = new List<Light>();
-            for (int i = 0; i < 10; i++)
-            {
+            for (int i = 0; i < numLight; i++) {
                 light.Add(new Light(rnd.Next(1, MAX_X * Tile.TILE_SIZE), rnd.Next(1, MAX_Y * Tile.TILE_SIZE)));
             }
 
@@ -45,7 +48,10 @@ namespace Game.Models.Enviroment
 
             this.Girl = new LittleGirl(700, 700);
 
-            this.smushy = new Smushy(100, 100);
+            smushy = new List<Smushy>();
+            for(int i = 0; i < numSmushy; i++) {
+                smushy.Add(new Smushy(rnd.Next(1, MAX_X * Tile.TILE_SIZE), rnd.Next(1, MAX_Y * Tile.TILE_SIZE)));
+            }
 
             for (int x = 0; x < MAX_X; x++)
             {
@@ -55,9 +61,9 @@ namespace Game.Models.Enviroment
                 }
             }
 
+            DisappatingFogs = new List<DisappatingFog>();
             FogEntities = new List<Fog>();
-            for (int i = 0; i < 10; i++)
-            {
+            for (int i = 0; i < numFog; i++) {
                 FogEntities.Add(new Fog(0, 0));
             }
 
@@ -91,6 +97,7 @@ namespace Game.Models.Enviroment
                 {
                     if (positionOfLightItemInInventory >= 0)
                     {
+                        Program.map.DisappatingFogs.Add(new DisappatingFog(Program.map.FogEntities[i].X, Program.map.FogEntities[i].Y));
                         Program.map.DeleteFog(i);
                         Program.map.Girl.littleGirlInventory.items.RemoveAt(positionOfLightItemInInventory);
                         positionOfLightItemInInventory = -1;
@@ -108,20 +115,27 @@ namespace Game.Models.Enviroment
                 fog.UpdatePosition();
             }
         }
-
-
+        
+        public void UpdateSmushyPositions() {
+            foreach(var smushy in this.smushy) {
+                smushy.UpdatePosition();
+            }
+        }
         public void DeleteFog(int FogToDelete)
         {
             FogEntities.RemoveAt(FogToDelete);
         }
-        public void UpdateSmushyPositions()
-        {
-            this.smushy.UpdatePosition();
-
-        }
 
         public void UpdateFogAnimations()
         {
+            for (int i = 0; i < this.DisappatingFogs.Count; i++) {
+                DisappatingFogs[i].animStep += 1;
+                if (DisappatingFogs[i].animStep == 4) {
+                    DisappatingFogs.RemoveAt(i);
+                    i--;
+                }
+            }
+
             foreach (var fog in this.FogEntities)
             {
                 fog.UpdateAnim();
@@ -130,15 +144,15 @@ namespace Game.Models.Enviroment
 
         public void UpdateLightAnimations()
         {
-            foreach (var lights in light)
-            {
+            foreach (var lights in light) {
                 lights.UpdateAnim();
             }
         }
 
-        public void UpdateSmushyAnimations()
-        {
-            this.smushy.UpdateAnimation();
+        public void UpdateSmushyAnimations() {
+            foreach (var smushy in this.smushy) {
+                smushy.UpdateAnimation();
+            }
         }
 
         public void UpdateGirlAnimations()
@@ -148,12 +162,27 @@ namespace Game.Models.Enviroment
 
         public IEnumerable<DrawableComponent> GetDrawableComponents()
         {
-            for (int y = 0; y < MAX_Y; y++)
-            {
-                for (int x = 0; x < MAX_X; x++)
-                {
-                    foreach (var component in this.Tiles[x, y].GetDrawableComponents())
-                    {
+
+            for (int y = -3; y < 0; y++) {
+                for (int x = 0; x < MAX_X; x++) {
+                    yield return new DrawableComponent() {
+                        TextureName = "grass2.png",
+                        Position = new Vector2f(x * Tile.TILE_SIZE, y * Tile.TILE_SIZE),
+                        RenderSize = new Vector2f(Tile.TILE_SIZE, Tile.TILE_SIZE)
+                    };
+                }
+            }
+            for (int x = 0; x < MAX_X; x += 3) {
+                yield return new DrawableComponent() {
+                    TextureName = "top border.png",
+                    Position = new Vector2f(x * Tile.TILE_SIZE, -3 * Tile.TILE_SIZE),
+                    RenderSize = new Vector2f(Tile.TILE_SIZE * 3, Tile.TILE_SIZE * 3)
+                };
+            }
+
+            for (int y = 0; y < MAX_Y; y++) {
+                for (int x = 0; x < MAX_X; x++) {
+                    foreach (var component in this.Tiles[x, y].GetDrawableComponents()) {
                         yield return component;
                     }
                 }
@@ -173,7 +202,6 @@ namespace Game.Models.Enviroment
                 }
             }
 
-
             for (int y = 0; y < MAX_Y; y++) {
                 for (int x = 0; x < MAX_X; x++) {
                     if (this.Girl.InRange(x * Tile.TILE_SIZE, y * Tile.TILE_SIZE, (x + 1) * Tile.TILE_SIZE, (y + 1) * Tile.TILE_SIZE)) {
@@ -189,6 +217,24 @@ namespace Game.Models.Enviroment
                             }
                         }
                     }
+
+                    foreach (var fog in this.DisappatingFogs) {
+                        if (fog.InRange(x * Tile.TILE_SIZE, y * Tile.TILE_SIZE, (x + 1) * Tile.TILE_SIZE, (y + 1) * Tile.TILE_SIZE)) {
+                            foreach (var component in fog.GetDrawableComponents()) {
+                                yield return component;
+                            }
+                        }
+                    }
+
+
+                    foreach (var smushy in this.smushy) {
+                        if (smushy.InRange(x * Tile.TILE_SIZE, y * Tile.TILE_SIZE, (x + 1) * Tile.TILE_SIZE, (y + 1) * Tile.TILE_SIZE)) {
+                            foreach (var component in smushy.GetDrawableComponents()) {
+                                yield return component;
+                            }
+                        }
+                    }
+
                     foreach (var tree in this.Trees) {
                         if (tree.InRange(x * Tile.TILE_SIZE, y * Tile.TILE_SIZE, (x + 1) * Tile.TILE_SIZE, (y + 1) * Tile.TILE_SIZE)) {
                             foreach (var component in tree.GetDrawableComponents()) {
@@ -197,6 +243,30 @@ namespace Game.Models.Enviroment
                         }
                     }
                 }
+            }
+
+            for (int y = -2; y < MAX_Y; y += 3) {
+                yield return new DrawableComponent() {
+                    TextureName = "left border.png",
+                    Position = new Vector2f(-2 * Tile.TILE_SIZE, y * Tile.TILE_SIZE),
+                    RenderSize = new Vector2f(Tile.TILE_SIZE * 3, Tile.TILE_SIZE * 3)
+                };
+            }
+
+            for (int y = -2; y < MAX_Y; y += 3) {
+                yield return new DrawableComponent() {
+                    TextureName = "right border.png",
+                    Position = new Vector2f(Map.MAX_X * Tile.TILE_SIZE - Tile.TILE_SIZE, y * Tile.TILE_SIZE),
+                    RenderSize = new Vector2f(Tile.TILE_SIZE * 3, Tile.TILE_SIZE * 3)
+                };
+            }
+
+            for (int x = 0; x < MAX_X; x+= 3) {
+                yield return new DrawableComponent() {
+                    TextureName = "bottom border.png",
+                    Position = new Vector2f(x * Tile.TILE_SIZE, Map.MAX_Y * Tile.TILE_SIZE - Tile.TILE_SIZE),
+                    RenderSize = new Vector2f(Tile.TILE_SIZE * 3, Tile.TILE_SIZE * 3)
+                };
             }
         }
     }

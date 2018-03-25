@@ -10,8 +10,10 @@ namespace Game.Models
 {
     public class LittleGirl : Position, IDrawable
     {
+        public const float MaxHealth = 10;
+
         public Vector2f velocity { get; set; }
-        public float health { get; set; } = 5;
+        public float health { get; set; } = MaxHealth;
         public Inventory littleGirlInventory = new Inventory();
         public string SurfaceName { get; set; } = "girl.png";
         public Direction girlDirection;
@@ -188,6 +190,7 @@ namespace Game.Models
                         Program.map.Girl.health += 1;
                         Console.Write(Program.map.Girl.health);
                         Program.map.potion.RemoveAt(i);
+                        SoundManager.addSound("potion.ogg");
                     }
                 }
             }
