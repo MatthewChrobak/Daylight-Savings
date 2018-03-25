@@ -29,7 +29,8 @@ namespace Game
                 graphics.EndRenderFrame();
             }, 16));
             events.GameEvents.Add(new Event(map.UpdateFogPositions, 8));
-            events.GameEvents.Add(new Event(map.UpdateFogAnim, 250));
+            events.GameEvents.Add(new Event(map.UpdateFogAnimations, 250));
+            events.GameEvents.Add(new Event(map.UpdateGirlAnimations, 100));
             
             MusicManager.addMusic("Theme.ogg", true);
 

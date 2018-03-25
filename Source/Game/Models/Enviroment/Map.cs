@@ -45,11 +45,16 @@ namespace Game.Models.Enviroment
             }
         }
 
-        public void UpdateFogAnim()
+        public void UpdateFogAnimations()
         {
             foreach (var fog in this.FogEntities) {
                 fog.UpdateAnim();
             }
+        }
+
+        public void UpdateGirlAnimations()
+        {
+            this.Girl.UpdateAnimation();
         }
 
         public IEnumerable<DrawableComponent> GetDrawableComponents()

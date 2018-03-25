@@ -14,6 +14,7 @@ namespace Game.Models
         public Inventory littleGirlInventory;
         public string SurfaceName { get; set; } = "girl.png";
         public Direction girlDirection;
+        public int animStep = 0;
 
         // Constructor for the Little Girl, setting her position
         public LittleGirl(int x, int y) : base(x, y)
@@ -28,7 +29,7 @@ namespace Game.Models
                 TextureName = this.SurfaceName,
                 RenderSize = new Vector2f(70, 104),
                 Position = new Vector2f(this.X - 35, this.Y - 100),
-                Rect = new IntRect(0, 0, 513, 738)
+                Rect = new IntRect(0, 738 * animStep, 513, 738)
             };
         }
 
@@ -39,9 +40,6 @@ namespace Game.Models
         }
 
         public void Move() {
-
-            // this.X += velocity.X;
-            // this.Y += velocity.Y;
 
             //Check 0 boundaries
             if (this.Y + velocity.Y < 0) {
@@ -65,6 +63,12 @@ namespace Game.Models
             Console.WriteLine("X position: " + this.X + " Y position: " + this.Y);
 
 
+        }
+
+        public void UpdateAnimation()
+        {
+            this.animStep += 1;
+            this.animStep %= 8;
         }
     }
 }
