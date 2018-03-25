@@ -22,6 +22,7 @@ namespace Game.Models.Enviroment
         public int numStartSmushy = 5;
         public int numOfCloud = 0;
         public int winningCondition = 15;
+        public int currentLevel = 1;
 
 
         public List<Tree> Trees;
@@ -282,8 +283,20 @@ namespace Game.Models.Enviroment
                             }
                         }
                     }
-                    if (numOfCloud==winningCondition) { 
-                        Program.map.bigBoss.bossTexture = "BigBossTransformation.png";       
+                    if (numOfCloud >= winningCondition) {
+                        Program.map.bigBoss.bossTexture = "BigBossTransformation.png";
+                        numStartFog *= 2;
+                        numStartLight *= 2;
+                        numStartSmushy *= 2;
+
+                        for (int i = 0; i < numStartSmushy; i++)
+                            SmushySpawning();
+
+                        for (int i = 0; i < numStartLight; i++)
+                            LightSpawning();
+
+                        for (int i = 0; i < numStartFog; i++)
+                            CloudSpawning();
                     }
                 }
             }
