@@ -10,23 +10,10 @@ namespace Game
     public static class Program
     {
         public static UISystem UI { get; set; } = new UISystem();
-        public static Map map = new Map();
+        public static Map map { get; set; } = new Map();
 
         private static void Main(string[] args)
         {
-
-            void updateFog()
-            {
-                for (int i = 0; i < map.FogEntities.Count; i++)
-                {
-                    Console.Write(map.FogEntities[i].X);
-                    if (map.FogEntities[i].X == map.Girl.X)
-                    {
-                        map.DeleteFog(i);
-
-                    }
-                }
-            }
 
             var graphics = new GraphicsSystem(map);
             var events = new EventSystem();
@@ -46,11 +33,10 @@ namespace Game
             events.GameEvents.Add(new Event(map.UpdateFogPositions, 8));
             events.GameEvents.Add(new Event(map.UpdateFogAnim, 250));
 
-
-            events.GameEvents.Add(new Event(updateFog, 8));
+            events.GameEvents.Add(new Event(map.UpdateFog, 8));
 
             MusicManager.addMusic("Theme.ogg", true);
-
+            map.Girl.itemSurroundingCheck();
             events.GameLoop();
         }
     }

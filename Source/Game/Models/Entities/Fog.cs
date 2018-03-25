@@ -19,7 +19,7 @@ namespace Game.Models.Entities
             this.animStep = rng.Next(0, 4);
             this.GetNewPos();
         }
-
+        
         public IEnumerable<DrawableComponent> GetDrawableComponents()
         {
             yield return new DrawableComponent() {
@@ -35,6 +35,8 @@ namespace Game.Models.Entities
             animStep += 1;
             animStep %= 4;
         }
+
+      
 
         private void GetNewPos()
         {
@@ -69,7 +71,5 @@ namespace Game.Models.Entities
                 this.Y -= moveSpeed;
             }
         }
-
-       
     }
 }
