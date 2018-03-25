@@ -40,8 +40,8 @@ namespace Game.Models.Entities
 
         private void GetNewPos()
         {
-            TargetPosition.X = (rng.Next(0, Map.MAX_X) * Tile.TILE_SIZE);
-            TargetPosition.Y = (rng.Next(0, Map.MAX_Y) * Tile.TILE_SIZE);
+            TargetPosition.X = (rng.Next(0, Program.map.MAX_X) * Tile.TILE_SIZE);
+            TargetPosition.Y = (rng.Next(0, Program.map.MAX_Y) * Tile.TILE_SIZE);
         }
 
         public void UpdatePosition()

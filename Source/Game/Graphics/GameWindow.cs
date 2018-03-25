@@ -73,7 +73,7 @@ namespace Game.Graphics
             else if (e.Code == Keyboard.Key.Down)
             {
                 Program.map.Girl.girlDirection = Direction.DOWN;
-                if (!((Program.map.Girl.Y + 25) >= Map.MAX_Y*Tile.TILE_SIZE)) {
+                if (!((Program.map.Girl.Y + 25) >= Program.map.MAX_Y*Tile.TILE_SIZE)) {
                     Program.map.Girl.Y += 25;
                 }
             }
@@ -90,7 +90,7 @@ namespace Game.Graphics
             else if (e.Code == Keyboard.Key.Right)
             {
                 Program.map.Girl.girlDirection = Direction.RIGHT;
-                if (!((Program.map.Girl.X + 25) >= Map.MAX_X*Tile.TILE_SIZE)) {
+                if (!((Program.map.Girl.X + 25) >= Program.map.MAX_X*Tile.TILE_SIZE)) {
                     Program.map.Girl.X += 25;
                 }
             }
@@ -123,6 +123,10 @@ namespace Game.Graphics
 
         // Method to process the inputs from the joystick
         private void ProcessJoyInputs(object sender, JoystickMoveEventArgs e){
+            if (StateSystem.GameState != States.InGame) {
+                return;
+            }
+
             if (e.Axis == Joystick.Axis.X)
             {
                 if(Math.Abs(e.Position) > bound){

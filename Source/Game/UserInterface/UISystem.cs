@@ -88,6 +88,20 @@ namespace Game.UserInterface
                     }
                 }
             });
+            mainmenu.Add(new Button() {
+                Height = 50,
+                Width = 100,
+                X = 300,
+                Y = 300,
+                ButtonText = "Play game",
+                SurfaceName = "shadowbox.png",
+                Click = (x, y) => StateSystem.NewTutorial(),
+                OnControllerButton = (code) => {
+                    if (code == "7") {
+                        StateSystem.NewTutorial();
+                    }
+                }
+            });
 
             this.Components[(int)States.MainMenu] = mainmenu;
             this.Components[(int)States.InGame] = gameUI;

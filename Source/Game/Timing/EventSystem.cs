@@ -1,10 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using Game.Models.Enviroment;
 using System;
-using Game.Models;
-using Game.Models.Enviroment;
+using System.Collections.Generic;
 
-namespace Game.Timing
-{
+namespace Game.Timing {
     public class EventSystem
     {
         public static Random rnd = new Random();
@@ -12,49 +10,79 @@ namespace Game.Timing
 
         public EventSystem()
         {
-            GameEvents.Add(new Event(() => Program.map.Girl.Move(), 8, true));
-            GameEvents.Add(new Event(() => {
-                Program.Graphics.BeginRenderFrame();
+            this.Clear();
+        }
 
-                if (StateSystem.GameState == States.InGame) {
-                    Program.Graphics.RenderToFrame(Program.map.GetDrawableComponents());
-                }
+        private void AddRegularEvents()
+        {
+            lock(this.GameEvents) {
+                GameEvents.Add(new Event(() => {
+                    Program.Graphics.BeginRenderFrame();
 
-                Program.Graphics.RenderToFrame(Program.UI.GetDrawableComponents());
-                Program.Graphics.EndRenderFrame();
-            }, 16, false));
+                    if (StateSystem.GameState == States.InGame) {
+                        Program.Graphics.RenderToFrame(Program.map.GetDrawableComponents());
+                    }
 
-            GameEvents.Add(new Event(Program.map.UpdateBigBossAnimations, 100, true));
-            GameEvents.Add(new Event(Program.map.TimerIncrementor, 1, true));
-            GameEvents.Add(new Event(Program.map.UpdateFogPositions, 8, true));
-            GameEvents.Add(new Event(Program.map.UpdateFogAnimations, 250, true));
-            GameEvents.Add(new Event(Program.map.UpdateSmushyAnimations, 100, true));
-            GameEvents.Add(new Event(Program.map.UpdateSmushyPositions, 1, true));
-            GameEvents.Add(new Event(Program.map.SmushySpawning, 1000 * 12, true));
-            GameEvents.Add(new Event(Program.map.LightSpawning, 1000 * 15, true));
-            GameEvents.Add(new Event(Program.map.CloudSpawning, 1000 * 15, true));
-            GameEvents.Add(new Event(Program.map.ItemSpawning, 1000 * 60, true));
-            GameEvents.Add(new Event(Program.map.UpdateGirlAnimations, 100, true));
-            GameEvents.Add(new Event(Program.map.UpdateLightAnimations, 125, true));
-            GameEvents.Add(new Event(Program.map.UpdateFog, 8, true));
-            GameEvents.Add(new Event(Program.map.Girl.HealthLossFromFog, 100, true));
-           
+                    Program.Graphics.RenderToFrame(Program.UI.GetDrawableComponents());
+                    Program.Graphics.EndRenderFrame();
+                }, 16, false));
+            }
+        }
+
+        public void AddGameEvents()
+        {
+            lock (GameEvents) {
+                GameEvents.Add(new Event(Program.map.Girl.Move, 8, true));
+                GameEvents.Add(new Event(Program.map.UpdateFogPositions, 8, true));
+                GameEvents.Add(new Event(Program.map.UpdateFogAnimations, 250, true));
+                GameEvents.Add(new Event(Program.map.UpdateSmushyAnimations, 100, true));
+                GameEvents.Add(new Event(Program.map.UpdateSmushyPositions, 1, true));
+                GameEvents.Add(new Event(Program.map.UpdateGirlAnimations, 100, true));
+                GameEvents.Add(new Event(Program.map.UpdateLightAnimations, 125, true));
+                GameEvents.Add(new Event(Program.map.UpdateFog, 8, true));
+                GameEvents.Add(new Event(Program.map.Girl.HealthLossFromFog, 100, true));
+            }
+        }
+
+        public void AddTutorialEvents()
+        {
+            lock (GameEvents) {
+                GameEvents.Add(new Event(Program.map.Girl.Move, 8, true));
+                GameEvents.Add(new Event(Program.map.UpdateFogAnimations, 250, true));
+                GameEvents.Add(new Event(Program.map.UpdateSmushyAnimations, 100, true));
+                GameEvents.Add(new Event(Program.map.UpdateGirlAnimations, 100, true));
+                GameEvents.Add(new Event(Program.map.UpdateLightAnimations, 125, true));
+                GameEvents.Add(new Event(Program.map.UpdateFog, 8, true));
+                GameEvents.Add(new Event(Program.map.Girl.HealthLossFromFog, 100, true));
+                GameEvents.Add(new Event(Program.map.Girl.BringBackToLife_Tutorial, 500, true));
+
+                GameEvents.Add(new Event(((TutorialMap)Program.map).RespawnFogs, 3000, true));
+                GameEvents.Add(new Event(((TutorialMap)Program.map).RespawnPotions, 3000, true));
+                GameEvents.Add(new Event(((TutorialMap)Program.map).RespawnSmushy, 3000, true));
+                GameEvents.Add(new Event(((TutorialMap)Program.map).RespawnLights, 3000, true));
+            }
         }
 
         public void GameLoop()
         {
             // While the game is running.
             while (StateSystem.GameState != States.Closed) {
-                foreach (var @event in GameEvents) {
-                    @event.Probe();
+                lock(this.GameEvents) {
+                    for (int i = 0; i < GameEvents.Count; i++) {
+                        GameEvents[i].Probe();
+                    }
                 }
+
                 System.Threading.Thread.Yield();
             }
         }
 
         public void Clear()
         {
-            this.GameEvents.Clear();
+            lock (GameEvents) {
+                this.GameEvents.Clear();
+                this.AddRegularEvents();
+            }
         }
     }
 }

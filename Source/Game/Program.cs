@@ -12,18 +12,36 @@ namespace Game
         public static UISystem UI { get; set; } = new UISystem();
         public static Map map { get; set; } = new Map();
         public static GraphicsSystem Graphics = new GraphicsSystem();
-        public static EventSystem Events = new EventSystem();
+        public static EventSystem Events;
 
         private static void Main(string[] args)
         {
-            MusicManager.addMusic("Theme.ogg", true);
-            map.Girl.itemSurroundingCheck();
+            Events = new EventSystem();
+            MusicManager.addMusic("Theme.ogg", true, 30);
             Events.GameLoop();
+        }
+
+        public static void NewTutorial()
+        {
+            if (Program.map.Girl != null) {
+                Graphics.RemoveCameraFocus();
+            }
+            Program.map = new TutorialMap();
+            
+            Program.map.Reset();
+            Events.AddTutorialEvents();
+            Graphics.SetCameraFocus(Program.map.Girl);
         }
 
         public static void NewGame()
         {
+            if (Program.map.Girl != null) {
+                Graphics.RemoveCameraFocus();
+            }
+            Program.map = new Map();
+
             Program.map.Reset();
+            Events.AddGameEvents();
             Graphics.SetCameraFocus(Program.map.Girl);
         }
     }
