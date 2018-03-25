@@ -13,10 +13,9 @@ namespace Game.Models.Enviroment
         public Tile[,] Tiles;
         public const int MAX_X = 30;
         public const int MAX_Y = 15;
-        public const int MAX_COIN = 10;
 
         public LittleGirl Girl { get; set; }
-        public Light[] light;
+        public List<Light> light;
         Random rnd = new Random();
 
         public Map()
@@ -28,9 +27,9 @@ namespace Game.Models.Enviroment
         {
             this.Tiles = new Tile[MAX_X, MAX_Y];
 
-            this.light = new Light[MAX_COIN];
-            for (int i = 0; i < light.Length; i++) {
-                light[i] = new Light(rnd.Next(1, MAX_X * Tile.TILE_SIZE), rnd.Next(1, MAX_Y * Tile.TILE_SIZE));
+            this.light = new List<Light>();
+            for (int i = 0; i < 10; i++) {
+                light.Add(new Light(rnd.Next(1, MAX_X * Tile.TILE_SIZE), rnd.Next(1, MAX_Y * Tile.TILE_SIZE)));
             }
             this.Girl = new LittleGirl(rnd.Next(1, MAX_X * Tile.TILE_SIZE), rnd.Next(1, MAX_Y * Tile.TILE_SIZE));
 
@@ -76,7 +75,7 @@ namespace Game.Models.Enviroment
             }
 
 
-            for (int i = 0; i < light.Length; i++) {
+            for (int i = 0; i < light.Count; i++) {
                 foreach (var component in light[i].GetDrawableComponents()) {
                     yield return component;
                 }

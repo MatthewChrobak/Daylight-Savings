@@ -11,7 +11,7 @@ namespace Game.Models
     {
         public Vector2f velocity { get; set; }
         public int health { get; set; }
-        public Inventory littleGirlInventory;
+        public Inventory littleGirlInventory = new Inventory();
         public string SurfaceName { get; set; } = "girl.png";
         public Direction girlDirection;
 
@@ -63,6 +63,9 @@ namespace Game.Models
             this.X += velocity.X;
             this.Y += velocity.Y;
 
+
+
+
             this.girlDirection = Direction.DOWN;
 
             if (Math.Abs(velocity.Y) < Math.Abs(velocity.X)) {
@@ -83,7 +86,6 @@ namespace Game.Models
                 }
             }
         }
-
         public void UpdateAnimation()
         {
             if (this.velocity.X == 0 && this.velocity.Y == 0) {
@@ -102,13 +104,27 @@ namespace Game.Models
 
             this.animStep += 1;
             this.animStep %= 8;
+
+            this.itemSurroundingCheck();
         }
 
         public void itemSurroundingCheck() {
-            foreach(var i in Game.Program.map.light) {
-                Console.WriteLine("X is: " + i.X + " Y is: " + i.Y);
+
+            int range = 30;
+
+            for (int i = 0; i < Game.Program.map.light.Count; i++) {
+
+                if ((Game.Program.map.light[i].X + range >= this.X && this.X >= Game.Program.map.light[i].X - range) 
+                    && (Game.Program.map.light[i].Y + range >= this.Y && this.Y >= Game.Program.map.light[i].Y - range)) {
+                    Program.map.Girl.littleGirlInventory.items.Add(new LightItem());
+                    Program.map.light.RemoveAt(i);
+                }
             }
-                
+                /*
+                 * debugging purpose
+                 * Console.WriteLine("X is: " + i.X + " Y is: " + i.Y); 
+                 */
+   
         }
     }
 }
