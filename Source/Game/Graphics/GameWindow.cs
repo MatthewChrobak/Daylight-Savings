@@ -96,7 +96,7 @@ namespace Game.Graphics
                 Console.WriteLine(this.girl.X);
             }
 
-            SoundManager.addMusic("footstep.ogg");
+            SoundManager.addSound("footstep.ogg");
         }
 
         private void GameWindow_Closed(object sender, EventArgs e)
