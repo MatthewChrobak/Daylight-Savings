@@ -61,12 +61,6 @@ namespace Game.Models
                 setVelocity(0, velocity.Y);
             }
 
-            this.X += velocity.X;
-            this.Y += velocity.Y;
-
-
-
-
             this.girlDirection = Direction.DOWN;
 
             if (Math.Abs(velocity.Y) < Math.Abs(velocity.X)) {
@@ -86,6 +80,19 @@ namespace Game.Models
                     girlDirection = Direction.LEFT;
                 }
             }
+
+            float nextX = this.X + velocity.X;
+            float nextY = this.Y + velocity.Y;
+            float range = 10;
+
+            foreach (var tree in Program.map.Trees) {
+                if (tree.InRange(nextX - range, nextY - range, nextX + range, nextY + range)) {
+                    return;
+                }
+            }
+
+            this.X = nextX;
+            this.Y = nextY;
         }
         public void UpdateAnimation()
         {
@@ -124,12 +131,7 @@ namespace Game.Models
                     Program.map.Girl.littleGirlInventory.items.Add(new LightItem());
                     Program.map.light.RemoveAt(i);
                 }
-            }
-                /*
-                 * debugging purpose
-                 * Console.WriteLine("X is: " + i.X + " Y is: " + i.Y); 
-                 */
-   
+            }   
         }
     }
 }

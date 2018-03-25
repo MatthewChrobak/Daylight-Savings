@@ -50,7 +50,7 @@ namespace Game.Models.Enviroment
             for (int i = 0; i < numTrees; i++) {
                 this.Trees.Add(new Tree() {
                     X = rnd.Next(0, MAX_X * Tile.TILE_SIZE),
-                    Y = rnd.Next(0, MAX_Y * Tile.TILE_SIZE)
+                    Y = rnd.Next(0, MAX_Y) * Tile.TILE_SIZE - 1
                 });
             }
         }
@@ -115,6 +115,8 @@ namespace Game.Models.Enviroment
                     }
                 }
             }
+
+
         }
     }
 }
