@@ -17,10 +17,24 @@ namespace Game.Models.Collision
         }
 
         public bool CollidedWith(Collider col, float push){
-            Vector2f delta = col._center - this._center;
+            Vector2f objectCenter = new Vector2f(this.X, this.Y);
+            Console.WriteLine(objectCenter);
+            Vector2f colCenter = new Vector2f(col.X, col.Y);
+            Vector2f delta = colCenter - objectCenter;
             float distance = this._radius + col._radius;
-
             // If Magnitude of vector delta is smaller than distance, then they have collided.
+            Console.WriteLine(MagnitudeOfVector(delta));
+            Console.WriteLine(distance);
+
+
+            if(push > 0.0f && MagnitudeOfVector(delta) < distance){
+                float unitvectorX = (objectCenter.X - colCenter.X) / (float)MagnitudeOfVector(objectCenter - colCenter);
+                float unitvectorY = (objectCenter.Y - colCenter.Y) / (float)MagnitudeOfVector(objectCenter - colCenter);
+
+                Vector2f unitVector = new Vector2f(unitvectorX, unitvectorY);
+                this.X = col.X + unitvectorX * (col._radius + this._radius + 1.0f);
+                this.Y = col.Y + unitvectorY * (col._radius + this._radius + 1.0f);
+            }
             return (MagnitudeOfVector(delta) < distance);
 
         }

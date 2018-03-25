@@ -13,7 +13,7 @@ namespace Game.Models.Enviroment
         public const int MAX_Y = 10;
 
         public List<Collider> _Colliders = new List<Collider>();
-        public CircleShape testCircle = new CircleShape(new SFML.System.Vector2f(101.0f,101.0f), 0.5f);
+        public CircleShape testCircle = new CircleShape(new SFML.System.Vector2f(110.0f,110.0f), 20f);
         public LittleGirl Girl { get; set; }
 
         public Map()
@@ -21,7 +21,7 @@ namespace Game.Models.Enviroment
             this._Colliders.Add(testCircle);
             this.Tiles = new Tile[MAX_X, MAX_Y];
 
-            this.Girl = new LittleGirl(new SFML.System.Vector2f(100.0f,100.0f),0.5f);
+            this.Girl = new LittleGirl(new SFML.System.Vector2f(100.0f,100.0f),10f);
 
             for (int x = 0; x < MAX_X; x++) {
                 for (int y = 0; y < MAX_Y; y++) {

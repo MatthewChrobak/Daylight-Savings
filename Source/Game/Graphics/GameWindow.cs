@@ -1,9 +1,11 @@
 ﻿using Game.Models;
+using Game.Models.Collision;
 using Game.Models.Enviroment;
 using Game.Timing;
 using SFML.Graphics;
 using SFML.Window;
 using System;
+using System.Collections.Generic;
 
 namespace Game.Graphics
 {
@@ -16,6 +18,8 @@ namespace Game.Graphics
 
         private float moveX;
         private float moveY;
+
+        private List<Collider> _allColliders;
 
 
         public GameWindow(Map map) : base(new VideoMode(960, 640), "Test")
@@ -30,6 +34,8 @@ namespace Game.Graphics
             this.MouseButtonPressed += this.GameWindow_MouseButtonPressed1;
             this.MouseButtonPressed += GameWindow_MouseButtonPressed;
 
+
+            _allColliders = map._Colliders;
             //this is the girl from MAP
             this.girl = map.Girl;
         }
@@ -64,6 +70,13 @@ namespace Game.Graphics
 
         private void GameWindow_KeyPressed(object sender, KeyEventArgs e)
         {
+            foreach(var col in _allColliders)
+            {
+                if (this.girl.CollidedWith(col, 1.0f))
+                {
+                    return;
+                }
+            }
             if(e.Code == Keyboard.Key.Up)
             {
                 Console.WriteLine("Up is pressed");
@@ -117,6 +130,16 @@ namespace Game.Graphics
 
         // Method to process the inputs from the joystick
         private void ProcessJoyInputs(object sender, JoystickMoveEventArgs e){
+            foreach (var col in _allColliders)
+            {
+                if (this.girl.CollidedWith(col, 1.0f))
+                {
+                    Console.WriteLine("Collided");
+                    girl.setVelocity(0.0f, 0.0f);
+                    return;
+                }
+            }
+
             if (e.Axis == Joystick.Axis.X)
             {
                 if(Math.Abs(e.Position) > bound){
@@ -138,5 +161,6 @@ namespace Game.Graphics
             }
             girl.setVelocity(moveX, moveY);
         }
+
     }
 }
