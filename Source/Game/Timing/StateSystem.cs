@@ -18,12 +18,18 @@
             Program.NewGame();
             GameState = States.InGame;
         }
+
+        public static void EndGame()
+        {
+            GameState = States.GameOver;
+        }
     }
 
     public enum States
     {
         MainMenu,
         InGame,
-        Closed
+        Closed,
+        GameOver
     }
 }

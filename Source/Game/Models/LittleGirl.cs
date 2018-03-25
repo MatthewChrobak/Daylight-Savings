@@ -5,6 +5,7 @@ using SFML.System;
 using Game.Models.Enviroment;
 using System;
 using Game.Sounds;
+using Game.Timing;
 
 namespace Game.Models
 {
@@ -150,6 +151,14 @@ namespace Game.Models
                     SoundManager.addSound("hit.ogg");
                     return;
                 }
+            }
+        }
+
+        public void CheckHealth()
+        {
+            if (Program.map.Girl.health == 0)
+            {
+                StateSystem.EndGame();
             }
         }
 
