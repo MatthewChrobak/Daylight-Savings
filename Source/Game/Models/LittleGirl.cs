@@ -12,9 +12,12 @@ namespace Game.Models
     {
         public Vector2f velocity { get; set; }
         public int health { get; set; }
-        public Inventory littleGirlInventory;
+        public Inventory littleGirlInventory = new Inventory();
         public string SurfaceName { get; set; } = "girl.png";
         public Direction girlDirection;
+
+        public int animStep = 0;
+        public bool halfStep = false;
 
         // Constructor for the Little Girl, setting her position
         public LittleGirl(int x, int y) : base(x, y)
@@ -29,7 +32,7 @@ namespace Game.Models
                 TextureName = this.SurfaceName,
                 RenderSize = new Vector2f(70, 104),
                 Position = new Vector2f(this.X - 35, this.Y - 100),
-                Rect = new IntRect(0, 0, 513, 738)
+                Rect = new IntRect(0, 738 * animStep, 513, 738)
             };
         }
 
@@ -41,9 +44,6 @@ namespace Game.Models
 
         public void Move()
         {
-
-            // this.X += velocity.X;
-            // this.Y += velocity.Y;
 
             //Check 0 boundaries
 
@@ -76,12 +76,45 @@ namespace Game.Models
             this.X += velocity.X;
             this.Y += velocity.Y;   
         }
+        public void UpdateAnimation()
+        {
+            if (this.velocity.X == 0 && this.velocity.Y == 0) {
+                this.animStep = 0;
+                return;
+            }
+            
+            if (Math.Abs(this.velocity.X) < 1.5f && Math.Abs(this.velocity.Y) < 1.5f) {
+                if (!this.halfStep) {
+                    this.halfStep = true;
+                    return;
+                } else {
+                    this.halfStep = false;
+                }
+            }
+
+            this.animStep += 1;
+            this.animStep %= 8;
+
+            this.itemSurroundingCheck();
+        }
 
         public void itemSurroundingCheck() {
-            foreach(var i in Game.Program.map.light) {
-                Console.WriteLine("X is: " + i.X + " Y is: " + i.Y);
+
+            int range = 30;
+
+            for (int i = 0; i < Game.Program.map.light.Count; i++) {
+
+                if ((Game.Program.map.light[i].X + range >= this.X && this.X >= Game.Program.map.light[i].X - range) 
+                    && (Game.Program.map.light[i].Y + range >= this.Y && this.Y >= Game.Program.map.light[i].Y - range)) {
+                    Program.map.Girl.littleGirlInventory.items.Add(new LightItem());
+                    Program.map.light.RemoveAt(i);
+                }
             }
-                
+                /*
+                 * debugging purpose
+                 * Console.WriteLine("X is: " + i.X + " Y is: " + i.Y); 
+                 */
+   
         }
     }
 }
