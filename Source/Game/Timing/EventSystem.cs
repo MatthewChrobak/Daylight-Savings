@@ -23,8 +23,10 @@ namespace Game.Timing
             GameEvents.Add(new Event(Program.map.UpdateFogPositions, 8, true));
             GameEvents.Add(new Event(Program.map.UpdateFogAnimations, 250, true));
             GameEvents.Add(new Event(Program.map.UpdateSmushyAnimations, 100, true));
-            GameEvents.Add(new Event(Program.map.UpdateSmushyPositions, 10, true));
+            GameEvents.Add(new Event(Program.map.UpdateSmushyPositions, 1, true));
             GameEvents.Add(new Event(Program.map.UpdateGirlAnimations, 100, true));
+            
+            GameEvents.Add(new Event(Program.map.UpdateFog, 8, true));
         }
 
         public void GameLoop()

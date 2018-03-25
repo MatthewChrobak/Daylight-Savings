@@ -60,8 +60,8 @@ namespace Game.Graphics
 
         private void GameWindow_KeyPressed(object sender, KeyEventArgs e)
         {
-
-            if(e.Code == Keyboard.Key.Up)
+            Game.Program.map.Girl.itemSurroundingCheck();
+            if (e.Code == Keyboard.Key.Up)
             {
                 Console.WriteLine("Up is pressed");
                 Program.map.Girl.girlDirection = Direction.UP;
@@ -105,8 +105,6 @@ namespace Game.Graphics
                 }
                 Console.WriteLine(Program.map.Girl.X);
             }
-
-            SoundManager.addSound("footstep.ogg");
         }
 
         private void GameWindow_Closed(object sender, EventArgs e)
@@ -148,8 +146,7 @@ namespace Game.Graphics
             if (e.Axis == Joystick.Axis.Y)
             {
                 if (Math.Abs(e.Position) > bound){
-                    moveY = speed * (e.Position / 100);
-
+                    moveY = speed * (e.Position / 100);                   
                 }
                 else{
                     moveY = 0.0f;

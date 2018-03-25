@@ -42,22 +42,27 @@ namespace Game.Models
             this.velocity = new Vector2f(x, y);
         }
 
-        public void Move() {
+        public void Move()
+        {
 
             //Check 0 boundaries
-            if (this.Y + velocity.Y < 0) {
+            if (this.Y + velocity.Y < 0)
+            {
                 setVelocity(velocity.X, 0);
             }
-            if (this.X + velocity.X < 0) { 
+            if (this.X + velocity.X < 0)
+            {
                 setVelocity(0, velocity.Y);
             }
-               
-            
+
+
             //check max boundaries
-            if(this.Y+velocity.Y >= Map.MAX_Y * Tile.TILE_SIZE) {
+            if (this.Y + velocity.Y >= Map.MAX_Y * Tile.TILE_SIZE)
+            {
                 setVelocity(velocity.X, 0);
             }
-                if(this.X+velocity.X>= Map.MAX_X * Tile.TILE_SIZE) {
+            if (this.X + velocity.X >= Map.MAX_X * Tile.TILE_SIZE)
+            {
                 setVelocity(0, velocity.Y);
             }
 
@@ -119,8 +124,8 @@ namespace Game.Models
 
             for (int i = 0; i < Game.Program.map.light.Count; i++) {
 
-                if ((Game.Program.map.light[i].X + range >= this.X && this.X >= Game.Program.map.light[i].X - range) 
-                    && (Game.Program.map.light[i].Y + range >= this.Y && this.Y >= Game.Program.map.light[i].Y - range)) {
+                if ((Game.Program.map.light[i].X + range) >= this.X && this.X >= (Game.Program.map.light[i].X - range) 
+                    && (Game.Program.map.light[i].Y + range) >= this.Y && this.Y >= (Game.Program.map.light[i].Y - range)) {
                     Program.map.Girl.littleGirlInventory.items.Add(new LightItem());
                     Program.map.light.RemoveAt(i);
                 }

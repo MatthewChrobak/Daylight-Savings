@@ -3,6 +3,7 @@ using Game.Models.Enviroment;
 using Game.Sounds;
 using Game.Timing;
 using Game.UserInterface;
+using System;
 
 namespace Game
 {
@@ -14,7 +15,7 @@ namespace Game
         public static EventSystem Events = new EventSystem();
 
         private static void Main(string[] args)
-        {            
+        {
             MusicManager.addMusic("Theme.ogg", true);
             map.Girl.itemSurroundingCheck();
             Events.GameLoop();
