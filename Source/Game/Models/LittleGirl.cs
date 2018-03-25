@@ -46,13 +46,6 @@ namespace Game.Models
         {
 
             //Check 0 boundaries
-
-            //if(velocity.Y != 0 || velocity.X != 0)
-            //{
-            //    SoundManager.addSound("footstep.ogg");
-            //}
-
-
             if (this.Y + velocity.Y < 0)
             {
                 setVelocity(velocity.X, 0);
@@ -127,8 +120,8 @@ namespace Game.Models
 
             for (int i = 0; i < Game.Program.map.light.Count; i++) {
 
-                if ((Game.Program.map.light[i].X + range >= this.X && this.X >= Game.Program.map.light[i].X - range) 
-                    && (Game.Program.map.light[i].Y + range >= this.Y && this.Y >= Game.Program.map.light[i].Y - range)) {
+                if ((Game.Program.map.light[i].X + range) >= this.X && this.X >= (Game.Program.map.light[i].X - range) 
+                    && (Game.Program.map.light[i].Y + range) >= this.Y && this.Y >= (Game.Program.map.light[i].Y - range)) {
                     Program.map.Girl.littleGirlInventory.items.Add(new LightItem());
                     Program.map.light.RemoveAt(i);
                 }

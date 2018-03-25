@@ -48,15 +48,33 @@ namespace Game.Models.Enviroment
 
         public void UpdateFog()
         {
-            for (int i = 0; i < Program.map.FogEntities.Count; i++)
+            //In case we're adding more items than just light lulz
+            int positionOfLightItemInInventory = -1;
+
+            for(int i = 0; i < Program.map.Girl.littleGirlInventory.items.Count; i++)
             {
-                //IF KAREN HAS LIGHT, THEN DO THE FOLLOWING
-                if (Program.map.FogEntities[i].X <= (Program.map.Girl.X + 125) && Program.map.FogEntities[i].X >= (Program.map.Girl.X - 125) && Program.map.FogEntities[i].Y <= (Program.map.Girl.Y + 62) && Program.map.FogEntities[i].Y >= (Program.map.Girl.Y - 62))
+                if(Program.map.Girl.littleGirlInventory.items[i].GetType() == typeof(LightItem))
                 {
-                    Program.map.DeleteFog(i);
+                    positionOfLightItemInInventory = i;
+                    break;
                 }
             }
+            
+            if (positionOfLightItemInInventory >= 0) { 
+                
+                for (int i = 0; i < Program.map.FogEntities.Count; i++)
+                {
+                    if (Program.map.FogEntities[i].X <= (Program.map.Girl.X + 125) && Program.map.FogEntities[i].X >= (Program.map.Girl.X - 125) && Program.map.FogEntities[i].Y <= (Program.map.Girl.Y + 62) && Program.map.FogEntities[i].Y >= (Program.map.Girl.Y - 62))
+                    {
+                        Program.map.DeleteFog(i);
+                        Program.map.Girl.littleGirlInventory.items.RemoveAt(positionOfLightItemInInventory);
+                        positionOfLightItemInInventory = -1;
+                        return;
+                    }
+                }        
+            }
         }
+        
 
         public void UpdateFogPositions()
         {
