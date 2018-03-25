@@ -1,5 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Game.Graphics;
+using Game.Models;
+
 
 namespace Game.Models.Enviroment
 {
@@ -7,16 +10,22 @@ namespace Game.Models.Enviroment
     {
         public Tile[,] Tiles;
 
-        public const int MAX_X = 10;
-        public const int MAX_Y = 10;
+        public const int MAX_X = 30;
+        public const int MAX_Y = 15;
+        public const int MAX_COIN = 10;
+
 
 
         public LittleGirl Girl { get; set; }
+        Light[] light = new Light[MAX_COIN];
+        Random rnd = new Random();
 
         public Map()
         {
             this.Tiles = new Tile[MAX_X, MAX_Y];
-
+            for(int i = 0; i < light.Length; i++) {
+                light[i] = new Light(rnd.Next(1, MAX_X * Tile.TILE_SIZE), rnd.Next(1, MAX_Y * Tile.TILE_SIZE));
+            }
             this.Girl = new LittleGirl(100, 100);
 
             for (int x = 0; x < MAX_X; x++) {
@@ -39,6 +48,12 @@ namespace Game.Models.Enviroment
             foreach (var component in this.Girl.GetDrawableComponents()) {
                 yield return component;
             }
+            for(int i = 0; i < light.Length; i++) {
+                foreach (var component in light[i].GetDrawableComponents()) {
+                    yield return component;
+                }
+            }
+            
         }
     }
 }
