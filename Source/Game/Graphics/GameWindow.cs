@@ -18,6 +18,8 @@ namespace Game.Graphics
         private float moveX;
         private float moveY;
 
+        int counter = 0;
+
 
         public GameWindow(Map map) : base(new VideoMode(960, 640), "Test")
         {
@@ -106,8 +108,6 @@ namespace Game.Graphics
                 }
                 Console.WriteLine(this.girl.X);
             }
-
-            SoundManager.addSound("footstep.ogg");
         }
 
         private void GameWindow_Closed(object sender, EventArgs e)
@@ -149,15 +149,15 @@ namespace Game.Graphics
             if (e.Axis == Joystick.Axis.Y)
             {
                 if (Math.Abs(e.Position) > bound){
-                    moveY = speed * (e.Position / 100);
-
+                    moveY = speed * (e.Position / 100);                   
                 }
                 else{
                     moveY = 0.0f;
                 }
             }
             girl.setVelocity(moveX, moveY);
-            SoundManager.addSound("footstep.ogg");
+            
+            
         }
     }
 }

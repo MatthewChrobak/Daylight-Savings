@@ -4,7 +4,7 @@ using SFML.Graphics;
 using SFML.System;
 using Game.Models.Enviroment;
 using System;
-
+using Game.Sounds;
 
 namespace Game.Models
 {
@@ -46,6 +46,13 @@ namespace Game.Models
             // this.Y += velocity.Y;
 
             //Check 0 boundaries
+
+            //if(velocity.Y != 0 || velocity.X != 0)
+            //{
+            //    SoundManager.addSound("footstep.ogg");
+            //}
+
+
             if (this.Y + velocity.Y < 0)
             {
                 setVelocity(velocity.X, 0);
@@ -67,7 +74,7 @@ namespace Game.Models
             }
 
             this.X += velocity.X;
-            this.Y += velocity.Y;
+            this.Y += velocity.Y;   
         }
 
         public void itemSurroundingCheck() {
