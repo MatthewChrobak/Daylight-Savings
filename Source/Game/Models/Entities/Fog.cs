@@ -69,5 +69,7 @@ namespace Game.Models.Entities
                 this.Y -= moveSpeed;
             }
         }
+
+       
     }
 }

@@ -5,6 +5,7 @@ using SFML.System;
 using Game.Models.Enviroment;
 using System;
 
+
 namespace Game.Models
 {
     public class LittleGirl : Position, IDrawable
@@ -38,31 +39,35 @@ namespace Game.Models
             this.velocity = new Vector2f(x, y);
         }
 
-        public void Move() {
+        public void Move()
+        {
 
             // this.X += velocity.X;
             // this.Y += velocity.Y;
 
             //Check 0 boundaries
-            if (this.Y + velocity.Y < 0) {
+            if (this.Y + velocity.Y < 0)
+            {
                 setVelocity(velocity.X, 0);
             }
-            if (this.X + velocity.X < 0) { 
+            if (this.X + velocity.X < 0)
+            {
                 setVelocity(0, velocity.Y);
             }
-               
-            
+
+
             //check max boundaries
-            if(this.Y+velocity.Y >= Map.MAX_Y * Tile.TILE_SIZE) {
+            if (this.Y + velocity.Y >= Map.MAX_Y * Tile.TILE_SIZE)
+            {
                 setVelocity(velocity.X, 0);
             }
-                if(this.X+velocity.X>= Map.MAX_X * Tile.TILE_SIZE) {
+            if (this.X + velocity.X >= Map.MAX_X * Tile.TILE_SIZE)
+            {
                 setVelocity(0, velocity.Y);
             }
 
             this.X += velocity.X;
             this.Y += velocity.Y;
-            Console.WriteLine("X position: " + this.X + " Y position: " + this.Y);
 
 
         }

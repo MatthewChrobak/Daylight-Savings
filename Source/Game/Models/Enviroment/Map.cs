@@ -37,12 +37,17 @@ namespace Game.Models.Enviroment
                 FogEntities.Add(new Fog(0, 0));
             }
         }
-
+        
         public void UpdateFogPositions()
         {
             foreach (var fog in this.FogEntities) {
                 fog.UpdatePosition();
             }
+        }
+
+        public void DeleteFog(int FogToDelete)
+        {
+            FogEntities.RemoveAt(FogToDelete);
         }
 
         public void UpdateFogAnim()

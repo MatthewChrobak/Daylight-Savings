@@ -157,6 +157,7 @@ namespace Game.Graphics
                 }
             }
             girl.setVelocity(moveX, moveY);
+            SoundManager.addSound("footstep.ogg");
         }
     }
 }
