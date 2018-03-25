@@ -64,6 +64,7 @@ namespace Game.UserInterface
                 Width = 200,
                 SurfaceName = "Full_HealthBar.png"
             });
+            gameUI.Add(new LightDisplay());
 
             // Mainmenu Components
             mainmenu.Add(new UIComponent() {

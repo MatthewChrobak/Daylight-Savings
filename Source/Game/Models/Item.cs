@@ -15,7 +15,6 @@ namespace Game.Models
     public class LightItem : Item {
         static int i = 1;
         public LightItem(){
-            Console.WriteLine("I am the " + i + " Light");
             i++;         
         }
     }
