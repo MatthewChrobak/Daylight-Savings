@@ -83,6 +83,13 @@ namespace Game.UserInterface
                     }
                 }
             });
+            mainmenu.Add(new UIComponent() {
+                Width = 500,
+                Height = 100,
+                X = 960 / 2 - 250,
+                Y = 100,
+                SurfaceName = "titlescreen.png"
+            });
             mainmenu.Add(new Marker() {
                 Width = 250,
                 Height = 100,
@@ -94,7 +101,7 @@ namespace Game.UserInterface
                 Height = 50,
                 Width = 100,
                 X = 960 - 960 / 2 + 50,
-                Y = 300,
+                Y = 400,
                 ButtonText = "Play Game",
                 SurfaceName = "whitebox.png",
                 Click = (x, y) => StateSystem.NewGame(),
@@ -108,7 +115,7 @@ namespace Game.UserInterface
                 Height = 50,
                 Width = 100,
                 X = 960 / 3 - 50,
-                Y = 300,
+                Y = 400,
                 ButtonText = "Play Tutorial",
                 SurfaceName = "whitebox.png",
                 Click = (x, y) => StateSystem.NewTutorial(),
