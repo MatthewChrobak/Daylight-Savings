@@ -2,6 +2,7 @@
 using SFML.System;
 using Game.Models.Enviroment;
 using System.Collections.Generic;
+using Game.Models;
 
 namespace Game.Graphics
 {
@@ -12,9 +13,9 @@ namespace Game.Graphics
         private Camera _camera;
         private Font _font;
 
-        public GraphicsSystem(Map map)
+        public GraphicsSystem()
         {
-            this._context = new GameWindow(map);
+            this._context = new GameWindow();
             this._camera = new Camera(this._context);
             this._surfaces = new SurfaceManager();
 
@@ -23,9 +24,11 @@ namespace Game.Graphics
             this._surfaces.LoadTextures();
 
             this._font = new Font("fonts/opensans.ttf");
+        }
 
-
-            map.Girl.Attach(_camera);
+        public void SetCameraFocus(Position pos)
+        {
+            pos.Attach(_camera);
         }
 
         public void BeginRenderFrame()

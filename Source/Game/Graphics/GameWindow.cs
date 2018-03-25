@@ -11,7 +11,6 @@ namespace Game.Graphics
     public class GameWindow : RenderWindow
     {
         private float bound = 15.0f;
-        private LittleGirl girl;
 
         private float speed = 2.0f;
 
@@ -19,7 +18,7 @@ namespace Game.Graphics
         private float moveY;
 
 
-        public GameWindow(Map map) : base(new VideoMode(960, 640), "Test")
+        public GameWindow() : base(new VideoMode(960, 640), "Test")
         {
             this.Closed += this.GameWindow_Closed;
             this.KeyPressed += this.ProcessKeyInputs;
@@ -30,9 +29,6 @@ namespace Game.Graphics
             this.MouseMoved += GameWindow_MouseMoved;
             this.MouseButtonPressed += this.GameWindow_MouseButtonPressed1;
             this.MouseButtonPressed += GameWindow_MouseButtonPressed;
-
-            //this is the girl from MAP
-            this.girl = map.Girl;
         }
 
         private void GameWindow_JoystickButtonPressed(object sender, JoystickButtonEventArgs e)
@@ -69,42 +65,42 @@ namespace Game.Graphics
             if(e.Code == Keyboard.Key.Up)
             {
                 Console.WriteLine("Up is pressed");
-                this.girl.girlDirection = Direction.UP;
-                if(((this.girl.Y-25) <= 0)) {
-                    this.girl.Y = 0;
+                Program.map.Girl.girlDirection = Direction.UP;
+                if(((Program.map.Girl.Y-25) <= 0)) {
+                    Program.map.Girl.Y = 0;
                 }
                 else
-                    this.girl.Y -= 25;
-                Console.WriteLine(this.girl.Y);
+                    Program.map.Girl.Y -= 25;
+                Console.WriteLine(Program.map.Girl.Y);
             }
             else if (e.Code == Keyboard.Key.Down)
             {
                 Console.WriteLine("Down is pressed");
-                this.girl.girlDirection = Direction.DOWN;
-                if (!((this.girl.Y + 25) >= Map.MAX_Y*Tile.TILE_SIZE)) {
-                    this.girl.Y += 25;
+                Program.map.Girl.girlDirection = Direction.DOWN;
+                if (!((Program.map.Girl.Y + 25) >= Map.MAX_Y*Tile.TILE_SIZE)) {
+                    Program.map.Girl.Y += 25;
                 }
-                Console.WriteLine(this.girl.Y);
+                Console.WriteLine(Program.map.Girl.Y);
             }
             else if (e.Code == Keyboard.Key.Left)
             {
                 Console.WriteLine("Left is pressed");
-                this.girl.girlDirection = Direction.LEFT;
-                if (((this.girl.X - 25) <= 0)) {
-                    this.girl.X = 0;
+                Program.map.Girl.girlDirection = Direction.LEFT;
+                if (((Program.map.Girl.X - 25) <= 0)) {
+                    Program.map.Girl.X = 0;
                 }
                 else
-                    this.girl.X -= 25;
-                Console.WriteLine(this.girl.X);
+                    Program.map.Girl.X -= 25;
+                Console.WriteLine(Program.map.Girl.X);
             }
             else if (e.Code == Keyboard.Key.Right)
             {
                 Console.WriteLine("Right is pressed");
-                this.girl.girlDirection = Direction.RIGHT;
-                if (!((this.girl.X + 25) >= Map.MAX_X*Tile.TILE_SIZE)) {
-                    this.girl.X += 25;
+                Program.map.Girl.girlDirection = Direction.RIGHT;
+                if (!((Program.map.Girl.X + 25) >= Map.MAX_X*Tile.TILE_SIZE)) {
+                    Program.map.Girl.X += 25;
                 }
-                Console.WriteLine(this.girl.X);
+                Console.WriteLine(Program.map.Girl.X);
             }
 
             SoundManager.addSound("footstep.ogg");
@@ -156,7 +152,7 @@ namespace Game.Graphics
                     moveY = 0.0f;
                 }
             }
-            girl.setVelocity(moveX, moveY);
+            Program.map.Girl.setVelocity(moveX, moveY);
         }
     }
 }
