@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System;
 using Game.Models;
+using Game.Models.Enviroment;
 
 namespace Game.Timing
 {
@@ -23,18 +24,21 @@ namespace Game.Timing
                 Program.Graphics.EndRenderFrame();
             }, 16, false));
 
+            GameEvents.Add(new Event(Program.map.UpdateBigBossAnimations, 50, true));
+            GameEvents.Add(new Event(Program.map.TimerIncrementor, 1, true));
             GameEvents.Add(new Event(Program.map.UpdateFogPositions, 8, true));
             GameEvents.Add(new Event(Program.map.UpdateFogAnimations, 250, true));
             GameEvents.Add(new Event(Program.map.UpdateSmushyAnimations, 100, true));
             GameEvents.Add(new Event(Program.map.UpdateSmushyPositions, 1, true));
-            GameEvents.Add(new Event(Program.map.SmushySpawning, 1000*15, true));
-            GameEvents.Add(new Event(Program.map.LightSpawning, 1000*5, true));
-            GameEvents.Add(new Event(Program.map.CloudSpawning, 1000*10, true));
-            GameEvents.Add(new Event(Program.map.ItemSpawning, 1000*60, true));
+            GameEvents.Add(new Event(Program.map.SmushySpawning, 1000 * 12, true));
+            GameEvents.Add(new Event(Program.map.LightSpawning, 1000 * 15, true));
+            GameEvents.Add(new Event(Program.map.CloudSpawning, 1000 * 15, true));
+            GameEvents.Add(new Event(Program.map.ItemSpawning, 1000 * 60, true));
             GameEvents.Add(new Event(Program.map.UpdateGirlAnimations, 100, true));
             GameEvents.Add(new Event(Program.map.UpdateLightAnimations, 125, true));
             GameEvents.Add(new Event(Program.map.UpdateFog, 8, true));
             GameEvents.Add(new Event(Program.map.Girl.HealthLossFromFog, 100, true));
+           
         }
 
         public void GameLoop()

@@ -15,6 +15,37 @@ namespace Game.Models
         
     }
 
+    public class BigBoss: Position, IDrawable {
+        private static Random rnd = new Random();
+        public (int X, int Y) TargetPosition;
+        public int animationStep = 0;
+        public int waitCount = 0;
+
+        public BigBoss(float x, float y) : base(x, y) {
+            this.animationStep = 0;
+        }
+
+        public void SmushyDamage(float x, float y) {
+           
+        }
+
+        public IEnumerable<DrawableComponent> GetDrawableComponents() {
+
+            yield return new DrawableComponent() {
+                TextureName = "BigBoss.png",
+                RenderSize = new Vector2f(300, 150),
+                Position = new Vector2f(this.X,this.Y-804),
+                Rect = new IntRect(22 * animationStep, 0, 2500, 1609)
+            };
+        }
+
+        public void UpdateAnimation() {
+            animationStep += 1;
+            animationStep %= 4;
+        }
+
+    }
+
 
     public class Smushy: Position, IDrawable
     {

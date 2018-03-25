@@ -17,6 +17,7 @@ namespace Game.Models.Enviroment
         public const int numLight = 10;
         public const int numFog = 10;
         public const int numSmushy = 5;
+        public int mapTimerThreshold = 0;
 
         public List<Tree> Trees;
         public LittleGirl Girl { get; set; }
@@ -24,6 +25,7 @@ namespace Game.Models.Enviroment
         public List<Smushy> smushy { get; set; }
         public List<Potion> potion;
         Random rnd = new Random();
+        public BigBoss bigBoss;
 
         public Map()
         {
@@ -47,6 +49,8 @@ namespace Game.Models.Enviroment
 
 
             this.Girl = new LittleGirl(700, 700);
+
+            this.bigBoss = new BigBoss(((Map.MAX_X * Tile.TILE_SIZE) / 2), 0);
 
             smushy = new List<Smushy>();
             for(int i = 0; i < numSmushy; i++) {
@@ -107,6 +111,9 @@ namespace Game.Models.Enviroment
             }
         }
 
+        public void UpdateBigBossAnimations() {
+            this.bigBoss.UpdateAnimation();
+        } 
 
         public void UpdateFogPositions()
         {
@@ -116,6 +123,12 @@ namespace Game.Models.Enviroment
             }
         }
 
+        public void TimerIncrementor() {
+            this.mapTimerThreshold += 1;
+            Console.WriteLine("the map timer is: " + this.mapTimerThreshold);
+        }
+
+        //Spwaning for item, smushy, light and cloud
         public void SmushySpawning() {
             Game.Program.map.smushy.Add(new Smushy(rnd.Next(1, MAX_X * Tile.TILE_SIZE), rnd.Next(1, MAX_Y * Tile.TILE_SIZE)));
         }
@@ -253,6 +266,10 @@ namespace Game.Models.Enviroment
                                 yield return component;
                             }
                         }
+                    }
+
+                    foreach(var components in bigBoss.GetDrawableComponents()) {
+                        yield return components;
                     }
                 }
             }
