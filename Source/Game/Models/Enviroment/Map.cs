@@ -115,7 +115,7 @@ namespace Game.Models.Enviroment
                         Program.map.DeleteFog(i);
                         Program.map.Girl.littleGirlInventory.items.RemoveAt(positionOfLightItemInInventory);
                         positionOfLightItemInInventory = -1;
-                        numOfCloud++;
+                        numOfCloud++; 
                         return;
                     }            
                 }
