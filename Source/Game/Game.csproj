@@ -68,6 +68,7 @@
     <Compile Include="Graphics\IDrawable.cs" />
     <Compile Include="Graphics\SurfaceManager.cs" />
     <Compile Include="Models\Directions.cs" />
+    <Compile Include="Models\Entities\DisappatingFog.cs" />
     <Compile Include="Models\Entities\Fog.cs" />
     <Compile Include="Models\Entities\Tree.cs" />
     <Compile Include="Models\Enviroment\Map.cs" />
