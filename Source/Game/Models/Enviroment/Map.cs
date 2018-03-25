@@ -115,7 +115,19 @@ namespace Game.Models.Enviroment
                 fog.UpdatePosition();
             }
         }
-        
+
+        public void SmushySpawning() {
+            Game.Program.map.smushy.Add(new Smushy(rnd.Next(1, MAX_X * Tile.TILE_SIZE), rnd.Next(1, MAX_Y * Tile.TILE_SIZE)));
+        }
+        public void ItemSpawning() {
+            Game.Program.map.potion.Add(new Potion(rnd.Next(1, MAX_X * Tile.TILE_SIZE), rnd.Next(1, MAX_Y * Tile.TILE_SIZE)));
+        }
+        public void CloudSpawning() {
+            Game.Program.map.FogEntities.Add(new Fog(rnd.Next(1, MAX_X * Tile.TILE_SIZE), rnd.Next(1, MAX_Y * Tile.TILE_SIZE)));
+        }
+        public void LightSpawning() {
+            Game.Program.map.light.Add(new Light(rnd.Next(1, MAX_X * Tile.TILE_SIZE), rnd.Next(1, MAX_Y * Tile.TILE_SIZE)));
+        }
         public void UpdateSmushyPositions() {
             foreach(var smushy in this.smushy) {
                 smushy.UpdatePosition();

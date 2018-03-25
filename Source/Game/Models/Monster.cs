@@ -35,7 +35,6 @@ namespace Game.Models
 
                 if ((Game.Program.map.smushy[i].X + range) >= x && x >= (Game.Program.map.smushy[i].X - range)
                     && (Game.Program.map.smushy[i].Y + range) >= y && y >= (Game.Program.map.smushy[i].Y - range)) {
-                    Console.WriteLine("Slim Damaged Received");
                     Game.Program.map.Girl.health -= (float)0.01;
                 }
             }
@@ -60,6 +59,7 @@ namespace Game.Models
             animationStep += 1;
             animationStep %= 8;
         }
+
 
         public void UpdatePosition() {
             {
