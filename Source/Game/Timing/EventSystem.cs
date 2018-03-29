@@ -29,7 +29,7 @@ namespace Game.Timing {
 
                     Program.Graphics.RenderToFrame(Program.UI.GetDrawableComponents());
                     Program.Graphics.EndRenderFrame();
-                }, 16, false));
+                }, 8, false));
             }
         }
 
@@ -42,7 +42,7 @@ namespace Game.Timing {
                 GameEvents.Add(new Event(Program.map.UpdateFogPositions, 4, true));
                 GameEvents.Add(new Event(Program.map.UpdateFogAnimations, 250, true));
                 GameEvents.Add(new Event(Program.map.UpdateSmushyAnimations, 100, true));
-                GameEvents.Add(new Event(Program.map.UpdateSmushyPositions, 1, true));
+                GameEvents.Add(new Event(Program.map.UpdateSmushyPositions, 16, true));
                 GameEvents.Add(new Event(Program.map.UpdateGirlAnimations, 100, true));
                 GameEvents.Add(new Event(Program.map.UpdateLightAnimations, 125, true));
                 GameEvents.Add(new Event(Program.map.UpdateFog, 8, true));
@@ -82,12 +82,28 @@ namespace Game.Timing {
 
         public void GameLoop()
         {
+            int tmr1000 = 0;
+
+            int[] rate = new int[100];
+
             // While the game is running.
             while (StateSystem.GameState != States.Closed) {
                 lock(this.GameEvents) {
                     for (int i = 0; i < GameEvents.Count; i++) {
-                        GameEvents[i].Probe();
+                        if (GameEvents[i].Probe()) {
+                            rate[i] += 1;
+                        }
                     }
+                }
+
+                if (tmr1000 <= Environment.TickCount) {
+
+                    //Console.Clear();
+                    for (int i = 0; i < GameEvents.Count; i++) {
+                        //Console.WriteLine($"{i}: {rate[i]} / {1000 / (GameEvents[i]._frequency + 1)}");
+                        rate[i] = 0;
+                    }
+                    tmr1000 = Environment.TickCount + 1000;
                 }
 
                 System.Threading.Thread.Yield();

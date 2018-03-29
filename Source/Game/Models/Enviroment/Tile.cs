@@ -8,7 +8,6 @@ namespace Game.Models.Enviroment
     public class Tile : Position, IDrawable
     {
         public string SurfaceName { get; set; }
-        public bool HasCloud = false;
         public const int TILE_SIZE = 48;
 
         private static Random rng = new Random();

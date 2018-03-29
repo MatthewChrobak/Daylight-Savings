@@ -38,6 +38,9 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Mac|AnyCPU'">
     <OutputPath>bin\Mac\</OutputPath>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="sfmlnet-audio-2">
       <HintPath>..\SFML\lib\sfmlnet-audio-2.dll</HintPath>

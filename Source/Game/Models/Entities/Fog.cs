@@ -46,16 +46,19 @@ namespace Game.Models.Entities
 
         public void UpdatePosition()
         {
-            float moveSpeed = 1.0f;
+            float moveSpeed = 3.5f;
 
-            if (this.X >= TargetPosition.X && this.X <= TargetPosition.X + Tile.TILE_SIZE) {
-                if (this.Y >= TargetPosition.Y && this.Y <= TargetPosition.Y + Tile.TILE_SIZE) {
+            if (this.X >= TargetPosition.X - moveSpeed && this.X <= TargetPosition.X + moveSpeed) {
+                if (this.Y >= TargetPosition.Y - moveSpeed
+                    && this.Y <= TargetPosition.Y + moveSpeed) {
                     waitCount += 1;
 
                     // Did we wait long enough?
-                    if (waitCount >= 100) {
+                    if (waitCount >= 25) {
                         this.GetNewPos();
                         waitCount = 0;
+                    } else {
+                        return;
                     }
                 }
             }

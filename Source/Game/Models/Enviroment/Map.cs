@@ -120,7 +120,6 @@ namespace Game.Models.Enviroment
                         Program.map.Girl.littleGirlInventory.items.RemoveAt(positionOfLightItemInInventory);
                         positionOfLightItemInInventory = -1;
                         numOfCloud++;
-                        Console.WriteLine("The number of cloud killed: " + numOfCloud);
                         return;
                     }            
                 }

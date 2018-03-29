@@ -12,13 +12,13 @@ namespace Game.Graphics
     {
         private float bound = 15.0f;
 
-        private float speed = 2.0f;
+        private float speed = 4.0f;
 
         private float moveX;
         private float moveY;
 
 
-        public GameWindow() : base(new VideoMode(960, 640), "Daylight Savings")
+        public GameWindow() : base(new VideoMode(1200, 900), "Daylight Savings", Styles.Fullscreen)
         {
             this.Closed += this.GameWindow_Closed;
             this.KeyPressed += this.ProcessKeyInputs;

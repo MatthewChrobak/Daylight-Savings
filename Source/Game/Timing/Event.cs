@@ -6,7 +6,7 @@ namespace Game.Timing
     {
         private Action<dynamic> _event;
         private int _nextTrigger;
-        private int _frequency;
+        public int _frequency;
         private dynamic _args;
         private bool _inGameRequirement;
 
@@ -23,10 +23,10 @@ namespace Game.Timing
 
         }
 
-        public void Probe()
+        public bool Probe()
         {
             if (this._inGameRequirement && StateSystem.GameState != States.InGame) {
-                return;
+                return false;
             }
 
             if (this._nextTrigger <= Environment.TickCount) {
@@ -34,7 +34,10 @@ namespace Game.Timing
 
                 // Update the next trigger time.
                 this._nextTrigger = Environment.TickCount + _frequency;
+                return true;
             }
+
+            return false;
         }
     }
 }
